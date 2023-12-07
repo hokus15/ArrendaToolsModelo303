@@ -68,22 +68,23 @@ adquisiciones_bienes_inversion = 2000.0
 iva_adquisiciones_bienes_inversion = 420.0
 volumen_anual_operaciones = 6000.0
 
-datos_modelo = Modelo303(
-    periodo=periodo,
-    nif_empresa_desarrollo=nif_empresa_desarrollo,
-    version=version,
-    nombre_fiscal_contribuyente=nombre_fiscal_contribuyente,
-    nif_contribuyente=nif_contribuyente,
-    iban=iban,
-    base_imponible=base_imponible,
-    gastos_bienes_servicios=gastos_bienes_servicios,
-    iva_gastos_bienes_servicios=iva_gastos_bienes_servicios,
-    adquisiciones_bienes_inversion=adquisiciones_bienes_inversion,
-    iva_adquisiciones_bienes_inversion=iva_adquisiciones_bienes_inversion,
-    volumen_anual_operaciones=volumen_anual_operaciones
-)
+datos_modelo = {
+    'periodo': periodo,
+    'nif_empresa_desarrollo': nif_empresa_desarrollo,
+    'version': version,
+    'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
+    'nif_contribuyente': nif_contribuyente,
+    'iban': iban,
+    'base_imponible': base_imponible,
+    'gastos_bienes_servicios': gastos_bienes_servicios,
+    'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
+    'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
+    'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
+    'volumen_anual_operaciones': volumen_anual_operaciones
+}
 
-datos_fichero = datos_modelo.generar()
+modelo = Modelo303(2023, datos_modelo)
+datos_fichero = modelo.generar()
 print(datos_fichero)
 
 with open(f"{nif_contribuyente}_2023_{periodo.value}.303", "w") as archivo:
