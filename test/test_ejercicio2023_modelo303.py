@@ -1,9 +1,9 @@
 import unittest
-from arrendatools.modelo303.modelo303 import Modelo303
+from arrendatools.modelo303.modelo import Modelo303
 from arrendatools.modelo303.periodos import Periodo
 
 
-class Modelo303TestCase(unittest.TestCase):
+class Modelo303Ejercicio2023TestCase(unittest.TestCase):
 
     def test_generar_modelo_123T_cuota_positiva(self):
         expected_result = "<T303020231T0000><AUX>                                                                      v1.0    12345678X                                                                                                                                                                                                                     </AUX><T30301000> U12345678EDE LOS PALOTES PERICO                                                           20231T22322222200000000 20000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000005000000000000000000000000000000000000010000000000000000000000000000000200000021000000000000004200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001750000000000000000000000000000000000000000000000000000000000000000000000000001400000000000000000000000000000000000005200000000000000000000000000000000000000000000000000000000000000004200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </T30301000><T30303000>0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000420001000000000000000042000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042000000000000000000000000000000000000000000000000042000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       </T30303000><T303DID00>           ES0012341234123412341234                                                                                                                                                   0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </T303DID00></T303020231T0000>"
@@ -20,22 +20,23 @@ class Modelo303TestCase(unittest.TestCase):
         iva_adquisiciones_bienes_inversion = 0.0
         volumen_anual_operaciones = None
 
-        datos_modelo = Modelo303(
-            periodo=periodo,
-            nif_empresa_desarrollo=nif_empresa_desarrollo,
-            version=version,
-            nombre_fiscal_contribuyente=nombre_fiscal_contribuyente,
-            nif_contribuyente=nif_contribuyente,
-            iban=iban,
-            base_imponible=base_imponible,
-            gastos_bienes_servicios=gastos_bienes_servicios,
-            iva_gastos_bienes_servicios=iva_gastos_bienes_servicios,
-            adquisiciones_bienes_inversion=adquisiciones_bienes_inversion,
-            iva_adquisiciones_bienes_inversion=iva_adquisiciones_bienes_inversion,
-            volumen_anual_operaciones=volumen_anual_operaciones
-        )
+        datos_modelo = {
+            'periodo': periodo,
+            'nif_empresa_desarrollo': nif_empresa_desarrollo,
+            'version': version,
+            'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
+            'nif_contribuyente': nif_contribuyente,
+            'iban': iban,
+            'base_imponible': base_imponible,
+            'gastos_bienes_servicios': gastos_bienes_servicios,
+            'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
+            'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
+            'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
+            'volumen_anual_operaciones': volumen_anual_operaciones
+        }
 
-        datos_fichero = datos_modelo.generar()
+        modelo = Modelo303(2023, datos_modelo)
+        datos_fichero = modelo.generar()
         self.assertEquals(datos_fichero, expected_result)
 
     def test_generar_modelo_123T_cuota_negativa(self):
@@ -53,22 +54,23 @@ class Modelo303TestCase(unittest.TestCase):
         iva_adquisiciones_bienes_inversion = 0.0
         volumen_anual_operaciones = None
 
-        datos_modelo = Modelo303(
-            periodo=periodo,
-            nif_empresa_desarrollo=nif_empresa_desarrollo,
-            version=version,
-            nombre_fiscal_contribuyente=nombre_fiscal_contribuyente,
-            nif_contribuyente=nif_contribuyente,
-            iban=iban,
-            base_imponible=base_imponible,
-            gastos_bienes_servicios=gastos_bienes_servicios,
-            iva_gastos_bienes_servicios=iva_gastos_bienes_servicios,
-            adquisiciones_bienes_inversion=adquisiciones_bienes_inversion,
-            iva_adquisiciones_bienes_inversion=iva_adquisiciones_bienes_inversion,
-            volumen_anual_operaciones=volumen_anual_operaciones
-        )
+        datos_modelo = {
+            'periodo': periodo,
+            'nif_empresa_desarrollo': nif_empresa_desarrollo,
+            'version': version,
+            'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
+            'nif_contribuyente': nif_contribuyente,
+            'iban': iban,
+            'base_imponible': base_imponible,
+            'gastos_bienes_servicios': gastos_bienes_servicios,
+            'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
+            'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
+            'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
+            'volumen_anual_operaciones': volumen_anual_operaciones
+        }
 
-        datos_fichero = datos_modelo.generar()
+        modelo = Modelo303(2023, datos_modelo)
+        datos_fichero = modelo.generar()
         self.assertEquals(datos_fichero, expected_result)
 
     def test_generar_modelo_4T_cuota_positiva(self):
@@ -86,22 +88,23 @@ class Modelo303TestCase(unittest.TestCase):
         iva_adquisiciones_bienes_inversion = 0.0
         volumen_anual_operaciones = 6000.0
 
-        datos_modelo = Modelo303(
-            periodo=periodo,
-            nif_empresa_desarrollo=nif_empresa_desarrollo,
-            version=version,
-            nombre_fiscal_contribuyente=nombre_fiscal_contribuyente,
-            nif_contribuyente=nif_contribuyente,
-            iban=iban,
-            base_imponible=base_imponible,
-            gastos_bienes_servicios=gastos_bienes_servicios,
-            iva_gastos_bienes_servicios=iva_gastos_bienes_servicios,
-            adquisiciones_bienes_inversion=adquisiciones_bienes_inversion,
-            iva_adquisiciones_bienes_inversion=iva_adquisiciones_bienes_inversion,
-            volumen_anual_operaciones=volumen_anual_operaciones
-        )
+        datos_modelo = {
+            'periodo': periodo,
+            'nif_empresa_desarrollo': nif_empresa_desarrollo,
+            'version': version,
+            'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
+            'nif_contribuyente': nif_contribuyente,
+            'iban': iban,
+            'base_imponible': base_imponible,
+            'gastos_bienes_servicios': gastos_bienes_servicios,
+            'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
+            'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
+            'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
+            'volumen_anual_operaciones': volumen_anual_operaciones
+        }
 
-        datos_fichero = datos_modelo.generar()
+        modelo = Modelo303(2023, datos_modelo)
+        datos_fichero = modelo.generar()
         self.assertEquals(datos_fichero, expected_result)
 
     def test_generar_modelo_4T_cuota_negativa(self):
@@ -121,21 +124,23 @@ class Modelo303TestCase(unittest.TestCase):
         iva_adquisiciones_bienes_inversion = 420.0
         volumen_anual_operaciones = None
 
+        datos_modelo = {
+            'periodo': periodo,
+            'nif_empresa_desarrollo': nif_empresa_desarrollo,
+            'version': version,
+            'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
+            'nif_contribuyente': nif_contribuyente,
+            'iban': iban,
+            'base_imponible': base_imponible,
+            'gastos_bienes_servicios': gastos_bienes_servicios,
+            'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
+            'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
+            'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
+            'volumen_anual_operaciones': volumen_anual_operaciones
+        }
+
         with self.assertRaisesRegex(ValueError, "El volumen anual de operaciones es obligatorio en el 4º trimestre*"):
-            Modelo303(
-                periodo=periodo,
-                nif_empresa_desarrollo=nif_empresa_desarrollo,
-                version=version,
-                nombre_fiscal_contribuyente=nombre_fiscal_contribuyente,
-                nif_contribuyente=nif_contribuyente,
-                iban=iban,
-                base_imponible=base_imponible,
-                gastos_bienes_servicios=gastos_bienes_servicios,
-                iva_gastos_bienes_servicios=iva_gastos_bienes_servicios,
-                adquisiciones_bienes_inversion=adquisiciones_bienes_inversion,
-                iva_adquisiciones_bienes_inversion=iva_adquisiciones_bienes_inversion,
-                volumen_anual_operaciones=volumen_anual_operaciones
-            )
+            Modelo303(2023, datos_modelo)
 
     def test_generar_modelo_nif_ed_largo(self):
         periodo = Periodo.P4T
@@ -151,21 +156,23 @@ class Modelo303TestCase(unittest.TestCase):
         iva_adquisiciones_bienes_inversion = 420.0
         volumen_anual_operaciones = 6000.00
 
+        datos_modelo = {
+            'periodo': periodo,
+            'nif_empresa_desarrollo': nif_empresa_desarrollo,
+            'version': version,
+            'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
+            'nif_contribuyente': nif_contribuyente,
+            'iban': iban,
+            'base_imponible': base_imponible,
+            'gastos_bienes_servicios': gastos_bienes_servicios,
+            'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
+            'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
+            'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
+            'volumen_anual_operaciones': volumen_anual_operaciones
+        }
+
         with self.assertRaisesRegex(ValueError, "El NIF de la empresa de desarrollo debe ser de*"):
-            Modelo303(
-                periodo=periodo,
-                nif_empresa_desarrollo=nif_empresa_desarrollo,
-                version=version,
-                nombre_fiscal_contribuyente=nombre_fiscal_contribuyente,
-                nif_contribuyente=nif_contribuyente,
-                iban=iban,
-                base_imponible=base_imponible,
-                gastos_bienes_servicios=gastos_bienes_servicios,
-                iva_gastos_bienes_servicios=iva_gastos_bienes_servicios,
-                adquisiciones_bienes_inversion=adquisiciones_bienes_inversion,
-                iva_adquisiciones_bienes_inversion=iva_adquisiciones_bienes_inversion,
-                volumen_anual_operaciones=volumen_anual_operaciones
-            )
+            Modelo303(2023, datos_modelo)
 
     def test_generar_modelo_nif_ed_corto(self):
         periodo = Periodo.P4T
@@ -181,21 +188,23 @@ class Modelo303TestCase(unittest.TestCase):
         iva_adquisiciones_bienes_inversion = 420.0
         volumen_anual_operaciones = 6000.00
 
+        datos_modelo = {
+            'periodo': periodo,
+            'nif_empresa_desarrollo': nif_empresa_desarrollo,
+            'version': version,
+            'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
+            'nif_contribuyente': nif_contribuyente,
+            'iban': iban,
+            'base_imponible': base_imponible,
+            'gastos_bienes_servicios': gastos_bienes_servicios,
+            'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
+            'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
+            'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
+            'volumen_anual_operaciones': volumen_anual_operaciones
+        }
+
         with self.assertRaisesRegex(ValueError, "El NIF de la empresa de desarrollo debe ser de*"):
-            Modelo303(
-                periodo=periodo,
-                nif_empresa_desarrollo=nif_empresa_desarrollo,
-                version=version,
-                nombre_fiscal_contribuyente=nombre_fiscal_contribuyente,
-                nif_contribuyente=nif_contribuyente,
-                iban=iban,
-                base_imponible=base_imponible,
-                gastos_bienes_servicios=gastos_bienes_servicios,
-                iva_gastos_bienes_servicios=iva_gastos_bienes_servicios,
-                adquisiciones_bienes_inversion=adquisiciones_bienes_inversion,
-                iva_adquisiciones_bienes_inversion=iva_adquisiciones_bienes_inversion,
-                volumen_anual_operaciones=volumen_anual_operaciones
-            )
+            Modelo303(2023, datos_modelo)
 
     def test_generar_modelo_nif_contribuyente_largo(self):
         periodo = Periodo.P4T
@@ -211,21 +220,23 @@ class Modelo303TestCase(unittest.TestCase):
         iva_adquisiciones_bienes_inversion = 420.0
         volumen_anual_operaciones = 6000.00
 
+        datos_modelo = {
+            'periodo': periodo,
+            'nif_empresa_desarrollo': nif_empresa_desarrollo,
+            'version': version,
+            'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
+            'nif_contribuyente': nif_contribuyente,
+            'iban': iban,
+            'base_imponible': base_imponible,
+            'gastos_bienes_servicios': gastos_bienes_servicios,
+            'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
+            'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
+            'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
+            'volumen_anual_operaciones': volumen_anual_operaciones
+        }
+
         with self.assertRaisesRegex(ValueError, "El NIF del contribuyente debe ser de*"):
-            Modelo303(
-                periodo=periodo,
-                nif_empresa_desarrollo=nif_empresa_desarrollo,
-                version=version,
-                nombre_fiscal_contribuyente=nombre_fiscal_contribuyente,
-                nif_contribuyente=nif_contribuyente,
-                iban=iban,
-                base_imponible=base_imponible,
-                gastos_bienes_servicios=gastos_bienes_servicios,
-                iva_gastos_bienes_servicios=iva_gastos_bienes_servicios,
-                adquisiciones_bienes_inversion=adquisiciones_bienes_inversion,
-                iva_adquisiciones_bienes_inversion=iva_adquisiciones_bienes_inversion,
-                volumen_anual_operaciones=volumen_anual_operaciones
-            )
+            Modelo303(2023, datos_modelo)
 
     def test_generar_modelo_nif_contribuyente_corto(self):
         periodo = Periodo.P4T
@@ -241,21 +252,23 @@ class Modelo303TestCase(unittest.TestCase):
         iva_adquisiciones_bienes_inversion = 420.0
         volumen_anual_operaciones = 6000.00
 
+        datos_modelo = {
+            'periodo': periodo,
+            'nif_empresa_desarrollo': nif_empresa_desarrollo,
+            'version': version,
+            'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
+            'nif_contribuyente': nif_contribuyente,
+            'iban': iban,
+            'base_imponible': base_imponible,
+            'gastos_bienes_servicios': gastos_bienes_servicios,
+            'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
+            'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
+            'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
+            'volumen_anual_operaciones': volumen_anual_operaciones
+        }
+
         with self.assertRaisesRegex(ValueError, "El NIF del contribuyente debe ser de*"):
-            Modelo303(
-                periodo=periodo,
-                nif_empresa_desarrollo=nif_empresa_desarrollo,
-                version=version,
-                nombre_fiscal_contribuyente=nombre_fiscal_contribuyente,
-                nif_contribuyente=nif_contribuyente,
-                iban=iban,
-                base_imponible=base_imponible,
-                gastos_bienes_servicios=gastos_bienes_servicios,
-                iva_gastos_bienes_servicios=iva_gastos_bienes_servicios,
-                adquisiciones_bienes_inversion=adquisiciones_bienes_inversion,
-                iva_adquisiciones_bienes_inversion=iva_adquisiciones_bienes_inversion,
-                volumen_anual_operaciones=volumen_anual_operaciones
-            )
+            Modelo303(2023, datos_modelo)
 
     def test_generar_modelo_version_largo(self):
         periodo = Periodo.P4T
@@ -271,21 +284,23 @@ class Modelo303TestCase(unittest.TestCase):
         iva_adquisiciones_bienes_inversion = 420.0
         volumen_anual_operaciones = 6000.00
 
+        datos_modelo = {
+            'periodo': periodo,
+            'nif_empresa_desarrollo': nif_empresa_desarrollo,
+            'version': version,
+            'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
+            'nif_contribuyente': nif_contribuyente,
+            'iban': iban,
+            'base_imponible': base_imponible,
+            'gastos_bienes_servicios': gastos_bienes_servicios,
+            'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
+            'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
+            'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
+            'volumen_anual_operaciones': volumen_anual_operaciones
+        }
+
         with self.assertRaisesRegex(ValueError, "La versión no puede tener más de *"):
-            Modelo303(
-                periodo=periodo,
-                nif_empresa_desarrollo=nif_empresa_desarrollo,
-                version=version,
-                nombre_fiscal_contribuyente=nombre_fiscal_contribuyente,
-                nif_contribuyente=nif_contribuyente,
-                iban=iban,
-                base_imponible=base_imponible,
-                gastos_bienes_servicios=gastos_bienes_servicios,
-                iva_gastos_bienes_servicios=iva_gastos_bienes_servicios,
-                adquisiciones_bienes_inversion=adquisiciones_bienes_inversion,
-                iva_adquisiciones_bienes_inversion=iva_adquisiciones_bienes_inversion,
-                volumen_anual_operaciones=volumen_anual_operaciones
-            )
+            Modelo303(2023, datos_modelo)
 
     def test_generar_modelo_nombre_largo(self):
         periodo = Periodo.P4T
@@ -301,21 +316,23 @@ class Modelo303TestCase(unittest.TestCase):
         iva_adquisiciones_bienes_inversion = 420.0
         volumen_anual_operaciones = 6000.00
 
+        datos_modelo = {
+            'periodo': periodo,
+            'nif_empresa_desarrollo': nif_empresa_desarrollo,
+            'version': version,
+            'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
+            'nif_contribuyente': nif_contribuyente,
+            'iban': iban,
+            'base_imponible': base_imponible,
+            'gastos_bienes_servicios': gastos_bienes_servicios,
+            'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
+            'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
+            'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
+            'volumen_anual_operaciones': volumen_anual_operaciones
+        }
+
         with self.assertRaisesRegex(ValueError, "El nombre o razón social del contribuyente no puede tener más de*"):
-            Modelo303(
-                periodo=periodo,
-                nif_empresa_desarrollo=nif_empresa_desarrollo,
-                version=version,
-                nombre_fiscal_contribuyente=nombre_fiscal_contribuyente,
-                nif_contribuyente=nif_contribuyente,
-                iban=iban,
-                base_imponible=base_imponible,
-                gastos_bienes_servicios=gastos_bienes_servicios,
-                iva_gastos_bienes_servicios=iva_gastos_bienes_servicios,
-                adquisiciones_bienes_inversion=adquisiciones_bienes_inversion,
-                iva_adquisiciones_bienes_inversion=iva_adquisiciones_bienes_inversion,
-                volumen_anual_operaciones=volumen_anual_operaciones
-            )
+            Modelo303(2023, datos_modelo)
 
     def test_generar_modelo_iban_largo(self):
         periodo = Periodo.P4T
@@ -331,21 +348,23 @@ class Modelo303TestCase(unittest.TestCase):
         iva_adquisiciones_bienes_inversion = 420.0
         volumen_anual_operaciones = 6000.00
 
+        datos_modelo = {
+            'periodo': periodo,
+            'nif_empresa_desarrollo': nif_empresa_desarrollo,
+            'version': version,
+            'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
+            'nif_contribuyente': nif_contribuyente,
+            'iban': iban,
+            'base_imponible': base_imponible,
+            'gastos_bienes_servicios': gastos_bienes_servicios,
+            'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
+            'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
+            'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
+            'volumen_anual_operaciones': volumen_anual_operaciones
+        }
+
         with self.assertRaisesRegex(ValueError, "El IBAN no puede tener más de*"):
-            Modelo303(
-                periodo=periodo,
-                nif_empresa_desarrollo=nif_empresa_desarrollo,
-                version=version,
-                nombre_fiscal_contribuyente=nombre_fiscal_contribuyente,
-                nif_contribuyente=nif_contribuyente,
-                iban=iban,
-                base_imponible=base_imponible,
-                gastos_bienes_servicios=gastos_bienes_servicios,
-                iva_gastos_bienes_servicios=iva_gastos_bienes_servicios,
-                adquisiciones_bienes_inversion=adquisiciones_bienes_inversion,
-                iva_adquisiciones_bienes_inversion=iva_adquisiciones_bienes_inversion,
-                volumen_anual_operaciones=volumen_anual_operaciones
-            )
+            Modelo303(2023, datos_modelo)
 
     def test_generar_modelo_sin_iban(self):
         expected_result = "<T303020231T0000><AUX>                                                                      v1.0    12345678X                                                                                                                                                                                                                     </AUX><T30301000> I12345678EDE LOS PALOTES PERICO                                                           20231T22322222200000000 20000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000005000000000000000000000000000000000000010000000000000000000000000000000200000021000000000000004200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001750000000000000000000000000000000000000000000000000000000000000000000000000001400000000000000000000000000000000000005200000000000000000000000000000000000000000000000000000000000000004200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </T30301000><T30303000>0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000420001000000000000000042000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042000000000000000000000000000000000000000000000000042000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       </T30303000><T303DID00>                                                                                                                                                                                      0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </T303DID00></T303020231T0000>"
@@ -361,19 +380,21 @@ class Modelo303TestCase(unittest.TestCase):
         iva_adquisiciones_bienes_inversion = 0.0
         volumen_anual_operaciones = None
 
-        datos_modelo = Modelo303(
-            periodo=periodo,
-            nif_empresa_desarrollo=nif_empresa_desarrollo,
-            version=version,
-            nombre_fiscal_contribuyente=nombre_fiscal_contribuyente,
-            nif_contribuyente=nif_contribuyente,
-            base_imponible=base_imponible,
-            gastos_bienes_servicios=gastos_bienes_servicios,
-            iva_gastos_bienes_servicios=iva_gastos_bienes_servicios,
-            adquisiciones_bienes_inversion=adquisiciones_bienes_inversion,
-            iva_adquisiciones_bienes_inversion=iva_adquisiciones_bienes_inversion,
-            volumen_anual_operaciones=volumen_anual_operaciones
-        )
+        datos_modelo = {
+            'periodo': periodo,
+            'nif_empresa_desarrollo': nif_empresa_desarrollo,
+            'version': version,
+            'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
+            'nif_contribuyente': nif_contribuyente,
+            'base_imponible': base_imponible,
+            'gastos_bienes_servicios': gastos_bienes_servicios,
+            'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
+            'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
+            'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
+            'volumen_anual_operaciones': volumen_anual_operaciones
+        }
+
+        datos_modelo = Modelo303(2023, datos_modelo)
 
         datos_fichero = datos_modelo.generar()
         self.assertEquals(datos_fichero, expected_result)
