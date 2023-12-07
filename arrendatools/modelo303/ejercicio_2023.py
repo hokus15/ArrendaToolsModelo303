@@ -1,8 +1,9 @@
 from arrendatools.modelo303.periodos import Periodo
+from arrendatools.modelo303.ejercicio import Ejercicio
 
 
-class Modelo303:
-    """Clase que contiene los datos necesarios para generar el modelo 303 trimestral para arrendadores con IVA.
+class Ejercicio2023(Ejercicio):
+    """Clase que contiene los datos necesarios para generar el modelo 303 trimestral para arrendadores con IVA para el ejercicio 2023.
 
     Attributes:
         periodo (string): Periodo de la declaración Datos validos: (1T, 2T, 3T o 4T)
@@ -69,68 +70,55 @@ class Modelo303:
     _NO = "2"
     _NO_SOLO_RG = "3"
 
-    def __init__(
-        self,
-        periodo,                                 # Periodo de la declaración Datos validos: (1T, 2T, 3T o 4T)
-        nif_empresa_desarrollo,                  # NIF de la empresa de desarrollo. A cumplimentar por las entidades desarrolladoras (EEDD). Máximo 9 caracteres.
-        version,                                 # Versión del programa: Debe consignarse el identificador de la versión del SW desarrollado por la ED. Máximo 4 caracteres.
-        nombre_fiscal_contribuyente,             # Apellidos y nombre o Razón social del contribuyente. Máximo 80 caracteres.
-        nif_contribuyente,                       # NIF contribuyente. Máximo 9 caracteres.
-        base_imponible,                          # Importe trimestral del alquiler sin computar el IVA. Tenga en cuenta que la base imponible del IVA en el arrendamiento de un local de negocio está constituida por el importe total de la contraprestación, incluyendo no solo el importe de la renta, sino también las cantidades asimiladas que el arrendador pueda exigir al arrendatario o inquilino. Por ejemplo, los gastos de comunidad, el IBI, los gastos de suministros (calefacción, agua, luz), las reparaciones y otros conceptos análogos. En ocasiones, estos gastos son facturados al arrendador y posteriormente el arrendador los repercute al arrendatario. No se solicitan las cuotas de IVA puesto que se calculan aplicando sobre la base consignada el 21 por 100. Tenga en cuenta que deberá declarar las cuotas de arrendamiento exigibles, hayan sido cobradas o no. En caso de impago podrá recuperar el IVA ingresado cuando se cumplan los requisitos previstos en el artículo 80.Tres o Cuatro, consignando las casillas "Modificación bases y cuotas" (casillas 14 y 15).
-        iban="",                                 # IBAN donde domiciliar el pago/devolucion.
-        gastos_bienes_servicios=0.0,             # Base imponible trimestral de los gastos en bienes y servicios corrientes.
-        iva_gastos_bienes_servicios=0.0,         # IVA trimestral soportado deducible de los gastos en bienes y servicios corrientes. Para ser deducible el IVA soportado debe disponer de factura completa emitida a nombre del arrendador. Podrá incluir, entre otras, las cuotas soportadas por suministros, reparaciones y obras de mejora, servicios profesionales independientes (abogados, asesoría, notaría, API) y servicios exteriores (publicidad, limpieza, vigilancia). No son deducibles, ni siquiera parcialmente, las cuotas soportadas en bienes y servicios que se utilicen simultáneamente para esta actividad y para necesidades privadas cuando el precio de adquisición sea inferior a 3.005,06 euros (ordenadores, móviles...). Tampoco son deducibles los gastos en los que no se soporte el impuesto (intereses de préstamo, seguros, IBI o la amortización del inmueble).
-        adquisiciones_bienes_inversion=0.0,      # Base imponible trimestral de las adquisiciones de bienes de inversión.
-        iva_adquisiciones_bienes_inversion=0.0,  # IVA trimestral soportado deducible de las adquisiciones de bienes de inversión. Podrá deducir el importe de las cuotas soportadas por la adquisición de bienes de inversión (cuantía superior a 3.005,06 euros) que se utilicen en la actividad de arrendamiento, como el mobiliario. Asimismo, el IVA soportado en la construcción o adquisición del inmueble, las obras de reforma o mejoras. En el caso de que la afectación a la actividad sea parcial, deberá calcularse la parte afecta.
-        volumen_anual_operaciones=None           # Volumen anual de operaciones. Sólo necesario para 4T.
-    ):
+    def __init__(self, ejercicio, data):
+
         # Validación de los datos
-        if not [periodo, nif_empresa_desarrollo, version, nombre_fiscal_contribuyente, nif_contribuyente, base_imponible]:
+        if not [data['periodo'], data['nif_empresa_desarrollo'], data['version'], data['nombre_fiscal_contribuyente'], data['nif_contribuyente'], data['base_imponible']]:
             raise ValueError("periodo, nif_empresa_desarrollo, version, nombre_fiscal_contribuyente, nif_contribuyente, base_imponible son campos obligatorios")
-        if len(nif_empresa_desarrollo) != Modelo303._LONGITUD_NIF:
-            raise ValueError(f"El NIF de la empresa de desarrollo debe ser de {Modelo303._LONGITUD_NIF} caracteres")
-        if len(version) > Modelo303._MAX_LONGITUD_VERSION:
-            raise ValueError(f"La versión no puede tener más de {Modelo303._MAX_LONGITUD_VERSION} caracteres")
-        if len(nombre_fiscal_contribuyente) > Modelo303._MAX_LONGITUD_NOMBRE_FISCAL_CONTRIBUYENTE:
-            raise ValueError(f"El nombre o razón social del contribuyente no puede tener más de {Modelo303._MAX_LONGITUD_NOMBRE_FISCAL_CONTRIBUYENTE} caracteres")
-        if len(nif_contribuyente) != Modelo303._LONGITUD_NIF:
-            raise ValueError(f"El NIF del contribuyente debe ser de {Modelo303._LONGITUD_NIF} caracteres")
-        if (periodo == Periodo.P4T and volumen_anual_operaciones is None):
+        if len(data['nif_empresa_desarrollo']) != Ejercicio2023._LONGITUD_NIF:
+            raise ValueError(f"El NIF de la empresa de desarrollo debe ser de {Ejercicio2023._LONGITUD_NIF} caracteres")
+        if len(data['version']) > Ejercicio2023._MAX_LONGITUD_VERSION:
+            raise ValueError(f"La versión no puede tener más de {Ejercicio2023._MAX_LONGITUD_VERSION} caracteres")
+        if len(data['nombre_fiscal_contribuyente']) > Ejercicio2023._MAX_LONGITUD_NOMBRE_FISCAL_CONTRIBUYENTE:
+            raise ValueError(f"El nombre o razón social del contribuyente no puede tener más de {Ejercicio2023._MAX_LONGITUD_NOMBRE_FISCAL_CONTRIBUYENTE} caracteres")
+        if len(data['nif_contribuyente']) != Ejercicio2023._LONGITUD_NIF:
+            raise ValueError(f"El NIF del contribuyente debe ser de {Ejercicio2023._LONGITUD_NIF} caracteres")
+        if (data['periodo'] == Periodo.P4T and data['volumen_anual_operaciones'] is None):
             raise ValueError("El volumen anual de operaciones es obligatorio en el 4º trimestre (4T)")
 
         # Campos obligatorios
-        self.ejercicio = self._EJERCICIO
-        self.periodo = periodo.value
-        self.nif_empresa_desarrollo = nif_empresa_desarrollo.upper()
-        self.version = version
-        self.nombre_fiscal = nombre_fiscal_contribuyente.upper()
-        self.nif_contribuyente = nif_contribuyente.upper()
-        self.base_imponible = base_imponible
+        self.ejercicio = str(ejercicio)                                         # Ejercicio 2023
+        self.periodo = data['periodo'].value                                    # Periodo de la declaración Datos validos: (1T, 2T, 3T o 4T)
+        self.nif_empresa_desarrollo = data['nif_empresa_desarrollo'].upper()    # NIF de la empresa de desarrollo. A cumplimentar por las entidades desarrolladoras (EEDD). Máximo 9 caracteres.
+        self.version = data['version']                                          # Versión del programa: Debe consignarse el identificador de la versión del SW desarrollado por la ED. Máximo 4 caracteres.
+        self.nombre_fiscal = data['nombre_fiscal_contribuyente'].upper()        # Apellidos y nombre o Razón social del contribuyente. Máximo 80 caracteres.
+        self.nif_contribuyente = data['nif_contribuyente'].upper()              # NIF contribuyente. Máximo 9 caracteres.
+        self.base_imponible = data['base_imponible']                            # Importe trimestral del alquiler sin computar el IVA. Tenga en cuenta que la base imponible del IVA en el arrendamiento de un local de negocio está constituida por el importe total de la contraprestación, incluyendo no solo el importe de la renta, sino también las cantidades asimiladas que el arrendador pueda exigir al arrendatario o inquilino. Por ejemplo, los gastos de comunidad, el IBI, los gastos de suministros (calefacción, agua, luz), las reparaciones y otros conceptos análogos. En ocasiones, estos gastos son facturados al arrendador y posteriormente el arrendador los repercute al arrendatario. No se solicitan las cuotas de IVA puesto que se calculan aplicando sobre la base consignada el 21 por 100. Tenga en cuenta que deberá declarar las cuotas de arrendamiento exigibles, hayan sido cobradas o no. En caso de impago podrá recuperar el IVA ingresado cuando se cumplan los requisitos previstos en el artículo 80.Tres o Cuatro, consignando las casillas "Modificación bases y cuotas" (casillas 14 y 15).
         # Validación campos opcionales
-        if iban is None:
-            iban = ""
+        if 'iban' not in data or data['iban'] is None:
+            data['iban'] = ""
 
-        if gastos_bienes_servicios is None:
-            gastos_bienes_servicios = 0.0
+        if 'gastos_bienes_servicios' not in data or data['gastos_bienes_servicios'] is None:
+            data['gastos_bienes_servicios'] = 0.0
 
-        if iva_gastos_bienes_servicios is None:
-            iva_gastos_bienes_servicios = 0.0
+        if 'iva_gastos_bienes_servicios' not in data or data['iva_gastos_bienes_servicios'] is None:
+            data['iva_gastos_bienes_servicios'] = 0.0
 
-        if adquisiciones_bienes_inversion is None:
-            adquisiciones_bienes_inversion = 0.0
+        if 'adquisiciones_bienes_inversion' not in data or data['adquisiciones_bienes_inversion'] is None:
+            data['adquisiciones_bienes_inversion'] = 0.0
 
-        if iva_adquisiciones_bienes_inversion is None:
-            iva_adquisiciones_bienes_inversion = 0.0
+        if 'iva_adquisiciones_bienes_inversion' not in data or data['iva_adquisiciones_bienes_inversion'] is None:
+            data['iva_adquisiciones_bienes_inversion'] = 0.0
 
         # Asignamos los campos opcionales
-        self.iban = iban.upper()
-        if len(iban) > Modelo303._MAX_LONGITUD_IBAN:
-            raise ValueError(f"El IBAN no puede tener más de {Modelo303._MAX_LONGITUD_IBAN} caracteres")
-        self.gastos_bienes_servicios = gastos_bienes_servicios
-        self.iva_gastos_bienes_servicios = iva_gastos_bienes_servicios
-        self.adquisiciones_bienes_inversion = adquisiciones_bienes_inversion
-        self.iva_adquisiciones_bienes_inversion = iva_adquisiciones_bienes_inversion
-        self.volumen_anual_operaciones = volumen_anual_operaciones
+        self.iban = data['iban'].upper()                                                        # IBAN donde domiciliar el pago/devolucion.
+        if len(data['iban']) > Ejercicio2023._MAX_LONGITUD_IBAN:
+            raise ValueError(f"El IBAN no puede tener más de {Ejercicio2023._MAX_LONGITUD_IBAN} caracteres")
+        self.gastos_bienes_servicios = data['gastos_bienes_servicios']                          # Base imponible trimestral de los gastos en bienes y servicios corrientes.
+        self.iva_gastos_bienes_servicios = data['iva_gastos_bienes_servicios']                  # IVA trimestral soportado deducible de los gastos en bienes y servicios corrientes. Para ser deducible el IVA soportado debe disponer de factura completa emitida a nombre del arrendador. Podrá incluir, entre otras, las cuotas soportadas por suministros, reparaciones y obras de mejora, servicios profesionales independientes (abogados, asesoría, notaría, API) y servicios exteriores (publicidad, limpieza, vigilancia). No son deducibles, ni siquiera parcialmente, las cuotas soportadas en bienes y servicios que se utilicen simultáneamente para esta actividad y para necesidades privadas cuando el precio de adquisición sea inferior a 3.005,06 euros (ordenadores, móviles...). Tampoco son deducibles los gastos en los que no se soporte el impuesto (intereses de préstamo, seguros, IBI o la amortización del inmueble).
+        self.adquisiciones_bienes_inversion = data['adquisiciones_bienes_inversion']            # Base imponible trimestral de las adquisiciones de bienes de inversión.
+        self.iva_adquisiciones_bienes_inversion = data['iva_adquisiciones_bienes_inversion']    # IVA trimestral soportado deducible de las adquisiciones de bienes de inversión. Podrá deducir el importe de las cuotas soportadas por la adquisición de bienes de inversión (cuantía superior a 3.005,06 euros) que se utilicen en la actividad de arrendamiento, como el mobiliario. Asimismo, el IVA soportado en la construcción o adquisición del inmueble, las obras de reforma o mejoras. En el caso de que la afectación a la actividad sea parcial, deberá calcularse la parte afecta.
+        self.volumen_anual_operaciones = data['volumen_anual_operaciones']                      # Volumen anual de operaciones. Sólo necesario para 4T.
 
     def generar(self):
         """
