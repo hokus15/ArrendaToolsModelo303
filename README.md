@@ -52,7 +52,7 @@ Para crear un objeto Modelo303, se deben proporcionar los datos necesarios para 
 A continuación se muestra un ejemplo de cómo crear un objeto Modelo303 y generar un archivo con los datos del modelo:
 
 ```python
-from arrendatools.modelo303.modelo303 import Modelo303
+from arrendatools.modelo303.modelo import Modelo303
 from arrendatools.modelo303.periodos import Periodo
 
 periodo = Periodo.P1T
