@@ -219,6 +219,10 @@ class Ejercicio2023(Ejercicio):
         """
         Genera los datos de la seccion DP30302 del modelo 303. En el caso de arrendadores con IVA esta sección no se tiene que rellenar.
         """
+        # Actualización 14/12/2023
+        # Para el periodo 4T se añaden campos para la información de "Días" correspondiente al módulo "Superficie del horno"
+        # de los siguientes epígrafes: 419.1, 419.2, 644.1, 644.2 y 644.3.
+        # Para facilitar la compatibilidad con los ficheros generados/presentados anteriormente se permitirá que dichos campos vengan cumplimentados a blancos sin dar error por ello.
 
         return ""
 

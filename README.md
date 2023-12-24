@@ -55,6 +55,7 @@ A continuación se muestra un ejemplo de cómo crear un objeto Modelo303 y gener
 from arrendatools.modelo303.modelo import Modelo303
 from arrendatools.modelo303.periodos import Periodo
 
+ejercicio = 2023
 periodo = Periodo.P1T
 nif_empresa_desarrollo = "12345678X"
 version = "v1.0"
@@ -83,11 +84,11 @@ datos_modelo = {
     'volumen_anual_operaciones': volumen_anual_operaciones
 }
 
-modelo = Modelo303(2023, datos_modelo)
+modelo = Modelo303(ejercicio, datos_modelo)
 datos_fichero = modelo.generar()
 print(datos_fichero)
 
-with open(f"{nif_contribuyente}_2023_{periodo.value}.303", "w") as archivo:
+with open(f"{nif_contribuyente}_{ejercicio}_{periodo.value}.303", "w") as archivo:
     archivo.write(datos_fichero)
 ```
 
