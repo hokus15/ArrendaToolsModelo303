@@ -2,6 +2,43 @@
 
 
 
+## v2024.0.0 (2024-02-02)
+
+### Breaking
+
+* feat(new-year-model): add support for year 2024
+
+BREAKING CHANGE: ([`fdeef6e`](https://github.com/hokus15/ArrendaToolsModelo303/commit/fdeef6e58e3ef433bec9ad66a92f932182ec5e5f))
+
+### Build
+
+* build(deps): bump python-semantic-release/python-semantic-release
+
+Bumps [python-semantic-release/python-semantic-release](https://github.com/python-semantic-release/python-semantic-release) from 8.5.2 to 8.7.2.
+- [Release notes](https://github.com/python-semantic-release/python-semantic-release/releases)
+- [Changelog](https://github.com/python-semantic-release/python-semantic-release/blob/master/CHANGELOG.md)
+- [Commits](https://github.com/python-semantic-release/python-semantic-release/compare/v8.5.2...v8.7.2)
+
+---
+updated-dependencies:
+- dependency-name: python-semantic-release/python-semantic-release
+  dependency-type: direct:production
+  update-type: version-update:semver-minor
+...
+
+Signed-off-by: dependabot[bot] &lt;support@github.com&gt; ([`c86574e`](https://github.com/hokus15/ArrendaToolsModelo303/commit/c86574e2c2526f8e7213fc54b59cf71bb7423b33))
+
+### Unknown
+
+* Merge pull request #13 from hokus15/devel
+
+feat(new-year-model): add support for year 2024 ([`8f1cf35`](https://github.com/hokus15/ArrendaToolsModelo303/commit/8f1cf3572a0702585949514aba892f58bd674497))
+
+* Merge pull request #12 from hokus15/dependabot/github_actions/python-semantic-release/python-semantic-release-8.7.2
+
+build(deps): bump python-semantic-release/python-semantic-release from 8.5.2 to 8.7.2 ([`e9f6a29`](https://github.com/hokus15/ArrendaToolsModelo303/commit/e9f6a2970a3c3c732d7bdf669a642ac0dc0cef66))
+
+
 ## v2023.2.0 (2023-12-24)
 
 ### Build
