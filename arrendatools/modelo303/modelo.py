@@ -33,7 +33,7 @@ class Modelo303:
         volumen_anual_operaciones (float): Volumen anual de operaciones. Sólo necesario para 4T.
     """
     _EJERCICIO_MIN = 2023
-    _EJERCICIO_MAX = 2023
+    _EJERCICIO_MAX = 2024
 
     def __init__(
         self,
