@@ -1,16 +1,19 @@
 from importlib import import_module
 
 
-def _load_class(module_class):
-    qname = module_class.split('.')
-    length = len(qname)
-    clazz = qname[length - 1]
-    module = ""
-    for i in range(length - 1):
-        module += qname[i] + "."
+def _load_class(module_class, safe_modules):
+    if module_class in safe_modules:
+        qname = module_class.split('.')
+        length = len(qname)
+        clazz = qname[length - 1]
+        module = ""
+        for i in range(length - 1):
+            module += qname[i] + "."
 
-    module = module.rstrip('.')
-    return getattr(import_module(module), clazz)
+        module = module.rstrip('.')
+        return getattr(import_module(module), clazz)
+    else:
+        raise ImportError("Module not in whitelist")
 
 
 class Modelo303:
@@ -34,6 +37,7 @@ class Modelo303:
     """
     _EJERCICIO_MIN = 2023
     _EJERCICIO_MAX = 2024
+    _SAFE_MODULES = [f"arrendatools.modelo303.ejercicio_{ejercicio}.Ejercicio{ejercicio}" for ejercicio in range(_EJERCICIO_MIN, _EJERCICIO_MAX + 1)]
 
     def __init__(
         self,
@@ -44,7 +48,7 @@ class Modelo303:
         if not self._EJERCICIO_MIN <= ejercicio <= self._EJERCICIO_MAX:
             raise ValueError(f"El ejercicio ha de ser un año entre {Modelo303._EJERCICIO_MIN} y {Modelo303._EJERCICIO_MAX}")
 
-        Ejercicio = _load_class(f"arrendatools.modelo303.ejercicio_{ejercicio}.Ejercicio{ejercicio}")
+        Ejercicio = _load_class(f"arrendatools.modelo303.ejercicio_{ejercicio}.Ejercicio{ejercicio}", self._SAFE_MODULES)
         # Instanciar la clase del ejercicio correspondiente
         self.generador = Ejercicio(ejercicio, data)
 
