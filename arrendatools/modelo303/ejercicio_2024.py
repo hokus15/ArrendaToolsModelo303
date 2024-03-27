@@ -302,6 +302,7 @@ class Ejercicio2024(Ejercicio):
         """
         Genera los datos de la seccion DP30302 del modelo 303. En el caso de arrendadores con IVA esta sección no se tiene que rellenar.
         """
+        # Los cambios del 27/03/2024 sólo aplican a esta página por lo que no se requiere ningún cambio adicional.
 
         return ""
 
