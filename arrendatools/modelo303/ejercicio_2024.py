@@ -461,7 +461,8 @@ class Ejercicio2024(Ejercicio):
         datos += self._RESERVADO_ADMON_13_ESPACIOS
         # Rectificativa - Como consecuencia de la presentación de la autoliquidación rectificativa solicito dar de baja/modificar la domiciliación efectuada
         datos += "".ljust(1, " ")
-        # Rectificativa - Exclusivamente para determinados supuestos de autoliquidación rectificativa por discrepancia de criterio administrativo que no deban incluirse en otras casillas. Otros ajustes [108]
+        # Rectificativa - Exclusivamente para determinados supuestos de autoliquidación rectificativa por discrepancia de criterio administrativo
+        # que no deban incluirse en otras casillas. Otros ajustes [108]
         datos += self._convertir_a_centimos_str(0.0)
         # Rectificativa - Rectificación - Importe [111]
         datos += self._convertir_a_centimos_str(0.0)
