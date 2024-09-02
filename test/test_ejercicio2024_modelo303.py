@@ -6,8 +6,8 @@ from arrendatools.modelo303.periodos import Periodo
 class Modelo303Ejercicio2024TestCase(unittest.TestCase):
 
     def test_generar_modelo_123T_cuota_positiva(self):
-        expected_result = "<T303020241T0000><AUX>                                                                      v1.0    12345678X                                                                                                                                                                                                                     </AUX><T30301000> U12345678EDE LOS PALOTES PERICO                                                           20241T22322222200000000 20000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000005000000000000000000000000000000000000010000000000000000000000000000000200000021000000000000004200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001750000000000000000000000000000000000000000000000000000000000000000000000000001400000000000000000000000000000000000005200000000000000000000000000000000000000000000000000000000000000004200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </T30301000><T30303000>0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000420001000000000000000042000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042000000000000000000000000000000000000000000000000042000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       </T30303000><T303DID00>           ES0012341234123412341234                                                                                                                                                   0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </T303DID00></T303020241T0000>"
-        periodo = Periodo.P1T
+        expected_result = "<T303020243T0000><AUX>                                                                      v1.0    12345678X                                                                                                                                                                                                                     </AUX><T30301000> U12345678EDE LOS PALOTES PERICO                                                           20243T22322222200000000 20000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000005000000000000000000000000000000000000010000000000000000000000000000000200000021000000000000004200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001750000000000000000000000000000000000000000000000000000000000000000000000000001400000000000000000000000000000000000005200000000000000000000000000000000000000000000000000000000000000004200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042000000000000000000000000000000000000000000000000000000000000000000000000000000000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       </T30301000><T30303000>0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000420001000000000000000042000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042000000000000000000000000000000000000000000000000042000                0000000000000000000000000000000000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </T30303000><T303DID00>           ES0012341234123412341234                                                                                                                                                   0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </T303DID00></T303020243T0000>"
+        periodo = Periodo.P3T
         nif_empresa_desarrollo = "12345678X"
         version = "v1.0"
         nombre_fiscal_contribuyente = "DE LOS PALOTES PERICO"
@@ -21,18 +21,18 @@ class Modelo303Ejercicio2024TestCase(unittest.TestCase):
         volumen_anual_operaciones = None
 
         datos_modelo = {
-            'periodo': periodo,
-            'nif_empresa_desarrollo': nif_empresa_desarrollo,
-            'version': version,
-            'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
-            'nif_contribuyente': nif_contribuyente,
-            'iban': iban,
-            'base_imponible': base_imponible,
-            'gastos_bienes_servicios': gastos_bienes_servicios,
-            'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
-            'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
-            'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
-            'volumen_anual_operaciones': volumen_anual_operaciones
+            "periodo": periodo,
+            "nif_empresa_desarrollo": nif_empresa_desarrollo,
+            "version": version,
+            "nombre_fiscal_contribuyente": nombre_fiscal_contribuyente,
+            "nif_contribuyente": nif_contribuyente,
+            "iban": iban,
+            "base_imponible": base_imponible,
+            "gastos_bienes_servicios": gastos_bienes_servicios,
+            "iva_gastos_bienes_servicios": iva_gastos_bienes_servicios,
+            "adquisiciones_bienes_inversion": adquisiciones_bienes_inversion,
+            "iva_adquisiciones_bienes_inversion": iva_adquisiciones_bienes_inversion,
+            "volumen_anual_operaciones": volumen_anual_operaciones,
         }
 
         modelo = Modelo303(2024, datos_modelo)
@@ -40,8 +40,8 @@ class Modelo303Ejercicio2024TestCase(unittest.TestCase):
         self.assertEqual(datos_fichero, expected_result)
 
     def test_generar_modelo_123T_cuota_negativa(self):
-        expected_result = "<T303020241T0000><AUX>                                                                      v1.0    12345678X                                                                                                                                                                                                                     </AUX><T30301000> C12345678EDE LOS PALOTES PERICO                                                           20241T22322222200000000 200000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000050000000000000000000000000000000000000100000000000000000000000000000002000000210000000000000042000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000017500000000000000000000000000000000000000000000000000000000000000000000000000014000000000000000000000000000000000000052000000000000000000000000000000000000000000000000000000000000000042000000000000002500000000000000005250000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000052500N0000000000010500                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </T30301000><T30303000>0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000N000000000001050010000N00000000000105000000000000000000000000000000000000000000000000000000000000000000000000000000000000000N00000000000105000000000000000000000000000000000000N0000000000010500                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       </T30303000><T303DID00>                                                                                                                                                                                      0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </T303DID00></T303020241T0000>"
-        periodo = Periodo.P1T
+        expected_result = "<T303020243T0000><AUX>                                                                      v1.0    12345678X                                                                                                                                                                                                                     </AUX><T30301000> C12345678EDE LOS PALOTES PERICO                                                           20243T22322222200000000 200000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000050000000000000000000000000000000000000100000000000000000000000000000002000000210000000000000042000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000017500000000000000000000000000000000000000000000000000000000000000000000000000014000000000000000000000000000000000000052000000000000000000000000000000000000000000000000000000000000000042000000000000002500000000000000005250000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000052500N0000000000010500000000000000000000000000000000000000000000000000000000000000000000000000000000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       </T30301000><T30303000>0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000N000000000001050010000N00000000000105000000000000000000000000000000000000000000000000000000000000000000000000000000000000000N00000000000105000000000000000000000000000000000000N0000000000010500                0000000000000000000000000000000000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </T30303000><T303DID00>                                                                                                                                                                                      0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </T303DID00></T303020243T0000>"
+        periodo = Periodo.P3T
         nif_empresa_desarrollo = "12345678X"
         version = "v1.0"
         nombre_fiscal_contribuyente = "DE LOS PALOTES PERICO"
@@ -55,18 +55,18 @@ class Modelo303Ejercicio2024TestCase(unittest.TestCase):
         volumen_anual_operaciones = None
 
         datos_modelo = {
-            'periodo': periodo,
-            'nif_empresa_desarrollo': nif_empresa_desarrollo,
-            'version': version,
-            'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
-            'nif_contribuyente': nif_contribuyente,
-            'iban': iban,
-            'base_imponible': base_imponible,
-            'gastos_bienes_servicios': gastos_bienes_servicios,
-            'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
-            'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
-            'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
-            'volumen_anual_operaciones': volumen_anual_operaciones
+            "periodo": periodo,
+            "nif_empresa_desarrollo": nif_empresa_desarrollo,
+            "version": version,
+            "nombre_fiscal_contribuyente": nombre_fiscal_contribuyente,
+            "nif_contribuyente": nif_contribuyente,
+            "iban": iban,
+            "base_imponible": base_imponible,
+            "gastos_bienes_servicios": gastos_bienes_servicios,
+            "iva_gastos_bienes_servicios": iva_gastos_bienes_servicios,
+            "adquisiciones_bienes_inversion": adquisiciones_bienes_inversion,
+            "iva_adquisiciones_bienes_inversion": iva_adquisiciones_bienes_inversion,
+            "volumen_anual_operaciones": volumen_anual_operaciones,
         }
 
         modelo = Modelo303(2024, datos_modelo)
@@ -74,7 +74,7 @@ class Modelo303Ejercicio2024TestCase(unittest.TestCase):
         self.assertEqual(datos_fichero, expected_result)
 
     def test_generar_modelo_4T_cuota_positiva(self):
-        expected_result = "<T303020244T0000><AUX>                                                                      v1.0    12345678X                                                                                                                                                                                                                     </AUX><T30301000> U12345678EDE LOS PALOTES PERICO                                                           20244T22322222200000000 21100000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000005000000000000000000000000000000000000010000000000000000000000000000000200000021000000000000004200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001750000000000000000000000000000000000000000000000000000000000000000000000000001400000000000000000000000000000000000005200000000000000000000000000000000000000000000000000000000000000004200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </T30301000><T30303000>0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000420001000000000000000042000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042000000000000000000000000000000000000000000000000042000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       </T30303000><T30304000> A018612                                    0000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </T30304000><T30305000>    0000000000000000000000000000000000 00000   0000000000000000000000000000000000 00000   0000000000000000000000000000000000 00000   0000000000000000000000000000000000 00000   0000000000000000000000000000000000 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </T30305000><T303DID00>           ES0012341234123412341234                                                                                                                                                   0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </T303DID00></T303020244T0000>"
+        expected_result = "<T303020244T0000><AUX>                                                                      v1.0    12345678X                                                                                                                                                                                                                     </AUX><T30301000> U12345678EDE LOS PALOTES PERICO                                                           20244T22322222200000000 21100000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000005000000000000000000000000000000000000010000000000000000000000000000000200000021000000000000004200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001750000000000000000000000000000000000000000000000000000000000000000000000000001400000000000000000000000000000000000005200000000000000000000000000000000000000000000000000000000000000004200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042000000000000000000000000000000000000000000000000000000000000000000000000000000000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       </T30301000><T30303000>0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000420001000000000000000042000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042000000000000000000000000000000000000000000000000042000                0000000000000000000000000000000000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </T30303000><T30304000> A018612                                    0000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </T30304000><T30305000>    0000000000000000000000000000000000 00000   0000000000000000000000000000000000 00000   0000000000000000000000000000000000 00000   0000000000000000000000000000000000 00000   0000000000000000000000000000000000 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </T30305000><T303DID00>           ES0012341234123412341234                                                                                                                                                   0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </T303DID00></T303020244T0000>"
         periodo = Periodo.P4T
         nif_empresa_desarrollo = "12345678X"
         version = "v1.0"
@@ -89,18 +89,18 @@ class Modelo303Ejercicio2024TestCase(unittest.TestCase):
         volumen_anual_operaciones = 6000.0
 
         datos_modelo = {
-            'periodo': periodo,
-            'nif_empresa_desarrollo': nif_empresa_desarrollo,
-            'version': version,
-            'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
-            'nif_contribuyente': nif_contribuyente,
-            'iban': iban,
-            'base_imponible': base_imponible,
-            'gastos_bienes_servicios': gastos_bienes_servicios,
-            'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
-            'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
-            'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
-            'volumen_anual_operaciones': volumen_anual_operaciones
+            "periodo": periodo,
+            "nif_empresa_desarrollo": nif_empresa_desarrollo,
+            "version": version,
+            "nombre_fiscal_contribuyente": nombre_fiscal_contribuyente,
+            "nif_contribuyente": nif_contribuyente,
+            "iban": iban,
+            "base_imponible": base_imponible,
+            "gastos_bienes_servicios": gastos_bienes_servicios,
+            "iva_gastos_bienes_servicios": iva_gastos_bienes_servicios,
+            "adquisiciones_bienes_inversion": adquisiciones_bienes_inversion,
+            "iva_adquisiciones_bienes_inversion": iva_adquisiciones_bienes_inversion,
+            "volumen_anual_operaciones": volumen_anual_operaciones,
         }
 
         modelo = Modelo303(2024, datos_modelo)
@@ -125,21 +125,24 @@ class Modelo303Ejercicio2024TestCase(unittest.TestCase):
         volumen_anual_operaciones = None
 
         datos_modelo = {
-            'periodo': periodo,
-            'nif_empresa_desarrollo': nif_empresa_desarrollo,
-            'version': version,
-            'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
-            'nif_contribuyente': nif_contribuyente,
-            'iban': iban,
-            'base_imponible': base_imponible,
-            'gastos_bienes_servicios': gastos_bienes_servicios,
-            'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
-            'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
-            'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
-            'volumen_anual_operaciones': volumen_anual_operaciones
+            "periodo": periodo,
+            "nif_empresa_desarrollo": nif_empresa_desarrollo,
+            "version": version,
+            "nombre_fiscal_contribuyente": nombre_fiscal_contribuyente,
+            "nif_contribuyente": nif_contribuyente,
+            "iban": iban,
+            "base_imponible": base_imponible,
+            "gastos_bienes_servicios": gastos_bienes_servicios,
+            "iva_gastos_bienes_servicios": iva_gastos_bienes_servicios,
+            "adquisiciones_bienes_inversion": adquisiciones_bienes_inversion,
+            "iva_adquisiciones_bienes_inversion": iva_adquisiciones_bienes_inversion,
+            "volumen_anual_operaciones": volumen_anual_operaciones,
         }
 
-        with self.assertRaisesRegex(ValueError, "El volumen anual de operaciones es obligatorio en el 4º trimestre*"):
+        with self.assertRaisesRegex(
+            ValueError,
+            "El volumen anual de operaciones es obligatorio en el 4º trimestre*",
+        ):
             Modelo303(2024, datos_modelo)
 
     def test_generar_modelo_nif_ed_largo(self):
@@ -157,21 +160,23 @@ class Modelo303Ejercicio2024TestCase(unittest.TestCase):
         volumen_anual_operaciones = 6000.00
 
         datos_modelo = {
-            'periodo': periodo,
-            'nif_empresa_desarrollo': nif_empresa_desarrollo,
-            'version': version,
-            'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
-            'nif_contribuyente': nif_contribuyente,
-            'iban': iban,
-            'base_imponible': base_imponible,
-            'gastos_bienes_servicios': gastos_bienes_servicios,
-            'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
-            'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
-            'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
-            'volumen_anual_operaciones': volumen_anual_operaciones
+            "periodo": periodo,
+            "nif_empresa_desarrollo": nif_empresa_desarrollo,
+            "version": version,
+            "nombre_fiscal_contribuyente": nombre_fiscal_contribuyente,
+            "nif_contribuyente": nif_contribuyente,
+            "iban": iban,
+            "base_imponible": base_imponible,
+            "gastos_bienes_servicios": gastos_bienes_servicios,
+            "iva_gastos_bienes_servicios": iva_gastos_bienes_servicios,
+            "adquisiciones_bienes_inversion": adquisiciones_bienes_inversion,
+            "iva_adquisiciones_bienes_inversion": iva_adquisiciones_bienes_inversion,
+            "volumen_anual_operaciones": volumen_anual_operaciones,
         }
 
-        with self.assertRaisesRegex(ValueError, "El NIF de la empresa de desarrollo debe ser de*"):
+        with self.assertRaisesRegex(
+            ValueError, "El NIF de la empresa de desarrollo debe ser de*"
+        ):
             Modelo303(2024, datos_modelo)
 
     def test_generar_modelo_nif_ed_corto(self):
@@ -189,21 +194,23 @@ class Modelo303Ejercicio2024TestCase(unittest.TestCase):
         volumen_anual_operaciones = 6000.00
 
         datos_modelo = {
-            'periodo': periodo,
-            'nif_empresa_desarrollo': nif_empresa_desarrollo,
-            'version': version,
-            'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
-            'nif_contribuyente': nif_contribuyente,
-            'iban': iban,
-            'base_imponible': base_imponible,
-            'gastos_bienes_servicios': gastos_bienes_servicios,
-            'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
-            'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
-            'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
-            'volumen_anual_operaciones': volumen_anual_operaciones
+            "periodo": periodo,
+            "nif_empresa_desarrollo": nif_empresa_desarrollo,
+            "version": version,
+            "nombre_fiscal_contribuyente": nombre_fiscal_contribuyente,
+            "nif_contribuyente": nif_contribuyente,
+            "iban": iban,
+            "base_imponible": base_imponible,
+            "gastos_bienes_servicios": gastos_bienes_servicios,
+            "iva_gastos_bienes_servicios": iva_gastos_bienes_servicios,
+            "adquisiciones_bienes_inversion": adquisiciones_bienes_inversion,
+            "iva_adquisiciones_bienes_inversion": iva_adquisiciones_bienes_inversion,
+            "volumen_anual_operaciones": volumen_anual_operaciones,
         }
 
-        with self.assertRaisesRegex(ValueError, "El NIF de la empresa de desarrollo debe ser de*"):
+        with self.assertRaisesRegex(
+            ValueError, "El NIF de la empresa de desarrollo debe ser de*"
+        ):
             Modelo303(2024, datos_modelo)
 
     def test_generar_modelo_nif_contribuyente_largo(self):
@@ -221,21 +228,23 @@ class Modelo303Ejercicio2024TestCase(unittest.TestCase):
         volumen_anual_operaciones = 6000.00
 
         datos_modelo = {
-            'periodo': periodo,
-            'nif_empresa_desarrollo': nif_empresa_desarrollo,
-            'version': version,
-            'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
-            'nif_contribuyente': nif_contribuyente,
-            'iban': iban,
-            'base_imponible': base_imponible,
-            'gastos_bienes_servicios': gastos_bienes_servicios,
-            'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
-            'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
-            'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
-            'volumen_anual_operaciones': volumen_anual_operaciones
+            "periodo": periodo,
+            "nif_empresa_desarrollo": nif_empresa_desarrollo,
+            "version": version,
+            "nombre_fiscal_contribuyente": nombre_fiscal_contribuyente,
+            "nif_contribuyente": nif_contribuyente,
+            "iban": iban,
+            "base_imponible": base_imponible,
+            "gastos_bienes_servicios": gastos_bienes_servicios,
+            "iva_gastos_bienes_servicios": iva_gastos_bienes_servicios,
+            "adquisiciones_bienes_inversion": adquisiciones_bienes_inversion,
+            "iva_adquisiciones_bienes_inversion": iva_adquisiciones_bienes_inversion,
+            "volumen_anual_operaciones": volumen_anual_operaciones,
         }
 
-        with self.assertRaisesRegex(ValueError, "El NIF del contribuyente debe ser de*"):
+        with self.assertRaisesRegex(
+            ValueError, "El NIF del contribuyente debe ser de*"
+        ):
             Modelo303(2024, datos_modelo)
 
     def test_generar_modelo_nif_contribuyente_corto(self):
@@ -253,21 +262,23 @@ class Modelo303Ejercicio2024TestCase(unittest.TestCase):
         volumen_anual_operaciones = 6000.00
 
         datos_modelo = {
-            'periodo': periodo,
-            'nif_empresa_desarrollo': nif_empresa_desarrollo,
-            'version': version,
-            'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
-            'nif_contribuyente': nif_contribuyente,
-            'iban': iban,
-            'base_imponible': base_imponible,
-            'gastos_bienes_servicios': gastos_bienes_servicios,
-            'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
-            'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
-            'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
-            'volumen_anual_operaciones': volumen_anual_operaciones
+            "periodo": periodo,
+            "nif_empresa_desarrollo": nif_empresa_desarrollo,
+            "version": version,
+            "nombre_fiscal_contribuyente": nombre_fiscal_contribuyente,
+            "nif_contribuyente": nif_contribuyente,
+            "iban": iban,
+            "base_imponible": base_imponible,
+            "gastos_bienes_servicios": gastos_bienes_servicios,
+            "iva_gastos_bienes_servicios": iva_gastos_bienes_servicios,
+            "adquisiciones_bienes_inversion": adquisiciones_bienes_inversion,
+            "iva_adquisiciones_bienes_inversion": iva_adquisiciones_bienes_inversion,
+            "volumen_anual_operaciones": volumen_anual_operaciones,
         }
 
-        with self.assertRaisesRegex(ValueError, "El NIF del contribuyente debe ser de*"):
+        with self.assertRaisesRegex(
+            ValueError, "El NIF del contribuyente debe ser de*"
+        ):
             Modelo303(2024, datos_modelo)
 
     def test_generar_modelo_version_largo(self):
@@ -285,21 +296,23 @@ class Modelo303Ejercicio2024TestCase(unittest.TestCase):
         volumen_anual_operaciones = 6000.00
 
         datos_modelo = {
-            'periodo': periodo,
-            'nif_empresa_desarrollo': nif_empresa_desarrollo,
-            'version': version,
-            'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
-            'nif_contribuyente': nif_contribuyente,
-            'iban': iban,
-            'base_imponible': base_imponible,
-            'gastos_bienes_servicios': gastos_bienes_servicios,
-            'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
-            'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
-            'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
-            'volumen_anual_operaciones': volumen_anual_operaciones
+            "periodo": periodo,
+            "nif_empresa_desarrollo": nif_empresa_desarrollo,
+            "version": version,
+            "nombre_fiscal_contribuyente": nombre_fiscal_contribuyente,
+            "nif_contribuyente": nif_contribuyente,
+            "iban": iban,
+            "base_imponible": base_imponible,
+            "gastos_bienes_servicios": gastos_bienes_servicios,
+            "iva_gastos_bienes_servicios": iva_gastos_bienes_servicios,
+            "adquisiciones_bienes_inversion": adquisiciones_bienes_inversion,
+            "iva_adquisiciones_bienes_inversion": iva_adquisiciones_bienes_inversion,
+            "volumen_anual_operaciones": volumen_anual_operaciones,
         }
 
-        with self.assertRaisesRegex(ValueError, "La versión no puede tener más de *"):
+        with self.assertRaisesRegex(
+            ValueError, "La versión no puede tener más de *"
+        ):
             Modelo303(2024, datos_modelo)
 
     def test_generar_modelo_nombre_largo(self):
@@ -317,21 +330,24 @@ class Modelo303Ejercicio2024TestCase(unittest.TestCase):
         volumen_anual_operaciones = 6000.00
 
         datos_modelo = {
-            'periodo': periodo,
-            'nif_empresa_desarrollo': nif_empresa_desarrollo,
-            'version': version,
-            'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
-            'nif_contribuyente': nif_contribuyente,
-            'iban': iban,
-            'base_imponible': base_imponible,
-            'gastos_bienes_servicios': gastos_bienes_servicios,
-            'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
-            'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
-            'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
-            'volumen_anual_operaciones': volumen_anual_operaciones
+            "periodo": periodo,
+            "nif_empresa_desarrollo": nif_empresa_desarrollo,
+            "version": version,
+            "nombre_fiscal_contribuyente": nombre_fiscal_contribuyente,
+            "nif_contribuyente": nif_contribuyente,
+            "iban": iban,
+            "base_imponible": base_imponible,
+            "gastos_bienes_servicios": gastos_bienes_servicios,
+            "iva_gastos_bienes_servicios": iva_gastos_bienes_servicios,
+            "adquisiciones_bienes_inversion": adquisiciones_bienes_inversion,
+            "iva_adquisiciones_bienes_inversion": iva_adquisiciones_bienes_inversion,
+            "volumen_anual_operaciones": volumen_anual_operaciones,
         }
 
-        with self.assertRaisesRegex(ValueError, "El nombre o razón social del contribuyente no puede tener más de*"):
+        with self.assertRaisesRegex(
+            ValueError,
+            "El nombre o razón social del contribuyente no puede tener más de*",
+        ):
             Modelo303(2024, datos_modelo)
 
     def test_generar_modelo_iban_largo(self):
@@ -349,26 +365,28 @@ class Modelo303Ejercicio2024TestCase(unittest.TestCase):
         volumen_anual_operaciones = 6000.00
 
         datos_modelo = {
-            'periodo': periodo,
-            'nif_empresa_desarrollo': nif_empresa_desarrollo,
-            'version': version,
-            'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
-            'nif_contribuyente': nif_contribuyente,
-            'iban': iban,
-            'base_imponible': base_imponible,
-            'gastos_bienes_servicios': gastos_bienes_servicios,
-            'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
-            'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
-            'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
-            'volumen_anual_operaciones': volumen_anual_operaciones
+            "periodo": periodo,
+            "nif_empresa_desarrollo": nif_empresa_desarrollo,
+            "version": version,
+            "nombre_fiscal_contribuyente": nombre_fiscal_contribuyente,
+            "nif_contribuyente": nif_contribuyente,
+            "iban": iban,
+            "base_imponible": base_imponible,
+            "gastos_bienes_servicios": gastos_bienes_servicios,
+            "iva_gastos_bienes_servicios": iva_gastos_bienes_servicios,
+            "adquisiciones_bienes_inversion": adquisiciones_bienes_inversion,
+            "iva_adquisiciones_bienes_inversion": iva_adquisiciones_bienes_inversion,
+            "volumen_anual_operaciones": volumen_anual_operaciones,
         }
 
-        with self.assertRaisesRegex(ValueError, "El IBAN no puede tener más de*"):
+        with self.assertRaisesRegex(
+            ValueError, "El IBAN no puede tener más de*"
+        ):
             Modelo303(2024, datos_modelo)
 
     def test_generar_modelo_sin_iban(self):
-        expected_result = "<T303020241T0000><AUX>                                                                      v1.0    12345678X                                                                                                                                                                                                                     </AUX><T30301000> I12345678EDE LOS PALOTES PERICO                                                           20241T22322222200000000 20000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000005000000000000000000000000000000000000010000000000000000000000000000000200000021000000000000004200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001750000000000000000000000000000000000000000000000000000000000000000000000000001400000000000000000000000000000000000005200000000000000000000000000000000000000000000000000000000000000004200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </T30301000><T30303000>0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000420001000000000000000042000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042000000000000000000000000000000000000000000000000042000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       </T30303000><T303DID00>                                                                                                                                                                                      0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </T303DID00></T303020241T0000>"
-        periodo = Periodo.P1T
+        expected_result = "<T303020243T0000><AUX>                                                                      v1.0    12345678X                                                                                                                                                                                                                     </AUX><T30301000> I12345678EDE LOS PALOTES PERICO                                                           20243T22322222200000000 20000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000005000000000000000000000000000000000000010000000000000000000000000000000200000021000000000000004200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001750000000000000000000000000000000000000000000000000000000000000000000000000001400000000000000000000000000000000000005200000000000000000000000000000000000000000000000000000000000000004200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042000000000000000000000000000000000000000000000000000000000000000000000000000000000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       </T30301000><T30303000>0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000420001000000000000000042000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042000000000000000000000000000000000000000000000000042000                0000000000000000000000000000000000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </T30303000><T303DID00>                                                                                                                                                                                      0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </T303DID00></T303020243T0000>"
+        periodo = Periodo.P3T
         nif_empresa_desarrollo = "12345678X"
         version = "v1.0"
         nombre_fiscal_contribuyente = "DE LOS PALOTES PERICO"
@@ -381,17 +399,17 @@ class Modelo303Ejercicio2024TestCase(unittest.TestCase):
         volumen_anual_operaciones = None
 
         datos_modelo = {
-            'periodo': periodo,
-            'nif_empresa_desarrollo': nif_empresa_desarrollo,
-            'version': version,
-            'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
-            'nif_contribuyente': nif_contribuyente,
-            'base_imponible': base_imponible,
-            'gastos_bienes_servicios': gastos_bienes_servicios,
-            'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
-            'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
-            'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
-            'volumen_anual_operaciones': volumen_anual_operaciones
+            "periodo": periodo,
+            "nif_empresa_desarrollo": nif_empresa_desarrollo,
+            "version": version,
+            "nombre_fiscal_contribuyente": nombre_fiscal_contribuyente,
+            "nif_contribuyente": nif_contribuyente,
+            "base_imponible": base_imponible,
+            "gastos_bienes_servicios": gastos_bienes_servicios,
+            "iva_gastos_bienes_servicios": iva_gastos_bienes_servicios,
+            "adquisiciones_bienes_inversion": adquisiciones_bienes_inversion,
+            "iva_adquisiciones_bienes_inversion": iva_adquisiciones_bienes_inversion,
+            "volumen_anual_operaciones": volumen_anual_operaciones,
         }
 
         datos_modelo = Modelo303(2024, datos_modelo)
@@ -400,5 +418,5 @@ class Modelo303Ejercicio2024TestCase(unittest.TestCase):
         self.assertEqual(datos_fichero, expected_result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
