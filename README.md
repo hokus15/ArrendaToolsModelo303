@@ -4,7 +4,7 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/hokus15/ArrendaToolsModelo303?logo=github)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/hokus15/ArrendaToolsModelo303?logo=github)
 
-Módulo de Python que genera un string para la importación de datos en el modelo 303 de la Agencia Tributaria de España del año 2023 (PRE 303 - Servicio ayuda modelo 303). El string generado se puede guardar en un fichero para importarlo en el modelo 303 para la presentación trimestral del IVA.
+Módulo de Python que genera un string para la importación de datos en el modelo 303 de la Agencia Tributaria de España a partire del año 2023 (PRE 303 - Servicio ayuda modelo 303). El string generado se puede guardar en un fichero para importarlo en el modelo 303 para la presentación trimestral del IVA.
 
 ## Limitaciones
 
