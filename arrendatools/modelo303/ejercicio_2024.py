@@ -1,9 +1,11 @@
-from arrendatools.modelo303.periodos import Periodo
 from arrendatools.modelo303.ejercicio import Ejercicio
+from arrendatools.modelo303.periodos import Periodo
 
 
 class Ejercicio2024(Ejercicio):
-    """Clase que contiene los datos necesarios para generar el modelo 303 trimestral para arrendadores con IVA para el ejercicio 2023.
+    """
+    Clase que contiene los datos necesarios para generar el modelo 303
+    trimestral para arrendadores con IVA para el ejercicio 2023.
 
     Attributes:
         periodo (string): Periodo de la declaración Datos validos: (1T, 2T, 3T o 4T)
@@ -19,6 +21,7 @@ class Ejercicio2024(Ejercicio):
         iva_adquisiciones_bienes_inversion (float): IVA trimestral soportado deducible de las adquisiciones de bienes de inversión. Podrá deducir el importe de las cuotas soportadas por la adquisición de bienes de inversión (cuantía superior a 3.005,06 euros) que se utilicen en la actividad de arrendamiento, como el mobiliario. Asimismo, el IVA soportado en la construcción o adquisición del inmueble, las obras de reforma o mejoras. En el caso de que la afectación a la actividad sea parcial, deberá calcularse la parte afecta.
         volumen_anual_operaciones (float): Volumen anual de operaciones. Sólo necesario para 4T.
     """
+
     _LONGITUD_NIF = 9
     _EJERCICIO = "2024"
 
@@ -35,17 +38,20 @@ class Ejercicio2024(Ejercicio):
     _TIPO_Y_CIERRE = "0000" + _CIERRE
     _AUX_APERTURA = "<AUX>"
     _AUX_CIERRE = "</AUX>"
-    _RESERVADO_ADMON_4_ESPACIOS = "".ljust(4, ' ')      # 4 espacios
-    _RESERVADO_ADMON_13_ESPACIOS = "".ljust(13, ' ')    # 13 espacios
-    _RESERVADO_ADMON_35_ESPACIOS = "".ljust(35, ' ')    # 35 espacios
-    _RESERVADO_ADMON_70_ESPACIOS = "".ljust(70, ' ')    # 70 espacios
-    _RESERVADO_ADMON_86_ESPACIOS = "".ljust(86, ' ')    # 86 espacios
-    _RESERVADO_ADMON_200_ESPACIOS = "".ljust(200, ' ')  # 200 espacios
-    _RESERVADO_ADMON_213_ESPACIOS = "".ljust(213, ' ')  # 213 espacios
-    _RESERVADO_ADMON_479_ESPACIOS = "".ljust(479, ' ')  # 479 espacios
-    _RESERVADO_ADMON_600_ESPACIOS = "".ljust(600, ' ')  # 600 espacios
-    _RESERVADO_ADMON_617_ESPACIOS = "".ljust(617, ' ')  # 617 espacios
-    _RESERVADO_ADMON_672_ESPACIOS = "".ljust(672, ' ')  # 672 espacios
+    _RESERVADO_ADMON_4_ESPACIOS = "".ljust(4, " ")  # 4 espacios
+    _RESERVADO_ADMON_13_ESPACIOS = "".ljust(13, " ")  # 13 espacios
+    _RESERVADO_ADMON_35_ESPACIOS = "".ljust(35, " ")  # 35 espacios
+    _RESERVADO_ADMON_70_ESPACIOS = "".ljust(70, " ")  # 70 espacios
+    _RESERVADO_ADMON_86_ESPACIOS = "".ljust(86, " ")  # 86 espacios
+    _RESERVADO_ADMON_120_ESPACIOS = "".ljust(120, " ")  # 120 espacios
+    _RESERVADO_ADMON_200_ESPACIOS = "".ljust(200, " ")  # 200 espacios
+    _RESERVADO_ADMON_213_ESPACIOS = "".ljust(213, " ")  # 213 espacios
+    _RESERVADO_ADMON_443_ESPACIOS = "".ljust(443, " ")  # 443 espacios
+    _RESERVADO_ADMON_479_ESPACIOS = "".ljust(479, " ")  # 479 espacios
+    _RESERVADO_ADMON_522_ESPACIOS = "".ljust(522, " ")  # 522 espacios
+    _RESERVADO_ADMON_600_ESPACIOS = "".ljust(600, " ")  # 600 espacios
+    _RESERVADO_ADMON_617_ESPACIOS = "".ljust(617, " ")  # 617 espacios
+    _RESERVADO_ADMON_672_ESPACIOS = "".ljust(672, " ")  # 672 espacios
     _DP30301 = "01000"
     _DP30302 = "02000"
     _DP30303 = "03000"
@@ -73,32 +79,57 @@ class Ejercicio2024(Ejercicio):
     def __init__(self, ejercicio, data):
 
         # Validación de los datos
-        if not [data['periodo'], data['nif_empresa_desarrollo'], data['version'], data['nombre_fiscal_contribuyente'], data['nif_contribuyente'], data['base_imponible']]:
-            raise ValueError("periodo, nif_empresa_desarrollo, version, nombre_fiscal_contribuyente, nif_contribuyente, base_imponible son campos obligatorios")
-        if len(data['nif_empresa_desarrollo']) != Ejercicio2024._LONGITUD_NIF:
-            raise ValueError(f"El NIF de la empresa de desarrollo debe ser de {Ejercicio2024._LONGITUD_NIF} caracteres")
-        if len(data['version']) > Ejercicio2024._MAX_LONGITUD_VERSION:
-            raise ValueError(f"La versión no puede tener más de {Ejercicio2024._MAX_LONGITUD_VERSION} caracteres")
-        if len(data['nombre_fiscal_contribuyente']) > Ejercicio2024._MAX_LONGITUD_NOMBRE_FISCAL_CONTRIBUYENTE:
-            raise ValueError(f"El nombre o razón social del contribuyente no puede tener más de {Ejercicio2024._MAX_LONGITUD_NOMBRE_FISCAL_CONTRIBUYENTE} caracteres")
-        if len(data['nif_contribuyente']) != Ejercicio2024._LONGITUD_NIF:
-            raise ValueError(f"El NIF del contribuyente debe ser de {Ejercicio2024._LONGITUD_NIF} caracteres")
-        if (data['periodo'] == Periodo.P4T and data['volumen_anual_operaciones'] is None):
-            raise ValueError("El volumen anual de operaciones es obligatorio en el 4º trimestre (4T)")
+        if not [
+            data["periodo"],
+            data["nif_empresa_desarrollo"],
+            data["version"],
+            data["nombre_fiscal_contribuyente"],
+            data["nif_contribuyente"],
+            data["base_imponible"],
+        ]:
+            raise ValueError(
+                "periodo, nif_empresa_desarrollo, version, nombre_fiscal_contribuyente, nif_contribuyente, base_imponible son campos obligatorios"
+            )
+        if len(data["nif_empresa_desarrollo"]) != Ejercicio2024._LONGITUD_NIF:
+            raise ValueError(
+                f"El NIF de la empresa de desarrollo debe ser de {Ejercicio2024._LONGITUD_NIF} caracteres"
+            )
+        if len(data["version"]) > Ejercicio2024._MAX_LONGITUD_VERSION:
+            raise ValueError(
+                f"La versión no puede tener más de {Ejercicio2024._MAX_LONGITUD_VERSION} caracteres"
+            )
+        if (
+            len(data["nombre_fiscal_contribuyente"])
+            > Ejercicio2024._MAX_LONGITUD_NOMBRE_FISCAL_CONTRIBUYENTE  # noqa:W503
+        ):
+            raise ValueError(
+                f"El nombre o razón social del contribuyente no puede tener más de {Ejercicio2024._MAX_LONGITUD_NOMBRE_FISCAL_CONTRIBUYENTE} caracteres"
+            )
+        if len(data["nif_contribuyente"]) != Ejercicio2024._LONGITUD_NIF:
+            raise ValueError(
+                f"El NIF del contribuyente debe ser de {Ejercicio2024._LONGITUD_NIF} caracteres"
+            )
+        if (
+            data["periodo"] == Periodo.P4T
+            and data["volumen_anual_operaciones"] is None  # noqa:W503
+        ):
+            raise ValueError(
+                "El volumen anual de operaciones es obligatorio en el 4º trimestre (4T)"
+            )
 
         # Campos obligatorios
-        # Ejercicio 2023
+        # Ejercicio 2024
         self.ejercicio = str(ejercicio)
         # Periodo de la declaración Datos validos: (1T, 2T, 3T o 4T)
-        self.periodo = data['periodo'].value
+        self.periodo = data["periodo"].value
         # NIF de la empresa de desarrollo. A cumplimentar por las entidades desarrolladoras (EEDD). Máximo 9 caracteres.
-        self.nif_empresa_desarrollo = data['nif_empresa_desarrollo'].upper()
+        self.nif_empresa_desarrollo = data["nif_empresa_desarrollo"].upper()
         # Versión del programa: Debe consignarse el identificador de la versión del SW desarrollado por la ED. Máximo 4 caracteres.
-        self.version = data['version']
+        self.version = data["version"]
         # Apellidos y nombre o Razón social del contribuyente. Máximo 80 caracteres.
-        self.nombre_fiscal = data['nombre_fiscal_contribuyente'].upper()
+        self.nombre_fiscal = data["nombre_fiscal_contribuyente"].upper()
         # NIF contribuyente. Máximo 9 caracteres.
-        self.nif_contribuyente = data['nif_contribuyente'].upper()
+        self.nif_contribuyente = data["nif_contribuyente"].upper()
         # Importe trimestral del alquiler sin computar el IVA. Tenga en cuenta que la base imponible del IVA en el arrendamiento de un
         # local de negocio está constituida por el importe total de la contraprestación, incluyendo no solo el importe de la renta,
         # sino también las cantidades asimiladas que el arrendador pueda exigir al arrendatario o inquilino.
@@ -108,30 +139,44 @@ class Ejercicio2024(Ejercicio):
         # Tenga en cuenta que deberá declarar las cuotas de arrendamiento exigibles, hayan sido cobradas o no.
         # En caso de impago podrá recuperar el IVA ingresado cuando se cumplan los requisitos previstos en el artículo 80.
         # Tres o Cuatro, consignando las casillas "Modificación bases y cuotas" (casillas 14 y 15).
-        self.base_imponible = data['base_imponible']
+        self.base_imponible = data["base_imponible"]
         # Validación campos opcionales
-        if 'iban' not in data or data['iban'] is None:
-            data['iban'] = ""
+        if "iban" not in data or data["iban"] is None:
+            data["iban"] = ""
 
-        if 'gastos_bienes_servicios' not in data or data['gastos_bienes_servicios'] is None:
-            data['gastos_bienes_servicios'] = 0.0
+        if (
+            "gastos_bienes_servicios" not in data
+            or data["gastos_bienes_servicios"] is None  # noqa:W503
+        ):
+            data["gastos_bienes_servicios"] = 0.0
 
-        if 'iva_gastos_bienes_servicios' not in data or data['iva_gastos_bienes_servicios'] is None:
-            data['iva_gastos_bienes_servicios'] = 0.0
+        if (
+            "iva_gastos_bienes_servicios" not in data
+            or data["iva_gastos_bienes_servicios"] is None  # noqa:W503
+        ):
+            data["iva_gastos_bienes_servicios"] = 0.0
 
-        if 'adquisiciones_bienes_inversion' not in data or data['adquisiciones_bienes_inversion'] is None:
-            data['adquisiciones_bienes_inversion'] = 0.0
+        if (
+            "adquisiciones_bienes_inversion" not in data
+            or data["adquisiciones_bienes_inversion"] is None  # noqa:W503
+        ):
+            data["adquisiciones_bienes_inversion"] = 0.0
 
-        if 'iva_adquisiciones_bienes_inversion' not in data or data['iva_adquisiciones_bienes_inversion'] is None:
-            data['iva_adquisiciones_bienes_inversion'] = 0.0
+        if (
+            "iva_adquisiciones_bienes_inversion" not in data
+            or data["iva_adquisiciones_bienes_inversion"] is None  # noqa:W503
+        ):
+            data["iva_adquisiciones_bienes_inversion"] = 0.0
 
         # Asignamos los campos opcionales
         # IBAN donde domiciliar el pago/devolucion.
-        self.iban = data['iban'].upper()
-        if len(data['iban']) > Ejercicio2024._MAX_LONGITUD_IBAN:
-            raise ValueError(f"El IBAN no puede tener más de {Ejercicio2024._MAX_LONGITUD_IBAN} caracteres")
+        self.iban = data["iban"].upper()
+        if len(data["iban"]) > Ejercicio2024._MAX_LONGITUD_IBAN:
+            raise ValueError(
+                f"El IBAN no puede tener más de {Ejercicio2024._MAX_LONGITUD_IBAN} caracteres"
+            )
         # Base imponible trimestral de los gastos en bienes y servicios corrientes.
-        self.gastos_bienes_servicios = data['gastos_bienes_servicios']
+        self.gastos_bienes_servicios = data["gastos_bienes_servicios"]
         # IVA trimestral soportado deducible de los gastos en bienes y servicios corrientes.
         # Para ser deducible el IVA soportado debe disponer de factura completa emitida a nombre del arrendador.
         # Podrá incluir, entre otras, las cuotas soportadas por suministros, reparaciones y obras de mejora, servicios profesionales
@@ -139,16 +184,20 @@ class Ejercicio2024(Ejercicio):
         # No son deducibles, ni siquiera parcialmente, las cuotas soportadas en bienes y servicios que se utilicen simultáneamente
         # para esta actividad y para necesidades privadas cuando el precio de adquisición sea inferior a 3.005,06 euros (ordenadores, móviles...).
         # Tampoco son deducibles los gastos en los que no se soporte el impuesto (intereses de préstamo, seguros, IBI o la amortización del inmueble).
-        self.iva_gastos_bienes_servicios = data['iva_gastos_bienes_servicios']
+        self.iva_gastos_bienes_servicios = data["iva_gastos_bienes_servicios"]
         # Base imponible trimestral de las adquisiciones de bienes de inversión.
-        self.adquisiciones_bienes_inversion = data['adquisiciones_bienes_inversion']
+        self.adquisiciones_bienes_inversion = data[
+            "adquisiciones_bienes_inversion"
+        ]
         # IVA trimestral soportado deducible de las adquisiciones de bienes de inversión. Podrá deducir el importe de las cuotas soportadas por la
         # adquisición de bienes de inversión (cuantía superior a 3.005,06 euros) que se utilicen en la actividad de arrendamiento,
         # como el mobiliario. Asimismo, el IVA soportado en la construcción o adquisición del inmueble, las obras de reforma o mejoras.
         # En el caso de que la afectación a la actividad sea parcial, deberá calcularse la parte afecta.
-        self.iva_adquisiciones_bienes_inversion = data['iva_adquisiciones_bienes_inversion']
+        self.iva_adquisiciones_bienes_inversion = data[
+            "iva_adquisiciones_bienes_inversion"
+        ]
         # Volumen anual de operaciones. Sólo necesario para 4T.
-        self.volumen_anual_operaciones = data['volumen_anual_operaciones']
+        self.volumen_anual_operaciones = data["volumen_anual_operaciones"]
 
     def generar(self):
         """
@@ -156,14 +205,28 @@ class Ejercicio2024(Ejercicio):
         El string generado se puede guardar en un fichero y es compatible con el modelo 303 para la presentación trimestral del IVA.
         """
 
-        REGISTRO_GENERAL_APERTURA = self._INICIO_APERTURA + self._MODELO + self._DISCRIMINANTE + self.ejercicio + self.periodo + self._TIPO_Y_CIERRE
-        REGISTRO_GENERAL_CIERRE = self._INICIO_CIERRE + self._MODELO + self._DISCRIMINANTE + self.ejercicio + self.periodo + self._TIPO_Y_CIERRE
+        REGISTRO_GENERAL_APERTURA = (
+            self._INICIO_APERTURA
+            + self._MODELO  # noqa:W503
+            + self._DISCRIMINANTE  # noqa:W503
+            + self.ejercicio  # noqa:W503
+            + self.periodo  # noqa:W503
+            + self._TIPO_Y_CIERRE  # noqa:W503
+        )
+        REGISTRO_GENERAL_CIERRE = (
+            self._INICIO_CIERRE
+            + self._MODELO  # noqa:W503
+            + self._DISCRIMINANTE  # noqa:W503
+            + self.ejercicio  # noqa:W503
+            + self.periodo  # noqa:W503
+            + self._TIPO_Y_CIERRE  # noqa:W503
+        )
         datos = REGISTRO_GENERAL_APERTURA
         datos += self._generar_dp303_00()
         datos += self._generar_dp303_01()
         datos += self._generar_dp303_02()
         datos += self._generar_dp303_03()
-        if (self.periodo == "4T"):
+        if self.periodo == "4T":
             datos += self._generar_dp303_04()
             datos += self._generar_dp303_05()
         datos += self._generar_dp303_did()
@@ -190,7 +253,11 @@ class Ejercicio2024(Ejercicio):
         """
 
         iva_devengado = round(self.base_imponible * 0.21, 2)
-        total_iva_deducible = round(self.iva_gastos_bienes_servicios + self.iva_adquisiciones_bienes_inversion, 2)
+        total_iva_deducible = round(
+            self.iva_gastos_bienes_servicios
+            + self.iva_adquisiciones_bienes_inversion,  # noqa:W503
+            2,
+        )
         cuota = self._calcula_couta()
 
         # Indicador de inicio de registro página 1
@@ -202,7 +269,7 @@ class Ejercicio2024(Ejercicio):
         # Identificación (1) - NIF
         datos += self.nif_contribuyente
         # Identificación (1) - Apellidos y nombre o Razón social
-        datos += self.nombre_fiscal.ljust(80, ' ')
+        datos += self.nombre_fiscal.ljust(80, " ")
         # Ejercicio
         datos += self.ejercicio
         # Devengo
@@ -227,10 +294,10 @@ class Ejercicio2024(Ejercicio):
         # Identificación (1) - Sujeto pasivo declarado en concurso de acreedores en el presente período de liquidación
         datos += self._NO
         # Identificación (1) - Fecha en que se dictó el auto de declaración de concurso
-        datos += "".ljust(8, '0')
+        datos += "".ljust(8, "0")
         # Identificación (1) - Tipo de autoliquidación si se ha dictado auto de declaración de concurso en este período:
         # "1" SI Preconcursal, "2" SI postconcursal, blanco NO.
-        datos += "".ljust(1, ' ')
+        datos += "".ljust(1, " ")
         # Identificación (1) - Sujeto pasivo acogido voluntariamente al SII
         datos += self._NO
         # Identificación (1) - Sujeto pasivo exonerado de la Declaración-resumen anual del IVA, modelo 390
@@ -246,7 +313,9 @@ class Ejercicio2024(Ejercicio):
         # IVA Devengado - Regimen general 10%. Casillas: [4], [5], [6]
         datos += self._base_tipo_cuota_str(0.0, 10.0, 0.0)
         # IVA Devengado - Regimen general 21%. Casillas: [7], [8], [9]
-        datos += self._base_tipo_cuota_str(self.base_imponible, 21.0, iva_devengado)
+        datos += self._base_tipo_cuota_str(
+            self.base_imponible, 21.0, iva_devengado
+        )
         # IVA Devengado - Adquisiciones intracomunitarias de bienes y servicios. Casillas: [10], [11]
         datos += self._base_cuota_str(0.0, 0.0)
         # IVA Devengado - Otras operaciones con inversión del sujeto pasivo (excepto. adq. intracom). Casillas: [12], [13]
@@ -264,12 +333,17 @@ class Ejercicio2024(Ejercicio):
         # IVA Devengado - Modificaciones bases y cuotas del recargo de equivalencia. Casillas: [25], [26]
         datos += self._base_cuota_str(0.0, 0.0)
         # IVA Devengado - Total cuota devengada.
-        # Casillas: ( [152] + [03] + [155] + [06] + [09] + [11] + [13] + [15] + [158] + [18] + [21] + [24] + [26] ) [27]
+        # Casillas: ( [152] + [167] + [03] + [155] + [06] + [09] + [11] + [13] + [15] + [158] + [170] + [18] + [21] + [24] + [26] ) [27]
         datos += self._convertir_a_centimos_str(iva_devengado)
         # IVA Deducible - Por cuotas soportadas en operaciones interiores corrientes. Casillas: [28], [29]
-        datos += self._base_cuota_str(self.gastos_bienes_servicios, self.iva_gastos_bienes_servicios)
+        datos += self._base_cuota_str(
+            self.gastos_bienes_servicios, self.iva_gastos_bienes_servicios
+        )
         # IVA Deducible - Por cuotas soportadas en operaciones interiores con bienes de inversión. Casillas: [30], [31]
-        datos += self._base_cuota_str(self.adquisiciones_bienes_inversion, self.iva_adquisiciones_bienes_inversion)
+        datos += self._base_cuota_str(
+            self.adquisiciones_bienes_inversion,
+            self.iva_adquisiciones_bienes_inversion,
+        )
         # IVA Deducible - Por cuotas soportadas en las importaciones de bienes corrientes. Casillas: [32], [33]
         datos += self._base_cuota_str(0.0, 0.0)
         # IVA Deducible - Por cuotas soportadas en las importaciones de bienes de inversión. Casillas: [34], [35]
@@ -290,8 +364,12 @@ class Ejercicio2024(Ejercicio):
         datos += self._convertir_a_centimos_str(total_iva_deducible)
         # IVA Deducible - Resultado régimen general. Casillas: ( [27] - [45] ) -> Cuota [46]
         datos += self._convertir_a_centimos_str(cuota)
+        # IVA Devengado - Régimen general 2%. Casillas: [155], [156], [157]
+        datos += self._base_tipo_cuota_str(0.0, 0.0, 0.0)
+        # IVA Devengado - Recargo equivalencia 2,60%. Casillas: [168], [169], [170]
+        datos += self._base_tipo_cuota_str(0.0, 0.0, 0.0)
         # Reservado para la AEAT
-        datos += self._RESERVADO_ADMON_600_ESPACIOS
+        datos += self._RESERVADO_ADMON_522_ESPACIOS
         # Reservado para la AEAT - Sello electrónico reservado para la AEAT
         datos += self._RESERVADO_ADMON_13_ESPACIOS
         # Indicador de fin de registro página 1
@@ -300,9 +378,16 @@ class Ejercicio2024(Ejercicio):
 
     def _generar_dp303_02(self):
         """
-        Genera los datos de la seccion DP30302 del modelo 303. En el caso de arrendadores con IVA esta sección no se tiene que rellenar.
+        Genera los datos de la seccion DP30302 del modelo 303.
+        En el caso de arrendadores con IVA esta sección no se
+        tiene que rellenar.
         """
-        # Los cambios del 27/03/2024 sólo aplican a esta página por lo que no se requiere ningún cambio adicional.
+        # Los cambios del 27/03/2024 sólo aplican a esta página por
+        # lo que no se requiere ningún cambio adicional.
+
+        # Los cambios del 18/07/2024 que aplican a esta página no
+        # se incluyen ya que en el caso de arrendadores con IVA esta
+        # sección no se tiene que rellenar.
 
         return ""
 
@@ -358,7 +443,7 @@ class Ejercicio2024(Ejercicio):
         # Resultado - Exclusivamente para sujetos pasivos que tributan conjuntamente a la Administración del Estado y a las Haciendas
         # Forales Resultado de la regularización anual. Casillas: [68]
         datos += self._convertir_a_centimos_str(0.0)
-        # Resultado - Resultado de la autoliquidación. Casillas: ( [66] + [77] - [78] + [68] ) [69]
+        # Resultado - Resultado de la autoliquidación. Casillas: ( [66] + [77] - [78] + [68] + [108]) [69]
         datos += self._convertir_a_centimos_str(resultado_autoliquidacion)
         # Resultado - Resultados a ingresar de anteriores autoliquidaciones o liquidaciones administrativas correspondientes al e
         # jercicio y período objeto de la autoliquidación. Casillas: [70]
@@ -369,17 +454,26 @@ class Ejercicio2024(Ejercicio):
         # Resultado - Resultado. Casillas: ( [69] - [70] + [109] ) [71]
         datos += self._convertir_a_centimos_str(resultado_final)
         # Declaración Sin actividad (X o blanco)
-        datos += "".ljust(1, ' ')
-        # Declaración complementaria (X o blanco)
-        datos += "".ljust(1, ' ')
-        # Número justificante declaración anterior
+        datos += "".ljust(1, " ")
+        # Rectificativa - Autoliquidación rectificativa
+        datos += "".ljust(1, " ")
+        # Rectificativa - Número justificante identificativo de la autoliquidación anterior
         datos += self._RESERVADO_ADMON_13_ESPACIOS
+        # Rectificativa - Como consecuencia de la presentación de la autoliquidación rectificativa solicito dar de baja/modificar la domiciliación efectuada
+        datos += "".ljust(1, " ")
+        # Rectificativa - Exclusivamente para determinados supuestos de autoliquidación rectificativa por discrepancia de criterio administrativo
+        # que no deban incluirse en otras casillas. Otros ajustes [108]
+        datos += self._convertir_a_centimos_str(0.0)
+        # Rectificativa - Rectificación - Importe [111]
+        datos += self._convertir_a_centimos_str(0.0)
         # Reservado para la AEAT
-        datos += self._RESERVADO_ADMON_35_ESPACIOS
+        datos += self._RESERVADO_ADMON_120_ESPACIOS
+        # Rectificativa - Motivo de la rectificación: Rectificaciones (excepto incluidas en el motivo siguiente)
+        datos += "".ljust(1, " ")
+        # Rectificativa - Motivo de la rectificación: Discrepancia criterio administrativo
+        datos += "".ljust(1, " ")
         # Reservado para la AEAT
-        datos += self._RESERVADO_ADMON_86_ESPACIOS
-        # Reservado para la AEAT
-        datos += self._RESERVADO_ADMON_479_ESPACIOS
+        datos += self._RESERVADO_ADMON_443_ESPACIOS
         # Indicador de fin de registro página 3
         datos += self._DP30303_CIERRE
         return datos
@@ -391,34 +485,34 @@ class Ejercicio2024(Ejercicio):
 
         datos = self._DP30304_APERTURA
         # Indicador de página complementaria.
-        datos += "".ljust(1, ' ')
+        datos += "".ljust(1, " ")
         # Código de actividad - Principal
         datos += "A01"
         # Epígrafe IAE - Principal
         datos += "8612"
         # Código de actividad - Otras - 1ª
-        datos += "".ljust(3, ' ')
+        datos += "".ljust(3, " ")
         # Epígrafe IAE - Otras - 1ª
-        datos += "".ljust(4, ' ')
+        datos += "".ljust(4, " ")
         # Código de actividad - Otras - 2ª
-        datos += "".ljust(3, ' ')
+        datos += "".ljust(3, " ")
         # Epígrafe IAE - Otras - 2ª
-        datos += "".ljust(4, ' ')
+        datos += "".ljust(4, " ")
         # Código de actividad - Otras - 3ª
-        datos += "".ljust(3, ' ')
+        datos += "".ljust(3, " ")
         # Epígrafe IAE - Otras - 3ª
-        datos += "".ljust(4, ' ')
+        datos += "".ljust(4, " ")
         # Código de actividad - Otras - 4ª
-        datos += "".ljust(3, ' ')
+        datos += "".ljust(3, " ")
         # Epígrafe IAE - Otras - 4ª
-        datos += "".ljust(4, ' ')
+        datos += "".ljust(4, " ")
         # Código de actividad - Otras - 5ª
-        datos += "".ljust(3, ' ')
+        datos += "".ljust(3, " ")
         # Epígrafe IAE - Otras - 5ª
-        datos += "".ljust(4, ' ')
+        datos += "".ljust(4, " ")
         # Marque si ha efectuado operaciones por las que tenga obligación de presentar la declaración anual de operaciones con terceras personas.
         # (X o blanco)
-        datos += "".ljust(1, ' ')
+        datos += "".ljust(1, " ")
         # Información de la tributación por razón de territorio: Álava [89]
         datos += self._porcentaje_str(0.0)
         # Información de la tributación por razón de territorio: Guipuzcoa [90]
@@ -481,55 +575,55 @@ class Ejercicio2024(Ejercicio):
 
         datos = self._DP30305_APERTURA
         # Indicador de página complementaria.
-        datos += "".ljust(1, ' ')
+        datos += "".ljust(1, " ")
         # Prorratas - 1 - Código CNAE [500]
-        datos += "".ljust(3, ' ')
+        datos += "".ljust(3, " ")
         # Prorratas - 1 - Importe de operaciones [501]
         datos += self._convertir_a_centimos_str(0.0)
         # Prorratas - 1 - Importe de operaciones con derecho a deducción [502]
         datos += self._convertir_a_centimos_str(0.0)
         # Prorratas - 1 - Tipo de prorrata ("G", "E" o blanco). [503]
-        datos += "".ljust(1, ' ')
+        datos += "".ljust(1, " ")
         # Prorratas - 1 - % de prorrata [504]
         datos += self._porcentaje_str(0.0)
         # Prorratas - 2 - Código CNAE [505]
-        datos += "".ljust(3, ' ')
+        datos += "".ljust(3, " ")
         # Prorratas - 2 - Importe de operaciones [506]
         datos += self._convertir_a_centimos_str(0.0)
         # Prorratas - 2 - Importe de operaciones con derecho a deducción [507]
         datos += self._convertir_a_centimos_str(0.0)
         # Prorratas - 2 - Tipo de prorrata ("G", "E" o blanco). [508]
-        datos += "".ljust(1, ' ')
+        datos += "".ljust(1, " ")
         # Prorratas - 2 - % de prorrata [509]
         datos += self._porcentaje_str(0.0)
         # Prorratas - 3 - Código CNAE [510]
-        datos += "".ljust(3, ' ')
+        datos += "".ljust(3, " ")
         # Prorratas - 3 - Importe de operaciones [511]
         datos += self._convertir_a_centimos_str(0.0)
         # Prorratas - 3 - Importe de operaciones con derecho a deducción [512]
         datos += self._convertir_a_centimos_str(0.0)
         # Prorratas - 3 - Tipo de prorrata ("G", "E" o blanco). [513]
-        datos += "".ljust(1, ' ')
+        datos += "".ljust(1, " ")
         # Prorratas - 3 - % de prorrata [514]
         datos += self._porcentaje_str(0.0)
         # Prorratas - 4 - Código CNAE [515]
-        datos += "".ljust(3, ' ')
+        datos += "".ljust(3, " ")
         # Prorratas - 4 - Importe de operaciones [516]
         datos += self._convertir_a_centimos_str(0.0)
         # Prorratas - 4 - Importe de operaciones con derecho a deducción [517]
         datos += self._convertir_a_centimos_str(0.0)
         # Prorratas - 4 - Tipo de prorrata ("G", "E" o blanco). [518]
-        datos += "".ljust(1, ' ')
+        datos += "".ljust(1, " ")
         # Prorratas - 4 - % de prorrata [519]
         datos += self._porcentaje_str(0.0)
         # Prorratas - 5 - Código CNAE [520]
-        datos += "".ljust(3, ' ')
+        datos += "".ljust(3, " ")
         # Prorratas - 5 - Importe de operaciones [521]
         datos += self._convertir_a_centimos_str(0.0)
         # Prorratas - 5 - Importe de operaciones con derecho a deducción [522]
         datos += self._convertir_a_centimos_str(0.0)
         # Prorratas - 5 - Tipo de prorrata ("G", "E" o blanco). [523]
-        datos += "".ljust(1, ' ')
+        datos += "".ljust(1, " ")
         # Prorratas - 5 - % de prorrata [524]
         datos += self._porcentaje_str(0.0)
         # 13. Reg. Deducc. Diferenc.- 1 - IVA ded. Operac. Interiores - Bienes y servicios corrientes - Base imponible [700]
@@ -615,23 +709,23 @@ class Ejercicio2024(Ejercicio):
 
         datos = self._DP303DID_APERTURA
         # Devolución. SWIFT-BIC
-        datos += "".ljust(11, ' ')
-        if (self._calcula_couta() < 0):
+        datos += "".ljust(11, " ")
+        if self._calcula_couta() < 0:
             # Si la cuota es negativa no se incluye el IBAN
             # Domiciliación/Devolución - IBAN
-            datos += "".ljust(34, ' ')
+            datos += "".ljust(34, " ")
         else:
             # Si la cuota es positiva se incluye el IBAN
             # Domiciliación/Devolución - IBAN
-            datos += self.iban.ljust(34, ' ')
+            datos += self.iban.ljust(34, " ")
         # Devolución - Banco/Bank name
-        datos += "".ljust(70, ' ')
+        datos += "".ljust(70, " ")
         # Devolución - Dirección del Banco/ Bank address
-        datos += "".ljust(35, ' ')
+        datos += "".ljust(35, " ")
         # Devolución - Ciudad/City
-        datos += "".ljust(30, ' ')
+        datos += "".ljust(30, " ")
         # Devolución - Código País/Country code
-        datos += "".ljust(2, ' ')
+        datos += "".ljust(2, " ")
         # Devolución - Marca SEPA (0 - Vacía, 1 - Cuenta España, 2 - Unión Europea SEPA, 3 - Resto Países)
         datos += self._marca_sepa(self.iban)
         datos += self._RESERVADO_ADMON_617_ESPACIOS
@@ -640,7 +734,11 @@ class Ejercicio2024(Ejercicio):
 
     def _calcula_couta(self):
         iva_devengado = round(self.base_imponible * 0.21, 2)
-        total_iva_deducible = round(self.iva_gastos_bienes_servicios + self.iva_adquisiciones_bienes_inversion, 2)
+        total_iva_deducible = round(
+            self.iva_gastos_bienes_servicios
+            + self.iva_adquisiciones_bienes_inversion,  # noqa:W503
+            2,
+        )
         return round(iva_devengado - total_iva_deducible, 2)
 
     def _tipo_declaracion(self):
@@ -659,13 +757,13 @@ class Ejercicio2024(Ejercicio):
         """
         cuota = self._calcula_couta()
 
-        if (cuota == 0):
+        if cuota == 0:
             return "N"
-        if (cuota < 0 and not self.periodo == "4T"):
+        if cuota < 0 and not self.periodo == "4T":
             return "C"
-        if (cuota < 0 and self.periodo == "4T"):
+        if cuota < 0 and self.periodo == "4T":
             return "D"
-        if (cuota > 0 and self.iban is not None and self.iban != ""):
+        if cuota > 0 and self.iban is not None and self.iban != "":
             return "U"
         return "I"
 
@@ -678,12 +776,12 @@ class Ejercicio2024(Ejercicio):
         :return: String con valor a añadir para la exoneración del Modelo 390 dependiendo del periodo.
         :rtype: String.
         """
-        if (periodo != "4T"):
+        if periodo != "4T":
             return self._NO_ES_4T
         return self._SI
 
     def _operaciones_distinto_0(self, periodo):
-        if (periodo != "4T"):
+        if periodo != "4T":
             return self._NO_ES_4T
         return self._SI
 
@@ -695,7 +793,7 @@ class Ejercicio2024(Ejercicio):
 
     def _convertir_a_centimos_zfill(self, valor, length):
         resultado = str(self._convertir_a_centimos(abs(valor))).zfill(length)
-        if (valor < 0):
+        if valor < 0:
             return "N" + resultado[1:]
         else:
             return resultado
@@ -707,7 +805,13 @@ class Ejercicio2024(Ejercicio):
         return self._convertir_a_centimos_zfill(valor, 5)
 
     def _base_cuota_str(self, base, cuota):
-        return self._convertir_a_centimos_str(base) + self._convertir_a_centimos_str(cuota)
+        return self._convertir_a_centimos_str(
+            base
+        ) + self._convertir_a_centimos_str(cuota)
 
     def _base_tipo_cuota_str(self, base, tipo, cuota):
-        return self._convertir_a_centimos_str(base) + self._porcentaje_str(tipo) + self._convertir_a_centimos_str(cuota)
+        return (
+            self._convertir_a_centimos_str(base)
+            + self._porcentaje_str(tipo)  # noqa:W503
+            + self._convertir_a_centimos_str(cuota)  # noqa:W503
+        )
