@@ -2,9 +2,9 @@ from .base import Modelo303Base
 from .datos_modelo_303 import Periodo
 
 
-class Modelo303Ejercicio2023(Modelo303Base):
+class Modelo303Ejercicio2025(Modelo303Base):
     """
-    Implementación para generar el modelo 303 trimestral para arrendadores con IVA para el ejercicio 2023.
+    Implementación para generar el modelo 303 trimestral para arrendadores con IVA para el ejercicio 2025.
     """
 
     _LONGITUD_NIF = 9
@@ -26,9 +26,12 @@ class Modelo303Ejercicio2023(Modelo303Base):
     _RESERVADO_ADMON_35_ESPACIOS = "".ljust(35, " ")  # 35 espacios
     _RESERVADO_ADMON_70_ESPACIOS = "".ljust(70, " ")  # 70 espacios
     _RESERVADO_ADMON_86_ESPACIOS = "".ljust(86, " ")  # 86 espacios
+    _RESERVADO_ADMON_120_ESPACIOS = "".ljust(120, " ")  # 120 espacios
     _RESERVADO_ADMON_200_ESPACIOS = "".ljust(200, " ")  # 200 espacios
     _RESERVADO_ADMON_213_ESPACIOS = "".ljust(213, " ")  # 213 espacios
+    _RESERVADO_ADMON_443_ESPACIOS = "".ljust(443, " ")  # 443 espacios
     _RESERVADO_ADMON_479_ESPACIOS = "".ljust(479, " ")  # 479 espacios
+    _RESERVADO_ADMON_522_ESPACIOS = "".ljust(522, " ")  # 522 espacios
     _RESERVADO_ADMON_600_ESPACIOS = "".ljust(600, " ")  # 600 espacios
     _RESERVADO_ADMON_617_ESPACIOS = "".ljust(617, " ")  # 617 espacios
     _RESERVADO_ADMON_672_ESPACIOS = "".ljust(672, " ")  # 672 espacios
@@ -58,22 +61,22 @@ class Modelo303Ejercicio2023(Modelo303Base):
     _CODIGO_ACTIVIDAD = "A01"
     _EPIGRAFE_IAE = "8612"
 
-    def generar(self):
+    def generar(self) -> str:
         REGISTRO_GENERAL_APERTURA = (
             self._INICIO_APERTURA
-            + self._MODELO
-            + self._DISCRIMINANTE
-            + self.ejercicio
-            + self.datos.periodo
-            + self._TIPO_Y_CIERRE
+            + self._MODELO  # noqa:W503
+            + self._DISCRIMINANTE  # noqa:W503
+            + self.ejercicio  # noqa:W503
+            + self.datos.periodo  # noqa:W503
+            + self._TIPO_Y_CIERRE  # noqa:W503
         )
         REGISTRO_GENERAL_CIERRE = (
             self._INICIO_CIERRE
-            + self._MODELO
-            + self._DISCRIMINANTE
-            + self.ejercicio
-            + self.datos.periodo
-            + self._TIPO_Y_CIERRE
+            + self._MODELO  # noqa:W503
+            + self._DISCRIMINANTE  # noqa:W503
+            + self.ejercicio  # noqa:W503
+            + self.datos.periodo  # noqa:W503
+            + self._TIPO_Y_CIERRE  # noqa:W503
         )
         datos = REGISTRO_GENERAL_APERTURA
         datos += self._generar_dp303_00()
@@ -109,7 +112,7 @@ class Modelo303Ejercicio2023(Modelo303Base):
         iva_devengado = round(self.datos.base_imponible * 0.21, 2)
         total_iva_deducible = round(
             self.datos.iva_gastos_bienes_servicios
-            + self.datos.iva_adquisiciones_bienes_inversion,
+            + self.datos.iva_adquisiciones_bienes_inversion,  # noqa:W503
             2,
         )
         cuota = self._calcula_couta()
@@ -187,7 +190,7 @@ class Modelo303Ejercicio2023(Modelo303Base):
         # IVA Devengado - Modificaciones bases y cuotas del recargo de equivalencia. Casillas: [25], [26]
         datos += self._base_cuota_str(0.0, 0.0)
         # IVA Devengado - Total cuota devengada.
-        # Casillas: ( [152] + [03] + [155] + [06] + [09] + [11] + [13] + [15] + [158] + [18] + [21] + [24] + [26] ) [27]
+        # Casillas: ( [152] + [167] + [03] + [155] + [06] + [09] + [11] + [13] + [15] + [158] + [170] + [18] + [21] + [24] + [26] ) [27]
         datos += self._convertir_a_centimos_str(iva_devengado)
         # IVA Deducible - Por cuotas soportadas en operaciones interiores corrientes. Casillas: [28], [29]
         datos += self._base_cuota_str(
@@ -219,8 +222,12 @@ class Modelo303Ejercicio2023(Modelo303Base):
         datos += self._convertir_a_centimos_str(total_iva_deducible)
         # IVA Deducible - Resultado régimen general. Casillas: ( [27] - [45] ) -> Cuota [46]
         datos += self._convertir_a_centimos_str(cuota)
+        # IVA Devengado - Régimen general 2%. Casillas: [165], [166], [167]
+        datos += self._base_tipo_cuota_str(0.0, 0.0, 0.0)
+        # IVA Devengado - Recargo equivalencia 2,60%. Casillas: [168], [169], [170]
+        datos += self._base_tipo_cuota_str(0.0, 0.0, 0.0)
         # Reservado para la AEAT
-        datos += self._RESERVADO_ADMON_600_ESPACIOS
+        datos += self._RESERVADO_ADMON_522_ESPACIOS
         # Reservado para la AEAT - Sello electrónico reservado para la AEAT
         datos += self._RESERVADO_ADMON_13_ESPACIOS
         # Indicador de fin de registro página 1
@@ -229,14 +236,10 @@ class Modelo303Ejercicio2023(Modelo303Base):
 
     def _generar_dp303_02(self):
         """
-        Genera los datos de la seccion DP30302 del modelo 303. En el caso de arrendadores con IVA esta sección no se tiene que rellenar.
+        Genera los datos de la seccion DP30302 del modelo 303.
+        En el caso de arrendadores con IVA esta sección no se
+        tiene que rellenar.
         """
-        # Actualización 14/12/2023
-        # Para el periodo 4T se añaden campos para la información de "Días" correspondiente al módulo "Superficie del horno"
-        # de los siguientes epígrafes: 419.1, 419.2, 644.1, 644.2 y 644.3.
-        # Para facilitar la compatibilidad con los ficheros generados/presentados anteriormente se permitirá que dichos campos
-        # vengan cumplimentados a blancos sin dar error por ello.
-
         return ""
 
     def _generar_dp303_03(self):
@@ -291,7 +294,7 @@ class Modelo303Ejercicio2023(Modelo303Base):
         # Resultado - Exclusivamente para sujetos pasivos que tributan conjuntamente a la Administración del Estado y a las Haciendas
         # Forales Resultado de la regularización anual. Casillas: [68]
         datos += self._convertir_a_centimos_str(0.0)
-        # Resultado - Resultado de la autoliquidación. Casillas: ( [66] + [77] - [78] + [68] ) [69]
+        # Resultado - Resultado de la autoliquidación. Casillas: ( [66] + [77] - [78] + [68] + [108]) [69]
         datos += self._convertir_a_centimos_str(resultado_autoliquidacion)
         # Resultado - Resultados a ingresar de anteriores autoliquidaciones o liquidaciones administrativas correspondientes al e
         # jercicio y período objeto de la autoliquidación. Casillas: [70]
@@ -303,16 +306,25 @@ class Modelo303Ejercicio2023(Modelo303Base):
         datos += self._convertir_a_centimos_str(resultado_final)
         # Declaración Sin actividad (X o blanco)
         datos += "".ljust(1, " ")
-        # Declaración complementaria (X o blanco)
+        # Rectificativa - Autoliquidación rectificativa
         datos += "".ljust(1, " ")
-        # Número justificante declaración anterior
+        # Rectificativa - Número justificante identificativo de la autoliquidación anterior
         datos += self._RESERVADO_ADMON_13_ESPACIOS
+        # Rectificativa - Como consecuencia de la presentación de la autoliquidación rectificativa solicito dar de baja/modificar la domiciliación efectuada
+        datos += "".ljust(1, " ")
+        # Rectificativa - Exclusivamente para determinados supuestos de autoliquidación rectificativa por discrepancia de criterio administrativo
+        # que no deban incluirse en otras casillas. Otros ajustes [108]
+        datos += self._convertir_a_centimos_str(0.0)
+        # Rectificativa - Rectificación - Importe [111]
+        datos += self._convertir_a_centimos_str(0.0)
         # Reservado para la AEAT
-        datos += self._RESERVADO_ADMON_35_ESPACIOS
+        datos += self._RESERVADO_ADMON_120_ESPACIOS
+        # Rectificativa - Motivo de la rectificación: Rectificaciones (excepto incluidas en el motivo siguiente)
+        datos += "".ljust(1, " ")
+        # Rectificativa - Motivo de la rectificación: Discrepancia criterio administrativo
+        datos += "".ljust(1, " ")
         # Reservado para la AEAT
-        datos += self._RESERVADO_ADMON_86_ESPACIOS
-        # Reservado para la AEAT
-        datos += self._RESERVADO_ADMON_479_ESPACIOS
+        datos += self._RESERVADO_ADMON_443_ESPACIOS
         # Indicador de fin de registro página 3
         datos += self._DP30303_CIERRE
         return datos
@@ -579,7 +591,7 @@ class Modelo303Ejercicio2023(Modelo303Base):
         iva_devengado = round(self.datos.base_imponible * 0.21, 2)
         total_iva_deducible = round(
             self.datos.iva_gastos_bienes_servicios
-            + self.datos.iva_adquisiciones_bienes_inversion,
+            + self.datos.iva_adquisiciones_bienes_inversion,  # noqa:W503
             2,
         )
         return round(iva_devengado - total_iva_deducible, 2)
@@ -655,6 +667,6 @@ class Modelo303Ejercicio2023(Modelo303Base):
     def _base_tipo_cuota_str(self, base, tipo, cuota):
         return (
             self._convertir_a_centimos_str(base)
-            + self._porcentaje_str(tipo)
-            + self._convertir_a_centimos_str(cuota)
+            + self._porcentaje_str(tipo)  # noqa:W503
+            + self._convertir_a_centimos_str(cuota)  # noqa:W503
         )
