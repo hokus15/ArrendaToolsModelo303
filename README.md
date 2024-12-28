@@ -4,7 +4,7 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/hokus15/ArrendaToolsModelo303?logo=github)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/hokus15/ArrendaToolsModelo303?logo=github)
 
-Módulo de Python que genera un string para la importación de datos en el modelo 303 de la Agencia Tributaria de España a partire del año 2023 (PRE 303 - Servicio ayuda modelo 303). El string generado se puede guardar en un fichero para importarlo en el modelo 303 para la presentación trimestral del IVA.
+Módulo de Python que genera un string para la importación de datos en el modelo 303 de la Agencia Tributaria de España a partir del año 2023 (PRE 303 - Servicio ayuda modelo 303). El string generado se puede guardar en un fichero para importarlo en el modelo 303 para la presentación trimestral del IVA.
 
 ## Limitaciones
 
@@ -41,50 +41,85 @@ Por tanto, se recomienda al usuario **revisar cuidadosamente la información gen
 
 ## Requisitos
 
-Este módulo requiere Python 3.7 o superior.
+Este módulo requiere Python 3.9 o superior.
 
 ## Uso
 
-El módulo cuenta con un objeto llamado Modelo303 que proporciona una interfaz para generar los datos del modelo 303 de la Agencia Tributaria. Este objeto cuenta con un método llamado `generar()` que permite crear un string, que guardado en un fichero de texto, es importable en la web de la Agencia Tributaria con los datos del modelo 303.
+El primer paso es recopilar la información necesaria para el trimestre fiscal que desees realizar la declaración. Esta información incluye datos del contribuyente, datos financieros y otros detalles específicos del trimestre. Algunos campos son obligatorios, como el periodo, la base imponible y el NIF del contribuyente, mientras que otros son opcionales dependiendo del contexto, como el volumen anual de operaciones (obligatorio solo en el cuarto trimestre).
 
-Para crear un objeto Modelo303, se deben proporcionar los datos necesarios para generar el modelo, como el nombre y NIF del del contribuyente, la información de facturación y los importes correspondientes. Es importante tener en cuenta que la Agencia Tributaria realiza validaciones adicionales, como verificar que el nombre y NIF coinciden con los del certificado que se usa para la presentación, que el IBAN es correcto, que la letra del NIF es correcta, entre otros.
+Usando la clase DatosModelo proporcionada por el módulo, puedes definir los datos requeridos. Cada campo tiene validaciones, como la longitud máxima, el formato y la obligatoriedad.
+Por ejemplo:
+
+```python
+from modelo_303 import DatosModelo, Periodo
+
+datos = DatosModelo(
+    periodo=Periodo.CUARTO_TRIMESTRE,
+    version="1.0",
+    nif_empresa_desarrollo="12345678X",
+    nombre_fiscal_contribuyente="DE LOS PALOTES PERICO",
+    nif_contribuyente="12345678X",
+    iban="ES0012341234123412341234",
+    base_imponible=10000.00,
+    gastos_bienes_servicios=500.00,
+    iva_gastos_bienes_servicios=105.00,
+    adquisiciones_bienes_inversion=3000.00,
+    iva_adquisiciones_bienes_inversion=630.00,
+    volumen_anual_operaciones=20000.00
+)
+```
+
+El módulo incluye un factory que facilita la creación del modelo a usar en función del ejercicio.
+Por ejemplo:
+
+```python
+modelo = get_modelo_303(2024, datos_modelo)
+```
+
+Ahora ya puedes generar el fichero utilizando el método correspondiente. Este método convierte los datos proporcionados en un formato compatible con el sistema de la Agencia Tributaria.
+Por ejemplo:
+
+
+```python
+datos_fichero = modelo.generar()
+```
 
 A continuación se muestra un ejemplo de cómo crear un objeto Modelo303 y generar un archivo con los datos del modelo:
 
 ```python
-from arrendatools.modelo303.modelo import Modelo303
-from arrendatools.modelo303.periodos import Periodo
+from arrendatools.modelo303.datos_modelo_303 import DatosModelo303, Periodo
+from arrendatools.modelo303.factory import get_modelo_303
 
-ejercicio = 2023
-periodo = Periodo.P1T
+periodo = Periodo.TERCER_TRIMESTRE
 nif_empresa_desarrollo = "12345678X"
 version = "v1.0"
 nombre_fiscal_contribuyente = "DE LOS PALOTES PERICO"
-nif_contribuyente = "98765432X"
+nif_contribuyente = "12345678X"
 iban = "ES0012341234123412341234"
-base_imponible = 2000.0
-gastos_bienes_servicios = 1000.0
-iva_gastos_bienes_servicios = 210.0
-adquisiciones_bienes_inversion = 2000.0
-iva_adquisiciones_bienes_inversion = 420.0
-volumen_anual_operaciones = 6000.0
+base_imponible = 2000.00
+gastos_bienes_servicios = 2500.0
+iva_gastos_bienes_servicios = 525.0
+adquisiciones_bienes_inversion = 0.0
+iva_adquisiciones_bienes_inversion = 0.0
+volumen_anual_operaciones = None
 
-datos_modelo = {
-    'periodo': periodo,
-    'nif_empresa_desarrollo': nif_empresa_desarrollo,
-    'version': version,
-    'nombre_fiscal_contribuyente': nombre_fiscal_contribuyente,
-    'nif_contribuyente': nif_contribuyente,
-    'iban': iban,
-    'base_imponible': base_imponible,
-    'gastos_bienes_servicios': gastos_bienes_servicios,
-    'iva_gastos_bienes_servicios': iva_gastos_bienes_servicios,
-    'adquisiciones_bienes_inversion': adquisiciones_bienes_inversion,
-    'iva_adquisiciones_bienes_inversion': iva_adquisiciones_bienes_inversion,
-    'volumen_anual_operaciones': volumen_anual_operaciones
-}
+datos_modelo = DatosModelo303(
+    periodo=periodo,
+    nif_empresa_desarrollo=nif_empresa_desarrollo,
+    version=version,
+    nombre_fiscal_contribuyente=nombre_fiscal_contribuyente,
+    nif_contribuyente=nif_contribuyente,
+    iban=iban,
+    base_imponible=base_imponible,
+    gastos_bienes_servicios=gastos_bienes_servicios,
+    iva_gastos_bienes_servicios=iva_gastos_bienes_servicios,
+    adquisiciones_bienes_inversion=adquisiciones_bienes_inversion,
+    iva_adquisiciones_bienes_inversion=iva_adquisiciones_bienes_inversion,
+    volumen_anual_operaciones=volumen_anual_operaciones,
+)
 
-modelo = Modelo303(ejercicio, datos_modelo)
+modelo = get_modelo_303(2024, datos_modelo)
+
 datos_fichero = modelo.generar()
 print(datos_fichero)
 
