@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "arrendatools.modelo303"
-version = "2024.1.0"
+version = "2026.0.0"
 authors = [
     {name = "Jordi Morell", email = "hokus@hotmail.com"},
 ]
