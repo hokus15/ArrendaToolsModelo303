@@ -1,17 +1,46 @@
-from .datos_modelo_303 import DatosModelo303
-from .ejercicio_2023 import Modelo303Ejercicio2023
-from .ejercicio_2024 import Modelo303Ejercicio2024
-from .ejercicio_2025 import Modelo303Ejercicio2025
+import importlib
+from pathlib import Path
+
+from arrendatools.modelo303.generador import Modelo303Generador
 
 
-def get_modelo_303(ejercicio: int, datos: DatosModelo303):
-    if ejercicio == 2023:
-        return Modelo303Ejercicio2023(ejercicio, datos)
-    elif ejercicio == 2024:
-        return Modelo303Ejercicio2024(ejercicio, datos)
-    elif ejercicio == 2025:
-        return Modelo303Ejercicio2025(ejercicio, datos)
-    else:
+class Modelo303Factory:
+    GENERADORES_PATH = Path(__file__).parent / "generadores"
+    GENERADOR_PREFIX = "generador_ejercicio_"
+
+    @staticmethod
+    def obtener_generador_modelo303(ejercicio: int) -> Modelo303Generador:
+        """Obtiene el generador del modelo 303 para el ejercicio especificado."""
+        # Nombre del módulo en términos de Python (relativo al paquete principal)
+        nombre_modulo = f"arrendatools.modelo303.generadores.{Modelo303Factory.GENERADOR_PREFIX}{ejercicio}"
+        # Ruta física al archivo del módulo
+        ruta_modulo = (
+            Modelo303Factory.GENERADORES_PATH
+            / f"{Modelo303Factory.GENERADOR_PREFIX}{ejercicio}.py"
+        )
+
+        if not ruta_modulo.exists():
+            raise ValueError(
+                f"No existe un generador para el ejercicio {ejercicio}"
+            )
+
+        try:
+            # Importa dinámicamente el módulo del generador
+            modulo = importlib.import_module(nombre_modulo)
+            # Busca una clase que implemente Modelo303Generador
+            for atributo in dir(modulo):
+                atributo_clase = getattr(modulo, atributo)
+                if (
+                    isinstance(atributo_clase, type)
+                    and issubclass(atributo_clase, Modelo303Generador)
+                    and atributo_clase is not Modelo303Generador
+                ):
+                    return atributo_clase(ejercicio)
+        except Exception as e:
+            raise ImportError(
+                f"Error al cargar el generador para el ejercicio {ejercicio}: {e}"
+            )
+
         raise ValueError(
-            f"No hay implementación del modelo 303 para el ejercicio {ejercicio}."
+            f"No se encontró una clase válida en el módulo para el ejercicio {ejercicio}"
         )
