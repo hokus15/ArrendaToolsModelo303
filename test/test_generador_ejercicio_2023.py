@@ -1,10 +1,10 @@
 import unittest
 
-from arrendatools.modelo303.datos_modelo_303 import DatosModelo303, Periodo
-from arrendatools.modelo303.factory import get_modelo_303
+from arrendatools.modelo303.datos import Modelo303Datos, Periodo
+from arrendatools.modelo303.factory import Modelo303Factory
 
 
-class Modelo303Ejercicio2023TestCase(unittest.TestCase):
+class GeneradorEjercicio2023TestCase(unittest.TestCase):
     def setUp(self):
         # Datos base válidos
         self.datos_validos = {
@@ -20,9 +20,9 @@ class Modelo303Ejercicio2023TestCase(unittest.TestCase):
         expected_result = "<T303020231T0000><AUX>                                                                      v1.0    12345678X                                                                                                                                                                                                                     </AUX><T30301000> U12345678EDE LOS PALOTES PERICO                                                           20231T22322222200000000 20000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000005000000000000000000000000000000000000010000000000000000000000000000000200000021000000000000004200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001750000000000000000000000000000000000000000000000000000000000000000000000000001400000000000000000000000000000000000005200000000000000000000000000000000000000000000000000000000000000004200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </T30301000><T30303000>0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000420001000000000000000042000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042000000000000000000000000000000000000000000000000042000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       </T30303000><T303DID00>           ES0012341234123412341234                                                                                                                                                   0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </T303DID00></T303020231T0000>"
         self.datos_validos["iban"] = "ES0012341234123412341234"
 
-        datos_modelo = DatosModelo303(**self.datos_validos)
-        modelo = get_modelo_303(2023, datos_modelo)
-        datos_fichero = modelo.generar()
+        datos_modelo = Modelo303Datos(**self.datos_validos)
+        modelo = Modelo303Factory.obtener_generador_modelo303(2023)
+        datos_fichero = modelo.generar(datos_modelo)
         self.assertEqual(datos_fichero, expected_result)
 
     def test_generar_modelo_123T_cuota_negativa(self):
@@ -31,9 +31,9 @@ class Modelo303Ejercicio2023TestCase(unittest.TestCase):
         self.datos_validos["gastos_bienes_servicios"] = 2500.0
         self.datos_validos["iva_gastos_bienes_servicios"] = 525.0
 
-        datos_modelo = DatosModelo303(**self.datos_validos)
-        modelo = get_modelo_303(2023, datos_modelo)
-        datos_fichero = modelo.generar()
+        datos_modelo = Modelo303Datos(**self.datos_validos)
+        modelo = Modelo303Factory.obtener_generador_modelo303(2023)
+        datos_fichero = modelo.generar(datos_modelo)
         self.assertEqual(datos_fichero, expected_result)
 
     def test_generar_modelo_4T_cuota_positiva(self):
@@ -42,9 +42,9 @@ class Modelo303Ejercicio2023TestCase(unittest.TestCase):
         self.datos_validos["periodo"] = Periodo.CUARTO_TRIMESTRE
         self.datos_validos["volumen_anual_operaciones"] = 6000.0
 
-        datos_modelo = DatosModelo303(**self.datos_validos)
-        modelo = get_modelo_303(2023, datos_modelo)
-        datos_fichero = modelo.generar()
+        datos_modelo = Modelo303Datos(**self.datos_validos)
+        modelo = Modelo303Factory.obtener_generador_modelo303(2023)
+        datos_fichero = modelo.generar(datos_modelo)
         self.assertEqual(datos_fichero, expected_result)
 
     def test_generar_modelo_4T_cuota_negativa(self):
@@ -53,9 +53,9 @@ class Modelo303Ejercicio2023TestCase(unittest.TestCase):
     def test_generar_modelo_sin_iban(self):
         expected_result = "<T303020231T0000><AUX>                                                                      v1.0    12345678X                                                                                                                                                                                                                     </AUX><T30301000> I12345678EDE LOS PALOTES PERICO                                                           20231T22322222200000000 20000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000005000000000000000000000000000000000000010000000000000000000000000000000200000021000000000000004200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001750000000000000000000000000000000000000000000000000000000000000000000000000001400000000000000000000000000000000000005200000000000000000000000000000000000000000000000000000000000000004200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </T30301000><T30303000>0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000420001000000000000000042000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042000000000000000000000000000000000000000000000000042000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       </T30303000><T303DID00>                                                                                                                                                                                      0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </T303DID00></T303020231T0000>"
 
-        datos_modelo = DatosModelo303(**self.datos_validos)
-        modelo = get_modelo_303(2023, datos_modelo)
-        datos_fichero = modelo.generar()
+        datos_modelo = Modelo303Datos(**self.datos_validos)
+        modelo = Modelo303Factory.obtener_generador_modelo303(2023)
+        datos_fichero = modelo.generar(datos_modelo)
         self.assertEqual(datos_fichero, expected_result)
 
 
