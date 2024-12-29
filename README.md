@@ -41,7 +41,7 @@ Por tanto, se recomienda al usuario **revisar cuidadosamente la información gen
 
 ## Requisitos
 
-Este módulo requiere Python 3.9 o superior.
+Este módulo requiere Python 3.10 o superior.
 
 ## Uso
 
@@ -73,7 +73,7 @@ El módulo incluye un factory que facilita la creación del modelo a usar en fun
 Por ejemplo:
 
 ```python
-modelo = get_modelo_303(2024, datos_modelo)
+modelo = Modelo303Factory.obtener_generador_modelo303(2024)
 ```
 
 Ahora ya puedes generar el fichero utilizando el método correspondiente. Este método convierte los datos proporcionados en un formato compatible con el sistema de la Agencia Tributaria.
@@ -81,14 +81,14 @@ Por ejemplo:
 
 
 ```python
-datos_fichero = modelo.generar()
+datos_fichero = modelo.generar(datos)
 ```
 
-A continuación se muestra un ejemplo de cómo crear un objeto Modelo303 y generar un archivo con los datos del modelo:
+A continuación se muestra un ejemplo completo de cómo crear un objeto GeneradorModelo303 para el ejercicio 2024 y generar un archivo con los datos del modelo:
 
 ```python
-from arrendatools.modelo303.datos_modelo_303 import DatosModelo303, Periodo
-from arrendatools.modelo303.factory import get_modelo_303
+from arrendatools.modelo303.modelo303_datos import Modelo303Datos, Periodo
+from arrendatools.modelo303.modelo303_factory import Modelo303Factory
 
 periodo = Periodo.TERCER_TRIMESTRE
 nif_empresa_desarrollo = "12345678X"
@@ -118,9 +118,9 @@ datos_modelo = DatosModelo303(
     volumen_anual_operaciones=volumen_anual_operaciones,
 )
 
-modelo = get_modelo_303(2024, datos_modelo)
+modelo = Modelo303Factory.obtener_generador_modelo303(2024)
 
-datos_fichero = modelo.generar()
+datos_fichero = modelo.generar(datos_modelo)
 print(datos_fichero)
 
 with open(f"{nif_contribuyente}_{ejercicio}_{periodo.value}.303", "w") as archivo:
