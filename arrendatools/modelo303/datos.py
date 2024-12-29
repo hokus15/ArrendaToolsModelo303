@@ -15,7 +15,7 @@ class Periodo(str, Enum):
     CUARTO_TRIMESTRE = "4T"
 
 
-class DatosModelo303(BaseModel):
+class Modelo303Datos(BaseModel):
     periodo: Periodo = Field(
         ..., description="Trimestre en formato 1T, 2T, 3T o 4T"
     )
