@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2026.0.1 (2025-01-02)
+
+### Bug Fixes
+
+- **model-generator**: Fix errors in 2024 generation for 4T
+  ([`df552e3`](https://github.com/hokus15/ArrendaToolsModelo303/commit/df552e34dd6b74fddd5bf0f37903582a7f415721))
+
+
 ## v2026.0.0 (2024-12-29)
 
 ### Continuous Integration
