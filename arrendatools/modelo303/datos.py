@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import Optional
 
 from pydantic import BaseModel, Field, model_validator
 
@@ -39,7 +40,7 @@ class Modelo303Datos(BaseModel):
         max_length=LONGITUD_NIF,
         description="NIF del contribuyente",
     )
-    iban: str = Field(
+    iban: Optional[str] = Field(
         "",
         min_length=MAX_LONGITUD_IBAN,
         max_length=MAX_LONGITUD_IBAN,
