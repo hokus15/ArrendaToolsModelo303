@@ -165,8 +165,10 @@ class GeneradorEjercicio2024(Modelo303Generador):
         modelo += self._base_tipo_cuota_str(0.0, 0.0, 0.0)
         # IVA Devengado - Régimen general 4%. Casillas: [1], [2], [3]
         modelo += self._base_tipo_cuota_str(0.0, 4.0, 0.0)
-        # IVA Devengado - Régimen general 5%. Casillas: [153], [154], [155]
-        modelo += self._base_tipo_cuota_str(0.0, 5.0, 0.0)
+        # IVA Devengado - Régimen general. Casillas: [153], [154], [155]
+        # 5.0% - 1T a 3T de 2024
+        # 7,5% - A partir de 10 y 4T de 2024 y ejercicios posteriores
+        modelo += self._base_tipo_cuota_str(0.0, 7.5, 0.0)
         # IVA Devengado - Regimen general 10%. Casillas: [4], [5], [6]
         modelo += self._base_tipo_cuota_str(0.0, 10.0, 0.0)
         # IVA Devengado - Regimen general 21%. Casillas: [7], [8], [9]
@@ -181,8 +183,10 @@ class GeneradorEjercicio2024(Modelo303Generador):
         modelo += self._base_cuota_str(0.0, 0.0)
         # IVA Devengado - Recargo equivalencia 1,75%. Casillas: [156], [157], [158]
         modelo += self._base_tipo_cuota_str(0.0, 1.75, 0.0)
-        # IVA Devengado - Recargo equivalencia 0%, 0,5% o 0,62%. Casillas: [16], [17], [18]
-        modelo += self._base_tipo_cuota_str(0.0, 0.0, 0.0)
+        # IVA Devengado - Recargo equivalencia. Casillas: [16], [17], [18]
+        # 0%, 0,5% o 0,62% - 1T a 3T de 2024
+        # 1% - A partir de 10 y 4T de 2024 y ejercicios posteriores
+        modelo += self._base_tipo_cuota_str(0.0, 1.0, 0.0)
         # IVA Devengado - Recargo equivalencia 1,40%. Casillas: [19], [20], [21]
         modelo += self._base_tipo_cuota_str(0.0, 1.4, 0.0)
         # IVA Devengado - Recargo equivalencia 5,20%. Casillas: [22], [23], [24]
@@ -222,10 +226,10 @@ class GeneradorEjercicio2024(Modelo303Generador):
         modelo += self._convertir_a_centimos_str(total_iva_deducible)
         # IVA Deducible - Resultado régimen general. Casillas: ( [27] - [45] ) -> Cuota [46]
         modelo += self._convertir_a_centimos_str(cuota)
-        # IVA Devengado - Régimen general 2%. Casillas: [155], [156], [157]
-        modelo += self._base_tipo_cuota_str(0.0, 0.0, 0.0)
-        # IVA Devengado - Recargo equivalencia 2,60%. Casillas: [168], [169], [170]
-        modelo += self._base_tipo_cuota_str(0.0, 0.0, 0.0)
+        # IVA Devengado - Régimen general 2%. Casillas: [165], [166], [167]
+        modelo += self._base_tipo_cuota_str(0.0, 2.0, 0.0)
+        # IVA Devengado - Recargo equivalencia 0,26% ó 0,5%. Casillas: [168], [169], [170]
+        modelo += self._base_tipo_cuota_str(0.0, 0.5, 0.0)
         # Reservado para la AEAT
         modelo += self._RESERVADO_ADMON_522_ESPACIOS
         # Reservado para la AEAT - Sello electrónico reservado para la AEAT
@@ -576,8 +580,12 @@ class GeneradorEjercicio2024(Modelo303Generador):
         modelo = self._DP303DID_APERTURA
         # Devolución. SWIFT-BIC
         modelo += "".ljust(11, " ")
-        if self._calcula_cuota(datos) < 0:
-            # Si la cuota es negativa no se incluye el IBAN
+        if (
+            self._calcula_cuota(datos) < 0
+            or datos.iban is None
+            or datos.iban == ""
+        ):
+            # Si la cuota es negativa, o no se ha proporcionado IBAN, no se incluye
             # Domiciliación/Devolución - IBAN
             modelo += "".ljust(34, " ")
         else:
