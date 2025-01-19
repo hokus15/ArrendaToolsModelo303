@@ -1,6 +1,55 @@
 # CHANGELOG
 
 
+## v2026.1.0 (2025-01-19)
+
+### Build System
+
+- **deps**: Bump python-semantic-release/publish-action
+  ([`16477b8`](https://github.com/hokus15/ArrendaToolsModelo303/commit/16477b8a0b2eb98c7f02f6a1d13b026b0f74b6fe))
+
+Bumps
+  [python-semantic-release/publish-action](https://github.com/python-semantic-release/publish-action)
+  from 9.15.2 to 9.16.1. - [Release
+  notes](https://github.com/python-semantic-release/publish-action/releases) -
+  [Changelog](https://github.com/python-semantic-release/publish-action/blob/main/releaserc.toml) -
+  [Commits](https://github.com/python-semantic-release/publish-action/compare/v9.15.2...v9.16.1)
+
+--- updated-dependencies: - dependency-name: python-semantic-release/publish-action dependency-type:
+  direct:production
+
+update-type: version-update:semver-minor
+
+...
+
+Signed-off-by: dependabot[bot] <support@github.com>
+
+- **deps**: Bump python-semantic-release/python-semantic-release
+  ([`0dd1312`](https://github.com/hokus15/ArrendaToolsModelo303/commit/0dd1312138b861b5c0de84052f2274cd25ab019b))
+
+Bumps
+  [python-semantic-release/python-semantic-release](https://github.com/python-semantic-release/python-semantic-release)
+  from 9.15.2 to 9.16.1. - [Release
+  notes](https://github.com/python-semantic-release/python-semantic-release/releases) -
+  [Changelog](https://github.com/python-semantic-release/python-semantic-release/blob/master/CHANGELOG.md)
+  -
+  [Commits](https://github.com/python-semantic-release/python-semantic-release/compare/v9.15.2...v9.16.1)
+
+--- updated-dependencies: - dependency-name: python-semantic-release/python-semantic-release
+  dependency-type: direct:production
+
+update-type: version-update:semver-minor
+
+...
+
+Signed-off-by: dependabot[bot] <support@github.com>
+
+### Features
+
+- **2025-functional-version**: First 2025 functional version
+  ([`ac4b01d`](https://github.com/hokus15/ArrendaToolsModelo303/commit/ac4b01d91ba921251fda8425dd1d5ea0c67349d0))
+
+
 ## v2026.0.1 (2025-01-02)
 
 ### Bug Fixes
