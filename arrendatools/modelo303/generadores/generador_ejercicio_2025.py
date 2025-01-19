@@ -168,7 +168,9 @@ class GeneradorEjercicio2025(Modelo303Generador):
         # IVA Devengado - Régimen general. Casillas: [153], [154], [155]
         # 5.0% - 1T a 3T de 2024
         # 7,5% - A partir de 10 y 4T de 2024 y ejercicios posteriores
-        modelo += self._base_tipo_cuota_str(0.0, 7.5, 0.0)
+        # 14/01/25 - IVA 303 (2025): Actualización del Diseño de Registro del modelo 303 para el ejercicio 2025 y siguientes
+        # Se pone a 0.0
+        modelo += self._base_tipo_cuota_str(0.0, 0.0, 0.0)
         # IVA Devengado - Regimen general 10%. Casillas: [4], [5], [6]
         modelo += self._base_tipo_cuota_str(0.0, 10.0, 0.0)
         # IVA Devengado - Regimen general 21%. Casillas: [7], [8], [9]
@@ -186,7 +188,9 @@ class GeneradorEjercicio2025(Modelo303Generador):
         # IVA Devengado - Recargo equivalencia. Casillas: [16], [17], [18]
         # 0%, 0,5% o 0,62% - 1T a 3T de 2024
         # 1% - A partir de 10 y 4T de 2024 y ejercicios posteriores
-        modelo += self._base_tipo_cuota_str(0.0, 1.0, 0.0)
+        # 14/01/25 - IVA 303 (2025): Actualización del Diseño de Registro del modelo 303 para el ejercicio 2025 y siguientes
+        # Se pone a 0.0
+        modelo += self._base_tipo_cuota_str(0.0, 0.0, 0.0)
         # IVA Devengado - Recargo equivalencia 1,40%. Casillas: [19], [20], [21]
         modelo += self._base_tipo_cuota_str(0.0, 1.4, 0.0)
         # IVA Devengado - Recargo equivalencia 5,20%. Casillas: [22], [23], [24]
@@ -227,7 +231,9 @@ class GeneradorEjercicio2025(Modelo303Generador):
         # IVA Deducible - Resultado régimen general. Casillas: ( [27] - [45] ) -> Cuota [46]
         modelo += self._convertir_a_centimos_str(cuota)
         # IVA Devengado - Régimen general 2%. Casillas: [165], [166], [167]
-        modelo += self._base_tipo_cuota_str(0.0, 2.0, 0.0)
+        # 14/01/25 - IVA 303 (2025): Actualización del Diseño de Registro del modelo 303 para el ejercicio 2025 y siguientes
+        # Se pone a 0.0
+        modelo += self._base_tipo_cuota_str(0.0, 0.0, 0.0)
         # IVA Devengado - Recargo equivalencia 0,26% ó 0,5%. Casillas: [168], [169], [170]
         modelo += self._base_tipo_cuota_str(0.0, 0.5, 0.0)
         # Reservado para la AEAT
@@ -244,16 +250,6 @@ class GeneradorEjercicio2025(Modelo303Generador):
         En el caso de arrendadores con IVA esta sección no se
         tiene que rellenar.
         """
-        # Los cambios del 27/03/2024 sólo aplican a esta página por
-        # lo que no se requiere ningún cambio adicional.
-
-        # Los cambios del 18/07/2024 que aplican a esta página no
-        # se incluyen ya que en el caso de arrendadores con IVA esta
-        # sección no se tiene que rellenar.
-
-        # Los cambios del 19/11/2024 que aplican a esta página no
-        # se incluyen ya que en el caso de arrendadores con IVA esta
-        # sección no se tiene que rellenar.
 
         return ""
 
