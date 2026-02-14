@@ -577,7 +577,11 @@ class GeneradorEjercicio2026(Modelo303Generador):
         modelo = self._DP303DID_APERTURA
         # Devolución. SWIFT-BIC
         modelo += "".ljust(11, " ")
-        if self._calcula_cuota(datos) < 0 or datos.iban is None or datos.iban == "":
+        if (
+            self._calcula_cuota(datos) < 0
+            or datos.iban is None
+            or datos.iban == ""
+        ):
             # Si la cuota es negativa no se incluye el IBAN
             # Domiciliación/Devolución - IBAN
             modelo += "".ljust(34, " ")
@@ -672,8 +676,9 @@ class GeneradorEjercicio2026(Modelo303Generador):
         return self._convertir_a_centimos_zfill(valor, 5)
 
     def _base_cuota_str(self, base, cuota):
-        return self._convertir_a_centimos_str(base) + self._convertir_a_centimos_str(
-            cuota
+        return (
+            self._convertir_a_centimos_str(base)
+            + self._convertir_a_centimos_str(cuota)
         )
 
     def _base_tipo_cuota_str(self, base, tipo, cuota):
