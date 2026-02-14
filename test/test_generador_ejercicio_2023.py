@@ -6,6 +6,7 @@ from arrendatools.modelo303.factory import Modelo303Factory
 
 class GeneradorEjercicio2023TestCase(unittest.TestCase):
     def setUp(self):
+        self.anyo_fiscal = 2023
         # Datos base válidos
         self.datos_validos = {
             "periodo": Periodo.PRIMER_TRIMESTRE,
@@ -21,7 +22,7 @@ class GeneradorEjercicio2023TestCase(unittest.TestCase):
         self.datos_validos["iban"] = "ES0012341234123412341234"
 
         datos_modelo = Modelo303Datos(**self.datos_validos)
-        modelo = Modelo303Factory.obtener_generador_modelo303(2023)
+        modelo = Modelo303Factory.obtener_generador_modelo303(self.anyo_fiscal)
         datos_fichero = modelo.generar(datos_modelo)
         self.assertEqual(datos_fichero, expected_result)
 
@@ -32,7 +33,7 @@ class GeneradorEjercicio2023TestCase(unittest.TestCase):
         self.datos_validos["iva_gastos_bienes_servicios"] = 525.0
 
         datos_modelo = Modelo303Datos(**self.datos_validos)
-        modelo = Modelo303Factory.obtener_generador_modelo303(2023)
+        modelo = Modelo303Factory.obtener_generador_modelo303(self.anyo_fiscal)
         datos_fichero = modelo.generar(datos_modelo)
         self.assertEqual(datos_fichero, expected_result)
 
@@ -43,20 +44,49 @@ class GeneradorEjercicio2023TestCase(unittest.TestCase):
         self.datos_validos["volumen_anual_operaciones"] = 6000.0
 
         datos_modelo = Modelo303Datos(**self.datos_validos)
-        modelo = Modelo303Factory.obtener_generador_modelo303(2023)
+        modelo = Modelo303Factory.obtener_generador_modelo303(self.anyo_fiscal)
         datos_fichero = modelo.generar(datos_modelo)
         self.assertEqual(datos_fichero, expected_result)
 
     def test_generar_modelo_4T_cuota_negativa(self):
-        pass
+        self.datos_validos["iban"] = "ES0012341234123412341234"
+        self.datos_validos["periodo"] = Periodo.CUARTO_TRIMESTRE
+        self.datos_validos["gastos_bienes_servicios"] = 2500.0
+        self.datos_validos["iva_gastos_bienes_servicios"] = 525.0
+        self.datos_validos["volumen_anual_operaciones"] = 6000.0
+
+        datos_modelo = Modelo303Datos(**self.datos_validos)
+        modelo = Modelo303Factory.obtener_generador_modelo303(self.anyo_fiscal)
+        datos_fichero = modelo.generar(datos_modelo)
+
+        self.assertIn("<T30301000> D", datos_fichero)
+        self.assertIn("<T30304000>", datos_fichero)
+        self.assertIn("<T30305000>", datos_fichero)
+        self.assertNotIn("ES0012341234123412341234", datos_fichero)
 
     def test_generar_modelo_sin_iban(self):
         expected_result = "<T303020231T0000><AUX>                                                                      v1.0    12345678X                                                                                                                                                                                                                     </AUX><T30301000> I12345678EDE LOS PALOTES PERICO                                                           20231T22322222200000000 20000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000005000000000000000000000000000000000000010000000000000000000000000000000200000021000000000000004200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001750000000000000000000000000000000000000000000000000000000000000000000000000001400000000000000000000000000000000000005200000000000000000000000000000000000000000000000000000000000000004200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </T30301000><T30303000>0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000420001000000000000000042000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042000000000000000000000000000000000000000000000000042000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       </T30303000><T303DID00>                                                                                                                                                                                      0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </T303DID00></T303020231T0000>"
 
         datos_modelo = Modelo303Datos(**self.datos_validos)
-        modelo = Modelo303Factory.obtener_generador_modelo303(2023)
+        modelo = Modelo303Factory.obtener_generador_modelo303(self.anyo_fiscal)
         datos_fichero = modelo.generar(datos_modelo)
         self.assertEqual(datos_fichero, expected_result)
+
+    def test_tipo_declaracion_cuota_cero(self):
+        self.datos_validos["base_imponible"] = 0.0
+
+        datos_modelo = Modelo303Datos(**self.datos_validos)
+        modelo = Modelo303Factory.obtener_generador_modelo303(self.anyo_fiscal)
+
+        self.assertEqual(modelo._tipo_declaracion(datos_modelo), "N")
+
+    def test_convertir_a_centimos_negativo(self):
+        modelo = Modelo303Factory.obtener_generador_modelo303(self.anyo_fiscal)
+
+        self.assertEqual(modelo._convertir_a_centimos_zfill(-12.34, 5), "N1234")
+        centimos = modelo._convertir_a_centimos_str(-1.23)
+        self.assertTrue(centimos.startswith("N"))
+        self.assertEqual(len(centimos), 17)
 
 
 if __name__ == "__main__":
