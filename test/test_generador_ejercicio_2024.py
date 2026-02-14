@@ -6,6 +6,7 @@ from arrendatools.modelo303.factory import Modelo303Factory
 
 class GeneradorEjercicio2024TestCase(unittest.TestCase):
     def setUp(self):
+        self.anyo_fiscal = 2024
         # Datos base válidos
         self.datos_validos = {
             "periodo": Periodo.TERCER_TRIMESTRE,
@@ -21,7 +22,7 @@ class GeneradorEjercicio2024TestCase(unittest.TestCase):
         self.datos_validos["iban"] = "ES0012341234123412341234"
 
         datos_modelo = Modelo303Datos(**self.datos_validos)
-        modelo = Modelo303Factory.obtener_generador_modelo303(2024)
+        modelo = Modelo303Factory.obtener_generador_modelo303(self.anyo_fiscal)
         datos_fichero = modelo.generar(datos_modelo)
         self.assertEqual(datos_fichero, expected_result)
 
@@ -32,7 +33,7 @@ class GeneradorEjercicio2024TestCase(unittest.TestCase):
         self.datos_validos["iva_gastos_bienes_servicios"] = 525.0
 
         datos_modelo = Modelo303Datos(**self.datos_validos)
-        modelo = Modelo303Factory.obtener_generador_modelo303(2024)
+        modelo = Modelo303Factory.obtener_generador_modelo303(self.anyo_fiscal)
         datos_fichero = modelo.generar(datos_modelo)
         self.assertEqual(datos_fichero, expected_result)
 
@@ -43,7 +44,7 @@ class GeneradorEjercicio2024TestCase(unittest.TestCase):
         self.datos_validos["volumen_anual_operaciones"] = 6000.0
 
         datos_modelo = Modelo303Datos(**self.datos_validos)
-        modelo = Modelo303Factory.obtener_generador_modelo303(2024)
+        modelo = Modelo303Factory.obtener_generador_modelo303(self.anyo_fiscal)
         datos_fichero = modelo.generar(datos_modelo)
         self.assertEqual(datos_fichero, expected_result)
 
@@ -56,7 +57,7 @@ class GeneradorEjercicio2024TestCase(unittest.TestCase):
         self.datos_validos["volumen_anual_operaciones"] = 6000.0
 
         datos_modelo = Modelo303Datos(**self.datos_validos)
-        modelo = Modelo303Factory.obtener_generador_modelo303(2024)
+        modelo = Modelo303Factory.obtener_generador_modelo303(self.anyo_fiscal)
         datos_fichero = modelo.generar(datos_modelo)
         self.assertEqual(datos_fichero, expected_result)
 
@@ -64,9 +65,19 @@ class GeneradorEjercicio2024TestCase(unittest.TestCase):
         expected_result = "<T303020243T0000><AUX>                                                                      v1.0    12345678X                                                                                                                                                                                                                     </AUX><T30301000> I12345678EDE LOS PALOTES PERICO                                                           20243T22322222200000000 20000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000007500000000000000000000000000000000000010000000000000000000000000000000200000021000000000000004200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001750000000000000000000000000000000000001000000000000000000000000000000000000001400000000000000000000000000000000000005200000000000000000000000000000000000000000000000000000000000000004200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042000000000000000000000020000000000000000000000000000000000000005000000000000000000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       </T30301000><T30303000>0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000420001000000000000000042000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042000000000000000000000000000000000000000000000000042000                0000000000000000000000000000000000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </T30303000><T303DID00>                                                                                                                                                                                      0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </T303DID00></T303020243T0000>"
 
         datos_modelo = Modelo303Datos(**self.datos_validos)
-        modelo = Modelo303Factory.obtener_generador_modelo303(2024)
+        modelo = Modelo303Factory.obtener_generador_modelo303(self.anyo_fiscal)
         datos_fichero = modelo.generar(datos_modelo)
         self.assertEqual(datos_fichero, expected_result)
+
+    def test_generar_did_con_iban_none(self):
+        self.datos_validos["iban"] = None
+
+        datos_modelo = Modelo303Datos(**self.datos_validos)
+        modelo = Modelo303Factory.obtener_generador_modelo303(self.anyo_fiscal)
+        did = modelo._generar_dp303_did(datos_modelo)
+
+        expected_prefix = "<T303DID00>" + (" " * 45)
+        self.assertTrue(did.startswith(expected_prefix))
 
 
 if __name__ == "__main__":

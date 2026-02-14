@@ -6,7 +6,6 @@ from arrendatools.modelo303.datos import Modelo303Datos, Periodo
 
 
 class Modelo303DatosTestCase(unittest.TestCase):
-
     def setUp(self):
         # Datos base válidos
         self.datos_validos = {
@@ -26,6 +25,20 @@ class Modelo303DatosTestCase(unittest.TestCase):
             "El volumen anual de operaciones es obligatorio en el 4º trimestre*",
         ):
             Modelo303Datos(**self.datos_validos)
+
+    def test_generar_modelo_4T_volumen_anual_ok(self):
+        self.datos_validos["periodo"] = Periodo.CUARTO_TRIMESTRE
+        self.datos_validos["volumen_anual_operaciones"] = 10000.0
+
+        datos = Modelo303Datos(**self.datos_validos)
+        self.assertEqual(datos.volumen_anual_operaciones, 10000.0)
+
+    def test_generar_modelo_no_4T_volumen_anual_none(self):
+        self.datos_validos["periodo"] = Periodo.PRIMER_TRIMESTRE
+        self.datos_validos["volumen_anual_operaciones"] = None
+
+        datos = Modelo303Datos(**self.datos_validos)
+        self.assertIsNone(datos.volumen_anual_operaciones)
 
     def test_generar_modelo_nif_ed_largo(self):
         self.datos_validos["nif_empresa_desarrollo"] = (
@@ -71,6 +84,12 @@ class Modelo303DatosTestCase(unittest.TestCase):
 
     def test_generar_modelo_iban_largo(self):
         self.datos_validos["iban"] = "ES001234123412341234123412345678901"
+        with self.assertRaises(ValidationError) as cm:
+            Modelo303Datos(**self.datos_validos)
+        self.assertIn("iban", str(cm.exception))
+
+    def test_generar_modelo_iban_corto(self):
+        self.datos_validos["iban"] = "ES0012"
         with self.assertRaises(ValidationError) as cm:
             Modelo303Datos(**self.datos_validos)
         self.assertIn("iban", str(cm.exception))
