@@ -11,7 +11,7 @@ IBAN_LENGTH = 24
 
 
 class Modelo303Data(BaseModel):
-    ejercicio: Period = Field(..., description="Trimestre en formato 1T, 2T, 3T o 4T")
+    periodo: Period = Field(..., description="Trimestre en formato 1T, 2T, 3T o 4T")
     version: str = Field(..., max_length=MAX_VERSION_LENGTH, description="Version")
     nif_empresa_desarrollo: str = Field(
         ...,
@@ -56,7 +56,7 @@ class Modelo303Data(BaseModel):
     @model_validator(mode="after")
     def check_volumen_anual_operaciones(self):
         if (
-            self.ejercicio == Period.FOURTH_QUARTER
+            self.periodo == Period.FOURTH_QUARTER
             and self.volumen_anual_operaciones is None
         ):
             raise ValueError(

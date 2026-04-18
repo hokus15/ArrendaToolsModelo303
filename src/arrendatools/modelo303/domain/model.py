@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from decimal import Decimal, ROUND_HALF_UP
+from decimal import ROUND_HALF_UP, Decimal
 from typing import ClassVar
 
 from arrendatools.modelo303.application.data import Modelo303Data
@@ -308,7 +308,7 @@ class Modelo303Model:
     def from_data(cls, data: Modelo303Data, fiscal_year: int) -> "Modelo303Model":
         model = cls()
         model.ejercicio = str(fiscal_year)
-        model.periodo = data.ejercicio.value
+        model.periodo = data.periodo.value
         model.version = data.version
         model.developer_nif = data.nif_empresa_desarrollo
         model.iban = data.iban or ""
@@ -329,8 +329,8 @@ class Modelo303Model:
         model.revocacion_prorrata = cls._NO
         model.concurso = cls._NO
         model.sii = cls._NO
-        model.exencion_390 = model.exoneracion_modelo_390(data.ejercicio)
-        model.operaciones_no_cero = model.operaciones_no_0(data.ejercicio)
+        model.exencion_390 = model.exoneracion_modelo_390(data.periodo)
+        model.operaciones_no_cero = model.operaciones_no_0(data.periodo)
         model.indicador_pago_gasolina = cls._ES_T
 
         model.casilla_65 = Decimal("100.00")
