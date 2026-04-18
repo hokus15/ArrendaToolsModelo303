@@ -22,7 +22,7 @@ class TestModelo303Data(unittest.TestCase):
         self.datos_validos["ejercicio"] = Period.FOURTH_QUARTER
 
         with self.assertRaisesRegex(
-            ValueError,
+            ValidationError,
             "El volumen anual de operaciones es obligatorio en el 4º trimestre*",
         ):
             Modelo303Data(**self.datos_validos)

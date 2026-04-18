@@ -6,6 +6,13 @@ This module defines:
 """
 
 from decimal import Decimal
+from typing import TYPE_CHECKING
+from collections.abc import Callable
+
+if TYPE_CHECKING:
+    from arrendatools.modelo303.domain.model import Modelo303Model
+
+Calculator = Callable[["Modelo303Model"], Decimal]
 
 # Simple value overrides that apply uniformly
 CASILLA_DEFAULTS: dict[str, Decimal] = {
@@ -16,7 +23,7 @@ CASILLA_DEFAULTS: dict[str, Decimal] = {
 
 # Calculator functions that override the default compute_casilla_* methods
 # Each receives the model instance and returns the computed value
-CASILLA_CALCULATORS: dict[str, "callable"] = {
+CASILLA_CALCULATORS: dict[str, Calculator] = {
     # In 2026: casilla_71 = casilla_69 - casilla_70 + casilla_109 - casilla_112
     # (DOES subtract casilla_112, unlike 2025)
     "casilla_71": lambda model: model.compute_casilla_69()
