@@ -1,11 +1,12 @@
 from decimal import Decimal
+from pathlib import Path
 
 from arrendatools.modelo303.application.data import Modelo303Data
 from arrendatools.modelo303.application.facade import get_generator
 from arrendatools.modelo303.domain.enums import Period
 
 ejercicio = 2025
-period = Period.FIRST_QUARTER
+periodo = Period.FIRST_QUARTER
 nif_empresa_desarrollo = "12345678X"
 version = "1.00"
 # nif_empresa_desarrollo = "Q2826000H"
@@ -24,7 +25,7 @@ cuota_adquisiones_bienes_inversion = Decimal("0.0")
 volumen_anual_operaciones = Decimal("6000.0")
 
 datos_modelo = Modelo303Data(
-    ejercicio=period,
+    periodo=periodo,
     nif_empresa_desarrollo=nif_empresa_desarrollo,
     version=version,
     razon_social=razon_social,
@@ -43,8 +44,9 @@ modelo = get_generator(ejercicio)
 datos_fichero = modelo.generate(datos_modelo)
 print(datos_fichero)
 
-with open(
-    f"C:\\Users\\hokus\\Downloads\\{nif_contribuyente}_{ejercicio}_{period.value}.303",
-    "w",
-) as archivo:
+output_dir = Path("output")
+output_dir.mkdir(parents=True, exist_ok=True)
+output_file = output_dir / f"{nif_contribuyente}_{ejercicio}_{periodo.value}.303"
+
+with open(output_file, "w") as archivo:
     archivo.write(datos_fichero)

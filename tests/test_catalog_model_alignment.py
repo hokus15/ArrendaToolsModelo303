@@ -31,7 +31,7 @@ LITERAL_FIELDS = {
 
 def _build_model(fiscal_year: int = 2026) -> Modelo303Model:
     data = Modelo303Data(
-        ejercicio=Period.THIRD_QUARTER,
+        periodo=Period.THIRD_QUARTER,
         version="v1.0",
         nif_empresa_desarrollo="12345678X",
         razon_social="DE LOS PALOTES PERICO",
