@@ -8,6 +8,7 @@ from arrendatools.modelo303.infrastructure.layout import LayoutSpec
 
 class Modelo303Generator:
     def __init__(self, fiscal_year: int, layout: LayoutSpec):
+        """Initialize generator for a fiscal year and layout."""
         self.fiscal_year = fiscal_year
         self.layout = layout
 
