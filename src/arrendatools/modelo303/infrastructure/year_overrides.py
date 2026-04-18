@@ -1,5 +1,4 @@
-"""
-Year-specific field overrides registry for Modelo303Model.
+"""Year-specific field overrides registry for Modelo303Model.
 
 This centralizes per-year configuration including simple value overrides and custom calculators for fields that
 vary by fiscal year.
@@ -28,8 +27,7 @@ YEAR_OVERRIDES_REGISTRY: dict[int, tuple[dict[str, Decimal], dict[str, callable]
 
 
 def get_year_defaults(fiscal_year: int) -> dict[str, Decimal]:
-    """
-    Get simple value overrides for a given fiscal year.
+    """Get simple value overrides for a given fiscal year.
 
     Parameters
     ----------
@@ -48,8 +46,7 @@ def get_year_defaults(fiscal_year: int) -> dict[str, Decimal]:
 
 
 def get_year_calculators(fiscal_year: int) -> dict[str, callable]:
-    """
-    Get custom calculator functions for a given fiscal year.
+    """Get custom calculator functions for a given fiscal year.
 
     These override the default compute_casilla_* methods on the model.
 

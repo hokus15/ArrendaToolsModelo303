@@ -9,8 +9,7 @@ def get_golden_dir() -> Path:
 
 
 def load_golden(tax_year: int, scenario: str) -> str:
-    """
-    Load expected output from golden file.
+    """Load expected output from golden file.
 
     Parameters
     ----------
@@ -40,8 +39,7 @@ def load_golden(tax_year: int, scenario: str) -> str:
 
 
 def save_golden(tax_year: int, scenario: str, content: str) -> None:
-    """
-    Save output to golden file.
+    """Save output to golden file.
 
     Parameters
     ----------
