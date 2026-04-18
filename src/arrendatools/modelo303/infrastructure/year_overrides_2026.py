@@ -1,4 +1,5 @@
-"""Year-specific overrides for fiscal year 2026.
+"""
+Year-specific overrides for fiscal year 2026.
 
 This module defines:
 - Simple field value overrides
