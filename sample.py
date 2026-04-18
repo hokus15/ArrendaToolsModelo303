@@ -1,4 +1,5 @@
 from decimal import Decimal
+from pathlib import Path
 
 from arrendatools.modelo303.application.data import Modelo303Data
 from arrendatools.modelo303.application.facade import get_generator
@@ -43,8 +44,5 @@ modelo = get_generator(ejercicio)
 datos_fichero = modelo.generate(datos_modelo)
 print(datos_fichero)
 
-with open(
-    f"C:\\Users\\hokus\\Downloads\\{nif_contribuyente}_{ejercicio}_{period.value}.303",
-    "w",
-) as archivo:
-    archivo.write(datos_fichero)
+output_path = Path(f"{nif_contribuyente}_{ejercicio}_{period.value}.303")
+output_path.write_text(datos_fichero, encoding="utf-8")

@@ -1,6 +1,6 @@
 import unittest
 
-from golden_helper import load_golden
+from tests.golden_helper import load_golden
 
 from arrendatools.modelo303.application.data import Modelo303Data
 from arrendatools.modelo303.application.facade import get_generator
