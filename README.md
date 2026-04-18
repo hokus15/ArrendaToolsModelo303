@@ -42,6 +42,7 @@ El software se distribuye bajo licencia MIT y se proporciona **"tal cual" ("AS I
 En la máxima medida permitida por la legislación aplicable, el autor y colaboradores no asumen responsabilidad por daños, pérdidas, sanciones, recargos, intereses, costes o reclamaciones derivados del uso, mal uso o imposibilidad de uso de la librería, incluidos errores en datos de entrada, configuraciones incorrectas, cambios de criterio de la AEAT o falta de actualización del software.
 
 El usuario es el único responsable de:
+
 - La veracidad, integridad y actualización de los datos introducidos.
 - La revisión manual del fichero generado antes de su presentación.
 - La validación final ante la AEAT y el cumplimiento de sus obligaciones fiscales.
@@ -141,6 +142,7 @@ Para añadir un nuevo año (por ejemplo, `2027`) hay que revisar **4 piezas**: `
    - Verifica también los tests de alineación (`tests/test_catalog_model_alignment.py`), que detectan campos en layout sin catálogo o campos no renderizables.
 
 Checklist mínimo para dar por soportado un nuevo año:
+
 1. `get_generator(2027)` devuelve generador sin error.
 2. Todos los campos de `layout_2027` existen en `FIELD_CATALOG`.
 3. `Modelo303Model.from_data(...)` genera string válido para escenarios 1T/2T/3T, 4T y sin IBAN.

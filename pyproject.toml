@@ -33,6 +33,10 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 
+[tool.bandit]
+exclude_dirs = ["tests"]
+skips = ["B101"]
+
 [tool.semantic_release]
 logging_use_named_masks = true
 tag_format = "v{version}"
