@@ -7,7 +7,7 @@ from arrendatools.modelo303.domain.enums import Period
 
 def _base_valid_data() -> dict:
     return {
-        "ejercicio": Period.THIRD_QUARTER,
+        "periodo": Period.THIRD_QUARTER,
         "version": "v1.0",
         "nif_empresa_desarrollo": "12345678X",
         "razon_social": "DE LOS PALOTES PERICO",
@@ -18,7 +18,7 @@ def _base_valid_data() -> dict:
 
 def test_generate_model_4t_annual_volume_none():
     datos_validos = _base_valid_data()
-    datos_validos["ejercicio"] = Period.FOURTH_QUARTER
+    datos_validos["periodo"] = Period.FOURTH_QUARTER
 
     with pytest.raises(
         ValueError,
@@ -29,7 +29,7 @@ def test_generate_model_4t_annual_volume_none():
 
 def test_generate_model_4t_annual_volume_ok():
     datos_validos = _base_valid_data()
-    datos_validos["ejercicio"] = Period.FOURTH_QUARTER
+    datos_validos["periodo"] = Period.FOURTH_QUARTER
     datos_validos["volumen_anual_operaciones"] = 10000.0
 
     datos = Modelo303Data(**datos_validos)
@@ -38,7 +38,7 @@ def test_generate_model_4t_annual_volume_ok():
 
 def test_generate_model_non_4t_annual_volume_none():
     datos_validos = _base_valid_data()
-    datos_validos["ejercicio"] = Period.FIRST_QUARTER
+    datos_validos["periodo"] = Period.FIRST_QUARTER
     datos_validos["volumen_anual_operaciones"] = None
 
     datos = Modelo303Data(**datos_validos)
@@ -47,7 +47,7 @@ def test_generate_model_non_4t_annual_volume_none():
 
 def test_generate_model_4t_annual_volume_zero_is_valid():
     datos_validos = _base_valid_data()
-    datos_validos["ejercicio"] = Period.FOURTH_QUARTER
+    datos_validos["periodo"] = Period.FOURTH_QUARTER
     datos_validos["volumen_anual_operaciones"] = 0.0
 
     datos = Modelo303Data(**datos_validos)
@@ -65,11 +65,11 @@ def test_generate_model_defaults_for_optional_amounts():
 
 def test_generate_model_period_invalid():
     datos_validos = _base_valid_data()
-    datos_validos["ejercicio"] = "5T"
+    datos_validos["periodo"] = "5T"
 
     with pytest.raises(ValidationError) as excinfo:
         Modelo303Data(**datos_validos)
-    assert "ejercicio" in str(excinfo.value)
+    assert "periodo" in str(excinfo.value)
 
 
 def test_generate_model_dev_nif_long():

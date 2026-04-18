@@ -5,7 +5,7 @@ from arrendatools.modelo303.domain.model import Modelo303Model
 
 def _make_data(**overrides) -> Modelo303Data:
     payload = {
-        "ejercicio": Period.THIRD_QUARTER,
+        "periodo": Period.THIRD_QUARTER,
         "version": "v1.0",
         "nif_empresa_desarrollo": "12345678X",
         "razon_social": "DE LOS PALOTES PERICO",
@@ -64,7 +64,7 @@ def test_declaration_type_n_when_zero():
 
 def test_declaration_type_c_when_negative_and_not_q4():
     model = _make_model(
-        ejercicio=Period.THIRD_QUARTER,
+        periodo=Period.THIRD_QUARTER,
         base_imponible=1000.0,
         cuota_gastos_bienes_y_servicios=300.0,
         cuota_adquisiones_bienes_inversion=0.0,
@@ -74,7 +74,7 @@ def test_declaration_type_c_when_negative_and_not_q4():
 
 def test_declaration_type_d_when_negative_and_q4():
     model = _make_model(
-        ejercicio=Period.FOURTH_QUARTER,
+        periodo=Period.FOURTH_QUARTER,
         volumen_anual_operaciones=1000.0,
         base_imponible=1000.0,
         cuota_gastos_bienes_y_servicios=300.0,
@@ -113,9 +113,9 @@ def test_declaration_type_i_when_positive_with_iban_none():
 
 
 def test_modelo_390_exemption():
-    model_q1 = _make_model(ejercicio=Period.FIRST_QUARTER)
+    model_q1 = _make_model(periodo=Period.FIRST_QUARTER)
     model_q4 = _make_model(
-        ejercicio=Period.FOURTH_QUARTER,
+        periodo=Period.FOURTH_QUARTER,
         volumen_anual_operaciones=1000.0,
     )
 
@@ -124,9 +124,9 @@ def test_modelo_390_exemption():
 
 
 def test_has_non_zero_operations():
-    model_q2 = _make_model(ejercicio=Period.SECOND_QUARTER)
+    model_q2 = _make_model(periodo=Period.SECOND_QUARTER)
     model_q4 = _make_model(
-        ejercicio=Period.FOURTH_QUARTER,
+        periodo=Period.FOURTH_QUARTER,
         volumen_anual_operaciones=1000.0,
     )
 
