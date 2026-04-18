@@ -12,9 +12,9 @@ Example year override module structure:
     CASILLA_CALCULATORS_2025 = {"casilla_71": lambda model: ...}
 """
 
+from collections.abc import Callable
 from decimal import Decimal
 from typing import TYPE_CHECKING
-from collections.abc import Callable
 
 from .year_overrides_2025 import CASILLA_CALCULATORS as CASILLA_CALCULATORS_2025
 from .year_overrides_2025 import CASILLA_DEFAULTS as CASILLA_DEFAULTS_2025
@@ -22,7 +22,7 @@ from .year_overrides_2026 import CASILLA_CALCULATORS as CASILLA_CALCULATORS_2026
 from .year_overrides_2026 import CASILLA_DEFAULTS as CASILLA_DEFAULTS_2026
 
 if TYPE_CHECKING:
-    from arrendatools.modelo303.domain.model import Modelo303Model
+    from arrendatools.modelo303.domain.model import Modelo303Model  # noqa: F401
 
 # Signature for year-specific calculator overrides.
 Calculator = Callable[["Modelo303Model"], Decimal]
