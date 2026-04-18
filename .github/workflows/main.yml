@@ -24,12 +24,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install flake8
           pip install -r requirements.txt
+          pip install -e .
       - name: Lint with flake8
         run: |
           flake8 .
-      - name: Test with unittest
+      - name: Test with pytest
         run: |
-          python -m unittest discover -s test -p "test_*.py"
+          pytest
   release:
     name: Semantic Release
     runs-on: ubuntu-latest
