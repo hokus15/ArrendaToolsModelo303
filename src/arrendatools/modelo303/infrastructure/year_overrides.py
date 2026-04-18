@@ -12,23 +12,15 @@ Example year override module structure:
     CASILLA_CALCULATORS_2025 = {"casilla_71": lambda model: ...}
 """
 
-from collections.abc import Callable
 from decimal import Decimal
-from typing import TYPE_CHECKING
 
 from .year_overrides_2025 import CASILLA_CALCULATORS as CASILLA_CALCULATORS_2025
 from .year_overrides_2025 import CASILLA_DEFAULTS as CASILLA_DEFAULTS_2025
 from .year_overrides_2026 import CASILLA_CALCULATORS as CASILLA_CALCULATORS_2026
 from .year_overrides_2026 import CASILLA_DEFAULTS as CASILLA_DEFAULTS_2026
 
-if TYPE_CHECKING:
-    from arrendatools.modelo303.domain.model import Modelo303Model  # noqa: F401
-
-# Signature for year-specific calculator overrides.
-Calculator = Callable[["Modelo303Model"], Decimal]
-
 # Registry: fiscal_year -> (defaults dict, calculators dict)
-YEAR_OVERRIDES_REGISTRY: dict[int, tuple[dict[str, Decimal], dict[str, Calculator]]] = {
+YEAR_OVERRIDES_REGISTRY: dict[int, tuple[dict[str, Decimal], dict[str, callable]]] = {
     2025: (CASILLA_DEFAULTS_2025, CASILLA_CALCULATORS_2025),
     2026: (CASILLA_DEFAULTS_2026, CASILLA_CALCULATORS_2026),
 }
@@ -48,7 +40,7 @@ def get_year_defaults(fiscal_year: int) -> dict[str, Decimal]:
     return defaults
 
 
-def get_year_calculators(fiscal_year: int) -> dict[str, Calculator]:
+def get_year_calculators(fiscal_year: int) -> dict[str, callable]:
     """Get custom calculator functions for a given fiscal year.
 
     These override the default compute_casilla_* methods on the model.
