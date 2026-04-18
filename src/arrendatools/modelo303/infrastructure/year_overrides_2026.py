@@ -5,12 +5,12 @@ This module defines:
 - Custom calculator functions for fields that vary by year
 """
 
+from collections.abc import Callable
 from decimal import Decimal
 from typing import TYPE_CHECKING
-from collections.abc import Callable
 
 if TYPE_CHECKING:
-    from arrendatools.modelo303.domain.model import Modelo303Model
+    from arrendatools.modelo303.domain.model import Modelo303Model  # noqa: F401
 
 Calculator = Callable[["Modelo303Model"], Decimal]
 
