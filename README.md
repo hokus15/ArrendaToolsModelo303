@@ -225,15 +225,14 @@ BUILTIN_REGISTRY: dict[str, Callable] = {
 
 - Crea `tests/test_generator_tax_year_2027.py` tomando como base `test_generator_tax_year_2026.py`.
 - Añade ficheros golden en `tests/golden/2027/` para los escenarios 1T/2T/3T, 4T positivo, 4T negativo y sin IBAN.
-- Actualiza `tests/test_modelo303_factory.py` para incluir 2027 en los años soportados.
+- Verifica el alineamiento schema/modelo en `tests/test_catalog_model_alignment.py`.
 - Ejecuta `pytest tests/ -v` para validar que todos los tests pasan.
 
 ### Checklist mínimo
 
 - [ ] `get_generator(2027)` devuelve un generador sin error.
-- [ ] `test_all_schema_fields_exist_in_catalog` pasa (todos los campos del schema están en el catálogo).
-- [ ] `test_model_and_catalog_can_render_every_catalog_field` pasa.
-- [ ] Golden tests de 2027 pasan (1T/2T/3T, 4T y sin IBAN).
+- [ ] `tests/test_catalog_model_alignment.py` pasa.
+- [ ] Golden tests de 2027 pasan en `tests/test_generator_tax_year_2027.py` (1T/2T/3T, 4T y sin IBAN).
 - [ ] `pytest tests/ -v` sin fallos.
 
 Ahora ya puedes generar el fichero utilizando el método correspondiente. Este método convierte los datos proporcionados en un formato compatible con el sistema de la Agencia Tributaria.

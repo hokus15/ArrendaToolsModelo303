@@ -494,7 +494,14 @@ def import_sheet(sheet, page_id: str) -> tuple[list[dict], list[str]]:
             formula_expr = formula_result[1]
 
         # Stable id: {page_id}_{N} — N is the integer from the Nº column.
-        field_id = f"{page_id}_{int(raw_num)}"
+        try:
+            field_number = int(raw_num)
+        except (TypeError, ValueError):
+            warnings.append(
+                f"Sheet '{sheet.title}' row {row_idx}: cannot parse Nº {raw_num!r}"
+            )
+            continue
+        field_id = f"{page_id}_{field_number}"
 
         # Semantic name: inferred from description, or fall back to field_id
         if source == "formula":
@@ -831,9 +838,7 @@ def main() -> None:
             allow_unicode=True,
             sort_keys=False,
             default_flow_style=False,
-            width=float(
-                "inf"
-            ),  # prevent line-folding that produces YAML list artifacts
+            width=10_000,  # prevent line-folding that produces YAML list artifacts
         )
 
     # Summary
@@ -871,11 +876,5 @@ def main() -> None:
 
 
 # Entry point
-if __name__ == "__main__":
-    main()
-if __name__ == "__main__":
-    main()
-if __name__ == "__main__":
-    main()
 if __name__ == "__main__":
     main()

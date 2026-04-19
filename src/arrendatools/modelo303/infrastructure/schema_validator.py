@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import ast
 
+from arrendatools.modelo303.infrastructure.builtins import BUILTIN_REGISTRY
 from arrendatools.modelo303.infrastructure.schema import FieldSpec, SchemaSpec, Source
 
 VALID_PAGE_INCLUDE_WHEN = {"always", "fourth_quarter"}
@@ -75,12 +76,20 @@ def _check_source(field_spec: FieldSpec) -> None:
             raise SchemaValidationError(
                 f"Field '{fid}': source='builtin' requires 'function'"
             )
+        if field_spec.function not in BUILTIN_REGISTRY:
+            raise SchemaValidationError(
+                f"Field '{fid}': unknown builtin function {field_spec.function!r}"
+            )
     elif source == Source.FORMULA:
         if not field_spec.expr:
             raise SchemaValidationError(
                 f"Field '{fid}': source='formula' requires 'expr'"
             )
         _check_formula_syntax(fid, field_spec.expr)
+    else:
+        raise SchemaValidationError(
+            f"Field '{fid}': unsupported source {source!r}"
+        )
 
 
 def _check_formula_syntax(field_id: str, expr: str) -> None:

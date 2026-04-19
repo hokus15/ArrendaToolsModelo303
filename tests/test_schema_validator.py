@@ -153,6 +153,20 @@ class TestValidateSchema:
         with pytest.raises(SchemaValidationError, match="requires 'function'"):
             validate_schema(schema)
 
+    def test_builtin_with_unknown_function_raises(self):
+        f = FieldSpec(
+            field_id="p1_1",
+            name="f1",
+            position=1,
+            length=1,
+            field_type=FieldType.ALPHANUMERIC,
+            source=Source.BUILTIN,
+            function="unknown_builtin",
+        )
+        schema = _make_schema(_make_page("p1", f))
+        with pytest.raises(SchemaValidationError, match="unknown builtin function"):
+            validate_schema(schema)
+
     def test_model_field_without_attr_passes(self):
         schema = _make_schema(_make_page("p1", _model_field("casilla_07")))
         validate_schema(schema)
