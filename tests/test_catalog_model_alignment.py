@@ -1,12 +1,19 @@
-"""Tests de alineación entre catálogo, layouts y modelo."""
+"""Tests de alineación entre schemas y modelo."""
 
 from dataclasses import fields
 
 from arrendatools.modelo303.application.data import Modelo303Data
 from arrendatools.modelo303.domain.enums import Period
 from arrendatools.modelo303.domain.model import Modelo303Model
-from arrendatools.modelo303.infrastructure.catalog import FIELD_CATALOG
-from arrendatools.modelo303.infrastructure.layout_registry import LAYOUTS
+from arrendatools.modelo303.infrastructure.schema_registry import (
+    SUPPORTED_SCHEMAS,
+    get_schema,
+)
+from arrendatools.modelo303.infrastructure.schema_renderer import (
+    _build_context,
+    _render_field,
+    _resolve_value,
+)
 
 LITERAL_FIELDS = {
     "registro_general_open",
@@ -44,59 +51,64 @@ def _build_model(fiscal_year: int = 2026) -> Modelo303Model:
 
 class TestCatalogModelAlignment:
     def test_all_data_fields_exist_explicitly_in_model(self):
+        """All non-literal, non-casilla, non-reserved schema fields must exist in Modelo303Model."""
         model_fields = {item.name for item in fields(Modelo303Model)}
-        data_fields_in_catalog = {
-            name
-            for name in FIELD_CATALOG.keys()
-            if not name.startswith("casilla_")
-            and not name.startswith("reserved_")
-            and not name.startswith("reservado_")
-            and name not in LITERAL_FIELDS
-        }
 
-        missing = sorted(data_fields_in_catalog - model_fields)
+        schema_data_fields: set[str] = set()
+        for fiscal_year in SUPPORTED_SCHEMAS:
+            schema = get_schema(fiscal_year)
+            for page in schema.pages:
+                for field_spec in page.fields:
+                    if field_spec.source.value not in (
+                        "constant",
+                        "default",
+                        "builtin",
+                        "formula",
+                    ):
+                        effective = field_spec.name
+                        if (
+                            not effective.startswith("casilla_")
+                            and not effective.startswith("reserved_")
+                            and not effective.startswith("reservado_")
+                            and effective not in LITERAL_FIELDS
+                        ):
+                            schema_data_fields.add(effective)
+
+        missing = sorted(schema_data_fields - model_fields)
 
         assert not missing, (
-            "Campos de datos del catálogo sin atributo explícito en Modelo303Model:\n"
+            "Campos de datos del schema sin atributo explícito en Modelo303Model:\n"
             + "\n".join(missing)
         )
 
-    def test_all_layout_fields_exist_in_catalog(self):
-        missing: list[str] = []
-
-        for layout in LAYOUTS.values():
-            for page in layout.pages:
-                for field_name in page.fields:
-                    if field_name not in FIELD_CATALOG:
-                        missing.append(field_name)
-
-        assert not missing, (
-            "Campos presentes en layout pero ausentes en FIELD_CATALOG:\n"
-            + "\n".join(sorted(set(missing)))
-        )
-
-    def test_model_and_catalog_can_render_every_catalog_field(self):
-        model = _build_model(2026)
-
+    def test_all_schema_fields_render_without_error(self):
+        """Every field in every schema must render without error against a real model."""
         unresolved: list[str] = []
-        for field_name in FIELD_CATALOG.keys():
-            try:
-                raw_value = getattr(model, field_name, None)
-                FIELD_CATALOG[field_name].render(field_name, raw_value)
-            except ValueError:
-                unresolved.append(field_name)
+
+        for fiscal_year in SUPPORTED_SCHEMAS:
+            schema = get_schema(fiscal_year)
+            model = _build_model(fiscal_year)
+            context = _build_context(model)
+            for page in schema.pages:
+                for field_spec in page.fields:
+                    try:
+                        raw_value = _resolve_value(field_spec, model, context)
+                        _render_field(field_spec, raw_value)
+                    except Exception as exc:  # noqa: BLE001
+                        unresolved.append(f"{fiscal_year}/{field_spec.field_id}: {exc}")
 
         assert not unresolved, (
-            "Campos en FIELD_CATALOG sin resolver/renderizar por modelo+catálogo:\n"
+            "Campos del schema que fallan al renderizar:\n"
             + "\n".join(sorted(unresolved))
         )
 
-    def test_layouts_have_expected_years(self):
-        assert 2025 in LAYOUTS
-        assert 2026 in LAYOUTS
+    def test_schemas_have_expected_years(self):
+        assert 2025 in SUPPORTED_SCHEMAS
+        assert 2026 in SUPPORTED_SCHEMAS
 
-    def test_layout_pages_non_empty(self):
-        for fiscal_year, layout in LAYOUTS.items():
-            assert layout.pages, f"El layout {fiscal_year} no tiene páginas"
-            for page in layout.pages:
-                assert page.name.strip(), f"Página sin nombre en layout {fiscal_year}"
+    def test_schema_pages_non_empty(self):
+        for fiscal_year in SUPPORTED_SCHEMAS:
+            schema = get_schema(fiscal_year)
+            assert schema.pages, f"El schema {fiscal_year} no tiene páginas"
+            for page in schema.pages:
+                assert page.id.strip(), f"Página sin id en schema {fiscal_year}"

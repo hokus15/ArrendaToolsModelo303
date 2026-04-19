@@ -2,14 +2,12 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from decimal import ROUND_HALF_UP, Decimal
-from typing import ClassVar
+from typing import TYPE_CHECKING, ClassVar
 
-from arrendatools.modelo303.application.data import Modelo303Data
 from arrendatools.modelo303.domain.enums import Period
-from arrendatools.modelo303.infrastructure.year_overrides import (
-    get_year_calculators,
-    get_year_defaults,
-)
+
+if TYPE_CHECKING:
+    from arrendatools.modelo303.application.data import Modelo303Data
 
 
 @dataclass(slots=True)
@@ -312,7 +310,6 @@ class Modelo303Model:
         model.version = data.version
         model.developer_nif = data.nif_empresa_desarrollo
         model.iban = data.iban or ""
-        model.sepa = model.marca_sepa(data.iban)
         model.pagina_complementaria = " "
         model.codigo_actividad_principal = cls._CODIGO_ACTIVIDAD
         model.epigrafe_iae_principal = cls._EPIGRAFE_IAE
@@ -329,8 +326,6 @@ class Modelo303Model:
         model.revocacion_prorrata = cls._NO
         model.concurso = cls._NO
         model.sii = cls._NO
-        model.exencion_390 = model.exoneracion_modelo_390(data.periodo)
-        model.operaciones_no_cero = model.operaciones_no_0(data.periodo)
         model.indicador_pago_gasolina = cls._ES_T
 
         model.casilla_65 = Decimal("100.00")
@@ -340,36 +335,14 @@ class Modelo303Model:
             rounding=ROUND_HALF_UP,
         )
         model.casilla_28 = data.base_gastos_bienes_y_servicios
-
-        # Apply year-specific simple value overrides (e.g., casilla_17, casilla_23)
-        year_defaults = get_year_defaults(fiscal_year)
-        for field_name, value in year_defaults.items():
-            setattr(model, field_name, value)
-
         model.casilla_29 = data.cuota_gastos_bienes_y_servicios
         model.casilla_30 = data.base_adquisiones_bienes_inversion
         model.casilla_31 = data.cuota_adquisiones_bienes_inversion
         if data.volumen_anual_operaciones is not None:
             model.casilla_80 = data.volumen_anual_operaciones
 
-        # Compute all calculated fields (uses any defaults set above)
-        model.casilla_27 = model.compute_casilla_27()
-        model.casilla_45 = model.compute_casilla_45()
-        model.casilla_46 = model.compute_casilla_46()
-        model.casilla_64 = model.compute_casilla_64()
-        model.casilla_66 = model.compute_casilla_66()
-        model.casilla_69 = model.compute_casilla_69()
-        model.casilla_71 = model.compute_casilla_71()
-        model.casilla_88 = model.compute_casilla_88()
-
-        # Apply year-specific custom calculators (override computed values)
-        year_calculators = get_year_calculators(fiscal_year)
-        for field_name, calculator in year_calculators.items():
-            setattr(model, field_name, calculator(model))
-
         if model.amount() < 0:
             model.iban = ""
-        model.tipo_declaracion = model.declaration_type()
         return model
 
     def amount(self) -> Decimal:
@@ -392,7 +365,7 @@ class Modelo303Model:
             return "N"
         if amount < 0 and self.periodo != Period.FOURTH_QUARTER:
             return "C"
-        if amount < 0 and self.periodo == Period.FOURTH_QUARTER:
+        if amount < 0:
             return "D"
         if amount > 0 and (self.iban or "") != "":
             return "U"
@@ -410,72 +383,3 @@ class Modelo303Model:
 
     def marca_sepa(self, iban: str | None) -> str:
         return "0"
-
-    def compute_casilla_27(self) -> Decimal:
-        return (
-            self.casilla_152
-            + self.casilla_167
-            + self.casilla_03
-            + self.casilla_155
-            + self.casilla_06
-            + self.casilla_09
-            + self.casilla_11
-            + self.casilla_13
-            + self.casilla_15
-            + self.casilla_158
-            + self.casilla_170
-            + self.casilla_18
-            + self.casilla_21
-            + self.casilla_24
-            + self.casilla_26
-        )
-
-    def compute_casilla_45(self) -> Decimal:
-        return (
-            self.casilla_29
-            + self.casilla_31
-            + self.casilla_33
-            + self.casilla_35
-            + self.casilla_37
-            + self.casilla_39
-            + self.casilla_41
-            + self.casilla_42
-            + self.casilla_43
-            + self.casilla_44
-        )
-
-    def compute_casilla_46(self) -> Decimal:
-        return self.compute_casilla_27() - self.compute_casilla_45()
-
-    def compute_casilla_64(self) -> Decimal:
-        return self.compute_casilla_46() + self.casilla_58 + self.casilla_76
-
-    def compute_casilla_66(self) -> Decimal:
-        return self.compute_casilla_64() * (self.casilla_65 / Decimal("100.00"))
-
-    def compute_casilla_69(self) -> Decimal:
-        return self.compute_casilla_66() + self.casilla_77 - self.casilla_78
-
-    def compute_casilla_71(self) -> Decimal:
-        return self.compute_casilla_69() - self.casilla_70 + self.casilla_109
-
-    def compute_casilla_88(self) -> Decimal:
-        return (
-            self.casilla_80
-            + self.casilla_81
-            + self.casilla_93
-            + self.casilla_94
-            + self.casilla_83
-            + self.casilla_84
-            + self.casilla_125
-            + self.casilla_126
-            + self.casilla_127
-            + self.casilla_128
-            + self.casilla_86
-            + self.casilla_95
-            + self.casilla_96
-            + self.casilla_97
-            + self.casilla_98
-            + self.casilla_79
-            + self.casilla_99
-        )
