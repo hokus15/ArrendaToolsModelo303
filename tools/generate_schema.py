@@ -838,7 +838,7 @@ def main() -> None:
             allow_unicode=True,
             sort_keys=False,
             default_flow_style=False,
-            width=10_000,  # prevent line-folding that produces YAML list artifacts
+            width=sys.maxsize,  # prevent line-folding that produces YAML list artifacts
         )
 
     # Summary
