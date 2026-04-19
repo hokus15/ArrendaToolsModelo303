@@ -119,8 +119,8 @@ def test_modelo_390_exemption():
         volumen_anual_operaciones=1000.0,
     )
 
-    assert model_q1.exencion_390 == "0"
-    assert model_q4.exencion_390 == "1"
+    assert model_q1.exoneracion_modelo_390(Period.FIRST_QUARTER) == "0"
+    assert model_q4.exoneracion_modelo_390(Period.FOURTH_QUARTER) == "1"
 
 
 def test_has_non_zero_operations():
@@ -130,10 +130,10 @@ def test_has_non_zero_operations():
         volumen_anual_operaciones=1000.0,
     )
 
-    assert model_q2.operaciones_no_cero == "0"
-    assert model_q4.operaciones_no_cero == "1"
+    assert model_q2.operaciones_no_0(Period.SECOND_QUARTER) == "0"
+    assert model_q4.operaciones_no_0(Period.FOURTH_QUARTER) == "1"
 
 
 def test_sepa_flag_default():
     model = _make_model()
-    assert model.sepa == "0"
+    assert model.marca_sepa(None) == "0"

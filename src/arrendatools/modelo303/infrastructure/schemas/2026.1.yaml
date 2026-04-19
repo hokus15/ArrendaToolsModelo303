@@ -1,0 +1,3080 @@
+schema_id: modelo303-2026.1
+fiscal_year: 2026
+revision: '1.01'
+specification_date: '2026-01-28'
+source_file: specs\2026\20260128 - DR303e26v101.xlsx
+pages:
+- id: registro_apertura
+  include_when: always
+  fields:
+  - id: registro_apertura_1
+    name: registro_apertura_1
+    position: 1
+    length: 2
+    field_type: alphanumeric
+    source: constant
+    value: <T
+    metadata:
+      tipo: An
+      descripcion: Constante.
+      validacion: ''
+      contenido: '"<T"'
+  - id: registro_apertura_2
+    name: registro_apertura_2
+    position: 3
+    length: 3
+    field_type: alphanumeric
+    source: constant
+    value: '303'
+    metadata:
+      tipo: An
+      descripcion: Modelo
+      validacion: ''
+      contenido: '"303"'
+  - id: registro_apertura_3
+    name: registro_apertura_3
+    position: 6
+    length: 1
+    field_type: alphanumeric
+    source: constant
+    value: '0'
+    metadata:
+      tipo: An
+      descripcion: Discriminante
+      validacion: ''
+      contenido: '"0"'
+  - id: registro_apertura_4
+    name: ejercicio
+    position: 7
+    length: 4
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Ejercicio de devengo (EEEE)
+      validacion: ''
+      contenido: Nota 2
+  - id: registro_apertura_5
+    name: periodo
+    position: 11
+    length: 2
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Período. (PP)
+      validacion: ''
+      contenido: '"01"..."12" o "1T"…"4T"'
+  - id: registro_apertura_6
+    name: registro_apertura_6
+    position: 13
+    length: 5
+    field_type: alphanumeric
+    source: constant
+    value: 0000>
+    metadata:
+      tipo: An
+      descripcion: Tipo y cierre
+      validacion: ''
+      contenido: '"0000>"'
+- id: dp30300
+  include_when: always
+  fields:
+  - id: dp30300_7
+    name: dp30300_7
+    position: 1
+    length: 5
+    field_type: alphanumeric
+    source: constant
+    value: <AUX>
+    metadata:
+      tipo: An
+      descripcion: Constante
+      validacion: ''
+      contenido: '"<AUX>"'
+  - id: dp30300_8
+    name: dp30300_8
+    position: 6
+    length: 70
+    field_type: alphanumeric
+    source: constant
+    value: ''
+    metadata:
+      tipo: An
+      descripcion: Reservado para la Administración. Rellenar con blancos
+      validacion: ''
+      contenido: BLANCOS
+  - id: dp30300_9
+    name: version
+    position: 76
+    length: 4
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Versión del Programa (Nota 1)
+      validacion: ''
+      contenido: ''
+  - id: dp30300_10
+    name: dp30300_10
+    position: 80
+    length: 4
+    field_type: alphanumeric
+    source: constant
+    value: ''
+    metadata:
+      tipo: An
+      descripcion: Reservado para la Administración. Rellenar con blancos
+      validacion: ''
+      contenido: BLANCOS
+  - id: dp30300_11
+    name: developer_nif
+    position: 84
+    length: 9
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: NIF Empresa Desarrollo (Nota 1)
+      validacion: ''
+      contenido: ''
+  - id: dp30300_12
+    name: dp30300_12
+    position: 93
+    length: 213
+    field_type: alphanumeric
+    source: constant
+    value: ''
+    metadata:
+      tipo: An
+      descripcion: Reservado para la Administración. Rellenar con blancos
+      validacion: ''
+      contenido: BLANCOS
+  - id: dp30300_13
+    name: dp30300_13
+    position: 306
+    length: 6
+    field_type: alphanumeric
+    source: constant
+    value: </AUX>
+    metadata:
+      tipo: An
+      descripcion: Constante
+      validacion: ''
+      contenido: '"</AUX>"'
+- id: dp30301
+  include_when: always
+  fields:
+  - id: dp30301_1
+    name: dp30301_1
+    position: 1
+    length: 2
+    field_type: alphanumeric
+    source: constant
+    value: <T
+    metadata:
+      tipo: An
+      descripcion: Inicio del identificador de modelo y página.
+      validacion: Obligatorio
+      contenido: Constante "<T"
+  - id: dp30301_2
+    name: dp30301_2
+    position: 3
+    length: 3
+    field_type: numeric
+    source: constant
+    value: '303'
+    metadata:
+      tipo: Num
+      descripcion: Modelo.
+      validacion: Obligatorio
+      contenido: Constante "303"
+  - id: dp30301_3
+    name: dp30301_3
+    position: 6
+    length: 5
+    field_type: numeric
+    source: constant
+    value: '01000'
+    metadata:
+      tipo: Num
+      descripcion: Página.
+      validacion: Obligatorio
+      contenido: Constante "01000"
+  - id: dp30301_4
+    name: dp30301_4
+    position: 11
+    length: 1
+    field_type: alphanumeric
+    source: constant
+    value: '>'
+    metadata:
+      tipo: An
+      descripcion: Fin de identificador de modelo.
+      validacion: Obligatorio
+      contenido: Constante ">"
+  - id: dp30301_5
+    name: pagina_complementaria
+    position: 12
+    length: 1
+    field_type: alphabetical
+    source: constant
+    value: ''
+    metadata:
+      tipo: A
+      descripcion: Indicador de página complementaria.
+      validacion: ''
+      contenido: En blanco
+  - id: dp30301_6
+    name: tipo_declaracion
+    position: 13
+    length: 1
+    field_type: alphabetical
+    source: builtin
+    function: tipo_declaracion
+    metadata:
+      tipo: A
+      descripcion: Tipo Declaración
+      validacion: Obligatorio PI
+      contenido: Nota 1
+  - id: dp30301_7
+    name: nif
+    position: 14
+    length: 9
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Identificación (1) - NIF
+      validacion: Obligatorio
+      contenido: ''
+  - id: dp30301_8
+    name: razon_social
+    position: 23
+    length: 80
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Identificación (1) - Apellidos y nombre o Razón social
+      validacion: Obligatorio
+      contenido: ''
+  - id: dp30301_9
+    name: ejercicio
+    position: 103
+    length: 4
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Devengo (2) - Ejercicio
+      validacion: Obligatorio
+      contenido: ''
+  - id: dp30301_10
+    name: periodo
+    position: 107
+    length: 2
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Devengo (2) - Período
+      validacion: Obligatorio
+      contenido: '"01",..., "12" o "1T" … "4T"'
+  - id: dp30301_11
+    name: tributacion_foral
+    position: 109
+    length: 1
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Identificación (1) - Tributación exclusivamente foral. Sujeto pasivo que tributa exclusivamente a una Administración tributaria Foral con IVA a la importación liquidado por la Aduana pendiente de ingreso
+      validacion: ''
+      contenido: '"1" SI,                                                          "2" NO.                                                    Nota 5'
+  - id: dp30301_12
+    name: registro_devolucion
+    position: 110
+    length: 1
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Identificación (1) - Sujeto pasivo inscrito en el Registro de devolución mensual (art. 30 RIVA)
+      validacion: ''
+      contenido: '"1" SI, "2" NO. Nota 5'
+  - id: dp30301_13
+    name: solo_rg
+    position: 111
+    length: 1
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Identificación (1) - Sujeto pasivo que tributa exclusivamente en régimen simplificado
+      validacion: ''
+      contenido: "\"1\" SI (sólo RS),\n \"2\" NO (RG + RS),\n\"3\" NO (sólo RG).                                    Nota 5"
+  - id: dp30301_14
+    name: autoliquidacion_conjunta
+    position: 112
+    length: 1
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Identificación (1) - Autoliquidación conjunta
+      validacion: ''
+      contenido: '"1" SI, "2" NO. Nota 5'
+  - id: dp30301_15
+    name: criterio_caja
+    position: 113
+    length: 1
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Identificación (1) - Sujeto pasivo acogido al régimen especial del criterio de Caja (art. 163 undecies LIVA)
+      validacion: ''
+      contenido: '"1" SI, "2" NO. Nota 5'
+  - id: dp30301_16
+    name: destinatario_caja
+    position: 114
+    length: 1
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Identificación (1) - Sujeto pasivo destinatario de operaciones acogidas al régimen especial del criterio de caja
+      validacion: ''
+      contenido: '"1" SI, "2" NO. Nota 5'
+  - id: dp30301_17
+    name: prorrata_especial
+    position: 115
+    length: 1
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Identificación (1) - Opción por la aplicación de la prorrata especial (art. 103.Dos.1º LIVA)
+      validacion: ''
+      contenido: Nota 6. Nota 5
+  - id: dp30301_18
+    name: revocacion_prorrata
+    position: 116
+    length: 1
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Identificación (1) - Revocación de la opción por la aplicación de la prorrata especial
+      validacion: ''
+      contenido: Nota 6. Nota 5
+  - id: dp30301_19
+    name: concurso
+    position: 117
+    length: 1
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Identificación (1) - Sujeto pasivo declarado en concurso de acreedores en el presente período de liquidación
+      validacion: ''
+      contenido: '"1" SI, "2" NO. Nota 5'
+  - id: dp30301_20
+    name: fecha_concurso
+    position: 118
+    length: 8
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Identificación (1) - Fecha en que se dictó el auto de declaración de concurso
+      validacion: ''
+      contenido: DDMMYYYY
+  - id: dp30301_21
+    name: tipo_auto_concurso
+    position: 126
+    length: 1
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Identificación (1) - Tipo de autoliquidación si se ha dictado auto de declaración de concurso en este período
+      validacion: ''
+      contenido: "\"1\" SI Preconcursal, \n\"2\" SI Postconcursal                             blanco NO.                                              Nota 5"
+  - id: dp30301_22
+    name: sii
+    position: 127
+    length: 1
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Identificación (1) - Sujeto pasivo acogido voluntariamente al SII
+      validacion: ''
+      contenido: '"1" SI,                                                          "2" NO.                                                    Nota 5'
+  - id: dp30301_23
+    name: exencion_390
+    position: 128
+    length: 1
+    field_type: numeric
+    source: builtin
+    function: exencion_390
+    metadata:
+      tipo: Num
+      descripcion: Identificación (1) - Sujeto pasivo exonerado de la Declaración-resumen anual del IVA, modelo 390
+      validacion: ''
+      contenido: Nota 4. Nota 5
+  - id: dp30301_24
+    name: operaciones_no_cero
+    position: 129
+    length: 1
+    field_type: numeric
+    source: builtin
+    function: operaciones_no_cero
+    metadata:
+      tipo: Num
+      descripcion: Identificación (1) - Sujeto pasivo con volumen anual de operaciones distinto de cero (art. 121 LIVA)
+      validacion: ''
+      contenido: Nota 3. Nota 5
+  - id: dp30301_25
+    name: indicador_pago_gasolina
+    position: 130
+    length: 1
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Identificación (1) - Sujeto pasivo con derecho a deducir pago a cuenta de entregas de gasolinas, gasóleos y biocarburantes posteriores a la ultimación del régimen de depósito distinto del aduanero
+      validacion: ''
+      contenido: '"1" SI, "2" NO. Nota 8. Nota 9. Nota 5'
+  - id: dp30301_26
+    name: casilla_150
+    position: 131
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Régimen general - Base imponible [150]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_27
+    name: casilla_151
+    position: 148
+    length: 5
+    field_type: numeric
+    source: constant
+    value: '00000'
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Régimen general - Tipo % [151]
+      validacion: ''
+      contenido: Constante "00000"
+  - id: dp30301_28
+    name: casilla_152
+    position: 153
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Régimen general - Cuota [152]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_29
+    name: casilla_165
+    position: 170
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Régimen general - Base imponible [165]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales.
+  - id: dp30301_30
+    name: casilla_166
+    position: 187
+    length: 5
+    field_type: numeric
+    source: constant
+    value: '00000'
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Régimen general - Tipo % [166]
+      validacion: ''
+      contenido: Constante "00000"
+  - id: dp30301_31
+    name: casilla_167
+    position: 192
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Régimen general - Cuota [167]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales.
+  - id: dp30301_32
+    name: casilla_01
+    position: 209
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Régimen general - Base imponible [01]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_33
+    name: casilla_02
+    position: 226
+    length: 5
+    field_type: numeric
+    source: constant
+    value: '00400'
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Régimen general - Tipo % [02]
+      validacion: ''
+      contenido: Constante "00400". Nota 7
+  - id: dp30301_34
+    name: casilla_03
+    position: 231
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Régimen general - Cuota [03]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_35
+    name: casilla_153
+    position: 248
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Régimen general - Base imponible [153]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_36
+    name: casilla_154
+    position: 265
+    length: 5
+    field_type: numeric
+    source: constant
+    value: '00000'
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Régimen general - Tipo % [154]
+      validacion: ''
+      contenido: Constante "00000"
+  - id: dp30301_37
+    name: casilla_155
+    position: 270
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Régimen general - Cuota [155]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_38
+    name: casilla_04
+    position: 287
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Régimen general - Base imponible [04]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_39
+    name: casilla_05
+    position: 304
+    length: 5
+    field_type: numeric
+    source: constant
+    value: '01000'
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Régimen general - Tipo % [05]
+      validacion: ''
+      contenido: Constante "01000". Nota 7
+  - id: dp30301_40
+    name: casilla_06
+    position: 309
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Régimen general - Cuota [06]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_41
+    name: casilla_07
+    position: 326
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Régimen general - Base imponible [07]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_42
+    name: casilla_08
+    position: 343
+    length: 5
+    field_type: numeric
+    source: constant
+    value: '02100'
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Régimen general - Tipo % [08]
+      validacion: ''
+      contenido: Constante "02100". Nota 7
+  - id: dp30301_43
+    name: casilla_09
+    position: 348
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Régimen general - Cuota [09]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_44
+    name: casilla_10
+    position: 365
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Adquisiciones intracomunitarias de bienes y servicios - Base imponible  [10]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_45
+    name: casilla_11
+    position: 382
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Adquisiciones intracomunitarias de bienes y servicios - Cuota [11]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_46
+    name: casilla_12
+    position: 399
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Otras operaciones con inversión del sujeto pasivo (excepto. adq. intracom) - Base imponible  [12]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_47
+    name: casilla_13
+    position: 416
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Otras operaciones con inversión del sujeto pasivo (excepto. adq. intracom) - Cuota [13]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_48
+    name: casilla_14
+    position: 433
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Modificación bases y cuotas- Base imponible  [14]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_49
+    name: casilla_15
+    position: 450
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Modificación bases y cuotas - Cuota [15]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_50
+    name: casilla_156
+    position: 467
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Recargo equivalencia - Base imponible [156]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_51
+    name: casilla_157
+    position: 484
+    length: 5
+    field_type: numeric
+    source: constant
+    value: '00175'
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Recargo equivalencia - Tipo % [157]
+      validacion: ''
+      contenido: Constante "00175". Nota 7
+  - id: dp30301_52
+    name: casilla_158
+    position: 489
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Recargo equivalencia - Cuota [158]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_53
+    name: casilla_168
+    position: 506
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Recargo equivalencia - Base imponible [168]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales.
+  - id: dp30301_54
+    name: casilla_169
+    position: 523
+    length: 5
+    field_type: numeric
+    source: constant
+    value: '00050'
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Recargo equivalencia - Tipo % [169]
+      validacion: ''
+      contenido: '"00050". Nota 7.'
+  - id: dp30301_55
+    name: casilla_170
+    position: 528
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Recargo equivalencia - Cuota [170]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales.
+  - id: dp30301_56
+    name: casilla_16
+    position: 545
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Recargo equivalencia - Base imponible [16]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_57
+    name: casilla_17
+    position: 562
+    length: 5
+    field_type: numeric
+    source: constant
+    value: '00000'
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Recargo equivalencia - Tipo % [17]
+      validacion: ''
+      contenido: Constante "00000"
+  - id: dp30301_58
+    name: casilla_18
+    position: 567
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Recargo equivalencia - Cuota [18]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_59
+    name: casilla_19
+    position: 584
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Recargo equivalencia - Base imponible [19]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_60
+    name: casilla_20
+    position: 601
+    length: 5
+    field_type: numeric
+    source: constant
+    value: '00140'
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Recargo equivalencia - Tipo % [20]
+      validacion: ''
+      contenido: Constante "00140". Nota 7
+  - id: dp30301_61
+    name: casilla_21
+    position: 606
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Recargo equivalencia - Cuota [21]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_62
+    name: casilla_22
+    position: 623
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Recargo equivalencia - Base imponible [22]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_63
+    name: casilla_23
+    position: 640
+    length: 5
+    field_type: numeric
+    source: constant
+    value: '00520'
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Recargo equivalencia - Tipo % [23]
+      validacion: ''
+      contenido: Constante "00520". Nota 7
+  - id: dp30301_64
+    name: casilla_24
+    position: 645
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Recargo equivalencia - Cuota [24]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_65
+    name: casilla_25
+    position: 662
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Modificaciones bases y cuotas del recargo de equivalencia - Base imponible [25]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_66
+    name: casilla_26
+    position: 679
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Modificaciones bases y cuotas del recargo de equivalencia - Cuota [26]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_67
+    name: casilla_27
+    position: 696
+    length: 17
+    field_type: numeric_signed
+    source: formula
+    expr: casilla_152 + casilla_167 + casilla_03 + casilla_155 + casilla_06 + casilla_09 + casilla_11 + casilla_13 + casilla_15 + casilla_158 + casilla_170 + casilla_18 + casilla_21 + casilla_24 + casilla_26
+    metadata:
+      tipo: N
+      descripcion: Liquidación (3) - Regimen General - IVA Devengado - Total cuota devengada ( [152] + [167] + [03] + [155] + [06] + [09] + [11] + [13] + [15] + [158] + [170] + [18] + [21] + [24] + [26] ) [27]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_68
+    name: casilla_28
+    position: 713
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Deducible - Por cuotas soportadas en operaciones interiores corrientes - Base [28]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_69
+    name: casilla_29
+    position: 730
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Deducible - Por cuotas soportadas en operaciones interiores corrientes - Cuota [29]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_70
+    name: casilla_30
+    position: 747
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Deducible - Por cuotas soportadas en operaciones interiores con bienes de inversión - Base [30]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_71
+    name: casilla_31
+    position: 764
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Deducible - Por cuotas soportadas en operaciones interiores con bienes de inversión - Cuota [31]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_72
+    name: casilla_32
+    position: 781
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Deducible - Por cuotas soportadas en las importaciones de bienes corrientes - Base [32]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_73
+    name: casilla_33
+    position: 798
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Deducible - Por cuotas soportadas en las importaciones de bienes corrientes - Cuota [33]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_74
+    name: casilla_34
+    position: 815
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Deducible - Por cuotas soportadas en las importaciones de bienes de inversión - Base [34]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_75
+    name: casilla_35
+    position: 832
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Deducible - Por cuotas soportadas en las importaciones de bienes de inversión - Cuota [35]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_76
+    name: casilla_36
+    position: 849
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Deducible - En adquisiciones intracomunitarias de bienes y servicios corrientes - Base [36]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_77
+    name: casilla_37
+    position: 866
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Deducible - En adquisiciones intracomunitarias de bienes y servicios corrientes - Cuota [37]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_78
+    name: casilla_38
+    position: 883
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Deducible - En adquisiciones intracomunitarias de bienes de inversión - Base [38]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_79
+    name: casilla_39
+    position: 900
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Liquidación (3) - Regimen General - IVA Deducible - En adquisiciones intracomunitarias de bienes de inversión - Cuota [39]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_80
+    name: casilla_40
+    position: 917
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Liquidación (3) - Regimen General - IVA Deducible - Rectificación de deducciones - Base [40]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_81
+    name: casilla_41
+    position: 934
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Liquidación (3) - Regimen General - IVA Deducible - Rectificación de deducciones - Cuota [41]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_82
+    name: casilla_42
+    position: 951
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Liquidación (3) - Regimen General - IVA Deducible - Compensaciones Régimen Especial A.G. y P. - Cuota [42]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_83
+    name: casilla_43
+    position: 968
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Liquidación (3) - Regimen General - IVA Deducible - Regularización inversiones - Cuota [43]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_84
+    name: casilla_44
+    position: 985
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Liquidación (3) - Regimen General - IVA Deducible - Regularización por aplicación del porcentaje definitivo de prorrata - Cuota [44]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_85
+    name: casilla_45
+    position: 1002
+    length: 17
+    field_type: numeric_signed
+    source: formula
+    expr: casilla_29 + casilla_31 + casilla_33 + casilla_35 + casilla_37 + casilla_39 + casilla_41 + casilla_42 + casilla_43 + casilla_44
+    metadata:
+      tipo: N
+      descripcion: Liquidación (3) - Regimen General - IVA Deducible - Total a deducir ( [29] + [31] + [33] + [35] + [37] + [39] + [41] + [42] + [43] + [44] ) - Cuota [45]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_86
+    name: casilla_46
+    position: 1019
+    length: 17
+    field_type: numeric_signed
+    source: formula
+    expr: casilla_27 - casilla_45
+    metadata:
+      tipo: N
+      descripcion: Liquidación (3) - Regimen General - IVA Deducible - Resultado régimen general ( [27] - [45] ) - Cuota [46]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30301_87
+    name: dp30301_87
+    position: 1036
+    length: 521
+    field_type: alphanumeric
+    source: constant
+    value: ''
+    metadata:
+      tipo: An
+      descripcion: Reservado para la AEAT
+      validacion: ''
+      contenido: ''
+  - id: dp30301_88
+    name: dp30301_88
+    position: 1557
+    length: 13
+    field_type: alphanumeric
+    source: constant
+    value: ''
+    metadata:
+      tipo: An
+      descripcion: Reservado para la AEAT - Sello electrónico reservado para la AEAT
+      validacion: ''
+      contenido: ''
+  - id: dp30301_89
+    name: dp30301_89
+    position: 1570
+    length: 12
+    field_type: alphanumeric
+    source: constant
+    value: </T30301000>
+    metadata:
+      tipo: An
+      descripcion: Indicador de fin de registro
+      validacion: Obligatorio
+      contenido: Constante "</T30301000>"
+- id: dp30303
+  include_when: always
+  fields:
+  - id: dp30303_1
+    name: dp30303_1
+    position: 1
+    length: 2
+    field_type: alphanumeric
+    source: constant
+    value: <T
+    metadata:
+      tipo: An
+      descripcion: Inicio del identificador de modelo y página.
+      validacion: Obligatorio
+      contenido: Constante "<T"
+  - id: dp30303_2
+    name: dp30303_2
+    position: 3
+    length: 3
+    field_type: numeric
+    source: constant
+    value: '303'
+    metadata:
+      tipo: Num
+      descripcion: Modelo.
+      validacion: Obligatorio
+      contenido: Constante "303"
+  - id: dp30303_3
+    name: dp30303_3
+    position: 6
+    length: 5
+    field_type: numeric
+    source: constant
+    value: '03000'
+    metadata:
+      tipo: Num
+      descripcion: Página.
+      validacion: Obligatorio
+      contenido: Constante "03000"
+  - id: dp30303_4
+    name: dp30303_4
+    position: 11
+    length: 1
+    field_type: alphanumeric
+    source: constant
+    value: '>'
+    metadata:
+      tipo: An
+      descripcion: Fin de identificador de modelo.
+      validacion: Obligatorio
+      contenido: Constante ">"
+  - id: dp30303_5
+    name: casilla_59
+    position: 12
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Información adicional - Entregas intracomunitarias de bienes y servicios [59]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30303_6
+    name: casilla_60
+    position: 29
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Información adicional - Exportaciones y operaciones asimiladas [60]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30303_7
+    name: casilla_120
+    position: 46
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Información adicional - Operaciones no sujetas por reglas de localización (excepto las incluidas en la casilla 123) [120]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30303_8
+    name: casilla_122
+    position: 63
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Información adicional - Operaciones sujetas con inversión del sujeto pasivo [122]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30303_9
+    name: casilla_123
+    position: 80
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Información adicional - Operaciones no sujetas por reglas de localización acogidas a los regímenes especiales de ventanilla única [123]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30303_10
+    name: casilla_124
+    position: 97
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Información adicional - Operaciones sujetas y acogidas a los regímenes especiales de ventanilla única [124]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30303_11
+    name: casilla_62
+    position: 114
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Información adicional - Importes de las entregas de bienes y prestaciones de servicios a las que habiéndoles sido aplicado el régimen especial del criterio de caja hubieran resultado devengadas conforme a la regla general de devengo contenida en el art. 75 LIVA - Base Imponible [62]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30303_12
+    name: casilla_63
+    position: 131
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Información adicional - Importes de las entregas de bienes y prestaciones de servicios a las que habiéndoles sido aplicado el régimen especial del criterio de caja hubieran resultado devengadas conforme a la regla general de devengo contenida en el art. 75 LIVA - Cuota [63]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30303_13
+    name: casilla_74
+    position: 148
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: 'Información adicional - Importes de las adquisiciones de bienes y servicios a las que sea de aplicación o afecte el régimen
+
+        especial del criterio de caja - Base Imponible [74]'
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30303_14
+    name: casilla_75
+    position: 165
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: 'Información adicional - Importes de las adquisiciones de bienes y servicios a las que sea de aplicación o afecte el régimen
+
+        especial del criterio de caja - Cuota [75]'
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30303_15
+    name: casilla_76
+    position: 182
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Resultado - Regularización cuotas art. 80.cinco.5ª LIVA  [76]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30303_16
+    name: casilla_64
+    position: 199
+    length: 17
+    field_type: numeric_signed
+    source: formula
+    expr: casilla_46 + casilla_58 + casilla_76
+    metadata:
+      tipo: N
+      descripcion: Resultado - Suma de resultados ( [46] + [58] + [76] ) [64]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30303_17
+    name: casilla_65
+    position: 216
+    length: 5
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Resultado - % Atribuible a la Administración del Estado [65]
+      validacion: ''
+      contenido: 3 enteros y 2 decimales
+  - id: dp30303_18
+    name: casilla_66
+    position: 221
+    length: 17
+    field_type: numeric_signed
+    source: formula
+    metadata:
+      tipo: N
+      descripcion: Resultado - Atribuible a la Administración del Estado [66]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+    expr: casilla_64 * casilla_65 / 100
+  - id: dp30303_19
+    name: casilla_77
+    position: 238
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Resultado - IVA a la importación liquidado por la Aduana pendiente de ingreso  [77]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30303_20
+    name: casilla_110
+    position: 255
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Resultado - Cuotas a compensar pendientes de periodos anteriores [110]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30303_21
+    name: casilla_78
+    position: 272
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Resultado - Cuotas a compensar de periodos anteriores aplicadas en este periodo [78]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30303_22
+    name: casilla_87
+    position: 289
+    length: 17
+    field_type: numeric
+    source: formula
+    expr: casilla_110 - casilla_78
+    metadata:
+      tipo: Num
+      descripcion: Resultado - Cuotas a compensar de periodos previos pendientes para periodos posteriores ([110] - [78]) [87]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30303_23
+    name: casilla_68
+    position: 306
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Resultado - Exclusivamente para sujetos pasivos que tributan conjuntamente a la Administración del Estado y a las Haciendas Forales Resultado de la regularización anual [68]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30303_24
+    name: casilla_108
+    position: 323
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Rectificativa - Exclusivamente para determinados supuestos de autoliquidación rectificativa por discrepancia de criterio administrativo que no deban incluirse en otras casillas. Otros ajustes [108]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30303_25
+    name: casilla_69
+    position: 340
+    length: 17
+    field_type: numeric_signed
+    source: formula
+    expr: casilla_66 + casilla_77 - casilla_78 + casilla_68 + casilla_108
+    metadata:
+      tipo: N
+      descripcion: Resultado - Resultado de la autoliquidación ( [66] + [77] - [78] + [68] + [108] ) [69]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30303_26
+    name: casilla_70
+    position: 357
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 'Resultado - Resultados a ingresar de anteriores autoliquidaciones o liquidaciones administrativas
+
+        correspondientes al ejercicio y período objeto de la autoliquidación [70]'
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30303_27
+    name: casilla_109
+    position: 374
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 'Resultado - Devoluciones acordadas por la Agencia Tributaria como consecuencia de la tramitación de
+
+        anteriores autoliquidaciones correspondientes al ejercicio y período objeto de la autoliquidación [109]'
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30303_28
+    name: casilla_112
+    position: 391
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 'Resultado - Pago a cuenta de entregas de gasolinas, gasóleos y biocarburantes posteriores a la ultimación del régimen de depósito
+
+        distinto del aduanero atribuible a la Administración del Estado (Suma de la casilla 36 de todos los modelos 319 correspondientes a entregas incluidas en esta autoliquidación) [112]'
+      validacion: ''
+      contenido: 15 enteros y 2 decimales. Nota 2
+  - id: dp30303_29
+    name: casilla_71
+    position: 408
+    length: 17
+    field_type: numeric_signed
+    source: formula
+    expr: casilla_69 - casilla_70 + casilla_109 - casilla_112
+    metadata:
+      tipo: N
+      descripcion: Resultado - Resultado ( [69] - [70] + [109] - [112] ) [71]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30303_30
+    name: sin_actividad
+    position: 425
+    length: 1
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Declaración Sin actividad
+      validacion: ''
+      contenido: X o blanco
+  - id: dp30303_31
+    name: rectificativa
+    position: 426
+    length: 1
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Rectificativa - Autoliquidación rectificativa
+      validacion: ''
+      contenido: X o blanco
+  - id: dp30303_32
+    name: num_justificante
+    position: 427
+    length: 13
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Rectificativa - Número justificante identificativo de la autoliquidación anterior
+      validacion: ''
+      contenido: ''
+  - id: dp30303_33
+    name: baja_domiciliacion
+    position: 440
+    length: 1
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Rectificativa - Como consecuencia de la presentación de la autoliquidación rectificativa solicito dar de baja/modificar la domiciliación efectuada
+      validacion: ''
+      contenido: X o blanco
+  - id: dp30303_34
+    name: casilla_111
+    position: 441
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Rectificativa - Rectificación - Importe [111]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30303_35
+    name: motivo_rectificacion
+    position: 458
+    length: 1
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: 'Rectificativa - Motivo de la rectificación: Rectificaciones (excepto incluidas en el motivo siguiente)'
+      validacion: ''
+      contenido: X o blanco
+  - id: dp30303_36
+    name: motivo_discrepancia
+    position: 459
+    length: 1
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: 'Rectificativa - Motivo de la rectificación: Discrepancia criterio administrativo'
+      validacion: ''
+      contenido: X o blanco
+  - id: dp30303_37
+    name: dp30303_37
+    position: 460
+    length: 546
+    field_type: alphanumeric
+    source: constant
+    value: ''
+    metadata:
+      tipo: An
+      descripcion: Reservado para la AEAT
+      validacion: ''
+      contenido: ''
+  - id: dp30303_38
+    name: dp30303_38
+    position: 1006
+    length: 12
+    field_type: alphanumeric
+    source: constant
+    value: </T30303000>
+    metadata:
+      tipo: An
+      descripcion: Indicador de fin de registro
+      validacion: Obligatorio
+      contenido: Constante "</T30303000>"
+- id: dp30304
+  include_when: fourth_quarter
+  fields:
+  - id: dp30304_1
+    name: dp30304_1
+    position: 1
+    length: 2
+    field_type: alphanumeric
+    source: constant
+    value: <T
+    metadata:
+      tipo: An
+      descripcion: Inicio del identificador de modelo y página.
+      validacion: Obligatorio
+      contenido: Constante "<T"
+  - id: dp30304_2
+    name: dp30304_2
+    position: 3
+    length: 3
+    field_type: numeric
+    source: constant
+    value: '303'
+    metadata:
+      tipo: Num
+      descripcion: Modelo.
+      validacion: Obligatorio
+      contenido: Constante "303"
+  - id: dp30304_3
+    name: dp30304_3
+    position: 6
+    length: 5
+    field_type: numeric
+    source: constant
+    value: '04000'
+    metadata:
+      tipo: Num
+      descripcion: Página.
+      validacion: Obligatorio
+      contenido: Constante "04000"
+  - id: dp30304_4
+    name: dp30304_4
+    position: 11
+    length: 1
+    field_type: alphanumeric
+    source: constant
+    value: '>'
+    metadata:
+      tipo: An
+      descripcion: Fin de identificador de modelo.
+      validacion: Obligatorio
+      contenido: Constante ">"
+  - id: dp30304_5
+    name: pagina_complementaria
+    position: 12
+    length: 1
+    field_type: alphabetical
+    source: constant
+    value: ''
+    metadata:
+      tipo: A
+      descripcion: Indicador de página complementaria.
+      validacion: ''
+      contenido: En blanco
+  - id: dp30304_6
+    name: codigo_actividad_principal
+    position: 13
+    length: 3
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: 'Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA: B - Código de actividad - Principal'
+      validacion: ''
+      contenido: ''
+  - id: dp30304_7
+    name: epigrafe_iae_principal
+    position: 16
+    length: 4
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: 'Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA: C - Epígrafe IAE - Principal'
+      validacion: ''
+      contenido: ''
+  - id: dp30304_8
+    name: codigo_actividad_1
+    position: 20
+    length: 3
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: 'Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA: B - Código de actividad - Otras - 1ª'
+      validacion: ''
+      contenido: ''
+  - id: dp30304_9
+    name: epigrafe_iae_1
+    position: 23
+    length: 4
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: 'Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA: C - Epígrafe IAE - Otras - 1ª'
+      validacion: ''
+      contenido: ''
+  - id: dp30304_10
+    name: codigo_actividad_2
+    position: 27
+    length: 3
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: 'Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA: B - Código de actividad - Otras - 2ª'
+      validacion: ''
+      contenido: ''
+  - id: dp30304_11
+    name: epigrafe_iae_2
+    position: 30
+    length: 4
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: 'Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA: C - Epígrafe IAE - Otras - 2ª'
+      validacion: ''
+      contenido: ''
+  - id: dp30304_12
+    name: codigo_actividad_3
+    position: 34
+    length: 3
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: 'Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA: B - Código de actividad - Otras - 3ª'
+      validacion: ''
+      contenido: ''
+  - id: dp30304_13
+    name: epigrafe_iae_3
+    position: 37
+    length: 4
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: 'Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA: C - Epígrafe IAE - Otras - 3ª'
+      validacion: ''
+      contenido: ''
+  - id: dp30304_14
+    name: codigo_actividad_4
+    position: 41
+    length: 3
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: 'Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA: B - Código de actividad - Otras - 4ª'
+      validacion: ''
+      contenido: ''
+  - id: dp30304_15
+    name: epigrafe_iae_4
+    position: 44
+    length: 4
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: 'Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA: C - Epígrafe IAE - Otras - 4ª'
+      validacion: ''
+      contenido: ''
+  - id: dp30304_16
+    name: codigo_actividad_5
+    position: 48
+    length: 3
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: 'Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA: B - Código de actividad - Otras - 5ª'
+      validacion: ''
+      contenido: ''
+  - id: dp30304_17
+    name: epigrafe_iae_5
+    position: 51
+    length: 4
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: 'Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA: C - Epígrafe IAE - Otras - 5ª'
+      validacion: ''
+      contenido: ''
+  - id: dp30304_18
+    name: marque_operaciones_terceras
+    position: 55
+    length: 1
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: "Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA: \nD - Marque si ha efectuado operaciones por las que tenga obligación de presentar la declaración anual de operaciones \ncon terceras personas."
+      validacion: ''
+      contenido: X o blanco
+  - id: dp30304_19
+    name: casilla_89
+    position: 56
+    length: 5
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 'Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA - Información de la tributación por razón de territorio: Álava [89]'
+      validacion: ''
+      contenido: 3 enteros y 2 decimales
+  - id: dp30304_20
+    name: casilla_90
+    position: 61
+    length: 5
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 'Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA - Información de la tributación por razón de territorio: Guipuzcoa [90]'
+      validacion: ''
+      contenido: 3 enteros y 2 decimales
+  - id: dp30304_21
+    name: casilla_91
+    position: 66
+    length: 5
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 'Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA - Información de la tributación por razón de territorio: Vizcaya [91]'
+      validacion: ''
+      contenido: 3 enteros y 2 decimales
+  - id: dp30304_22
+    name: casilla_92
+    position: 71
+    length: 5
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 'Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA - Información de la tributación por razón de territorio: Navarra [92]'
+      validacion: ''
+      contenido: 3 enteros y 2 decimales
+  - id: dp30304_23
+    name: casilla_107
+    position: 76
+    length: 5
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 'Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA - Información de la tributación por razón de territorio: Territorio común [107]'
+      validacion: ''
+      contenido: 3 enteros y 2 decimales
+  - id: dp30304_24
+    name: casilla_80
+    position: 81
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA - Operaciones realizadas en el ejercicio - Operaciones en régimen general [80]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30304_25
+    name: casilla_81
+    position: 98
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA - Operaciones realizadas en el ejercicio - Operaciones en régimen especial del criterio de caja conforme art. 75 LIVA [81]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30304_26
+    name: casilla_93
+    position: 115
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA - Operaciones realizadas en el ejercicio - Entregas intracomunitarias de bienes y servicios [93]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30304_27
+    name: casilla_94
+    position: 132
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA - Operaciones realizadas en el ejercicio - Exportaciones y otras operaciones exentas con derecho a deducción [94]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30304_28
+    name: casilla_83
+    position: 149
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA - Operaciones realizadas en el ejercicio - Operaciones exentas sin derecho a deducción [83]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30304_29
+    name: casilla_84
+    position: 166
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA - Operaciones realizadas en el ejercicio - Operaciones no sujetas por reglas de localización (excepto las incluidas en la casilla 126) [84]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30304_30
+    name: casilla_125
+    position: 183
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA - Operaciones sujetas con inversión del sujeto pasivo [125]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30304_31
+    name: casilla_126
+    position: 200
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA - Operaciones no sujetas por reglas de localización acogidas a los regímenes especiales de ventanilla única [126]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30304_32
+    name: casilla_127
+    position: 217
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA - OSS. Operaciones sujetas y acogidas a los regímenes especiales de ventanilla única [127]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30304_33
+    name: casilla_128
+    position: 234
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA - Operaciones intragrupo valoradas conforme a lo dispuesto en los arts. 78 y 79 LIVA [128]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30304_34
+    name: casilla_86
+    position: 251
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA - Operaciones realizadas en el ejercicio - Operaciones en régimen simplificado [86]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30304_35
+    name: casilla_95
+    position: 268
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA - Operaciones realizadas en el ejercicio - Operaciones en régimen especial de la agricultura, ganadería y pesca [95]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30304_36
+    name: casilla_96
+    position: 285
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA - Operaciones realizadas en el ejercicio - Operaciones realizadas por sujetos pasivos acogidos al régimen especial del recargo de equivalencia [96]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30304_37
+    name: casilla_97
+    position: 302
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA - Operaciones realizadas en el ejercicio - Operaciones en Régimen especial de bienes usados, objetos de arte, antigüedades y objetos de colección [97]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30304_38
+    name: casilla_98
+    position: 319
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA - Operaciones realizadas en el ejercicio - Operaciones en régimen especial de Agencias de Viajes [98]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30304_39
+    name: casilla_79
+    position: 336
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA - Operaciones realizadas en el ejercicio - Entregas de bienes inmuebles, operaciones financieras y relativas al oro de inversión no habituales [79]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30304_40
+    name: casilla_99
+    position: 353
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA - Operaciones realizadas en el ejercicio - Entregas de bienes de inversión [99]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30304_41
+    name: casilla_88
+    position: 370
+    length: 17
+    field_type: numeric_signed
+    source: formula
+    expr: casilla_80+casilla_81+casilla_93+casilla_94+casilla_83+casilla_84+casilla_125+casilla_126+casilla_127+casilla_128+casilla_86+casilla_95+casilla_96+casilla_97+casilla_98-casilla_79-casilla_99
+    metadata:
+      tipo: N
+      descripcion: Exclusivamente a cumplimentar en el último periodo por sujetos pasivos exonerados de la Declaración-resumen anual del IVA - Operaciones realizadas en el ejercicio - Total volumen de operaciones ([80]+[81]+[93]+[94]+[83]+[84]+[125]+[126]+[127]+[128]+[86]+[95]+[96]+[97]+[98]-[79]-[99]) [88]
+      validacion: ''
+      contenido: 15 enteros y 2 decimales
+  - id: dp30304_42
+    name: dp30304_42
+    position: 387
+    length: 600
+    field_type: alphanumeric
+    source: constant
+    value: ''
+    metadata:
+      tipo: An
+      descripcion: Reservado para la AEAT
+      validacion: ''
+      contenido: ''
+  - id: dp30304_43
+    name: dp30304_43
+    position: 987
+    length: 12
+    field_type: alphanumeric
+    source: constant
+    value: </T30304000>
+    metadata:
+      tipo: An
+      descripcion: Indicador de fin de registro
+      validacion: Obligatorio
+      contenido: Constante "</T30304000>"
+- id: dp30305
+  include_when: fourth_quarter
+  fields:
+  - id: dp30305_1
+    name: dp30305_1
+    position: 1
+    length: 2
+    field_type: alphanumeric
+    source: constant
+    value: <T
+    metadata:
+      tipo: An
+      descripcion: Inicio del identificador de modelo y página.
+      validacion: Obligatorio
+      contenido: Constante "<T"
+  - id: dp30305_2
+    name: dp30305_2
+    position: 3
+    length: 3
+    field_type: numeric
+    source: constant
+    value: '303'
+    metadata:
+      tipo: Num
+      descripcion: Modelo.
+      validacion: Obligatorio
+      contenido: Constante "303"
+  - id: dp30305_3
+    name: dp30305_3
+    position: 6
+    length: 5
+    field_type: numeric
+    source: constant
+    value: '05000'
+    metadata:
+      tipo: Num
+      descripcion: Página.
+      validacion: Obligatorio
+      contenido: Constante "05000"
+  - id: dp30305_4
+    name: dp30305_4
+    position: 11
+    length: 1
+    field_type: alphanumeric
+    source: constant
+    value: '>'
+    metadata:
+      tipo: An
+      descripcion: Fin de identificador de modelo.
+      validacion: Obligatorio
+      contenido: Constante ">"
+  - id: dp30305_5
+    name: pagina_complementaria
+    position: 12
+    length: 1
+    field_type: alphabetical
+    source: model
+    metadata:
+      tipo: A
+      descripcion: Indicador de página complementaria. Blanco (No complementaria) o "C" (Complementaria)
+      validacion: ''
+      contenido: Nota 1
+  - id: dp30305_6
+    name: casilla_500
+    position: 13
+    length: 4
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Prorratas - 1 - Código CNAE [500]
+      validacion: ''
+      contenido: CNAE-2025
+  - id: dp30305_7
+    name: casilla_501
+    position: 17
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Prorratas - 1 - Importe de operaciones [501]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_8
+    name: casilla_502
+    position: 34
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Prorratas - 1 - Importe de operaciones con derecho a deducción [502]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_9
+    name: casilla_503
+    position: 51
+    length: 1
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Prorratas - 1 - Tipo de prorrata [503]
+      validacion: ''
+      contenido: '"G", "E" o blanco.'
+  - id: dp30305_10
+    name: casilla_504
+    position: 52
+    length: 5
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Prorratas - 1 - % de prorrata [504]
+      validacion: ''
+      contenido: 3 enteros 2 decimales, menor o igual que 100.
+  - id: dp30305_11
+    name: casilla_505
+    position: 57
+    length: 4
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Prorratas - 2 - Código CNAE [505]
+      validacion: ''
+      contenido: CNAE-2025
+  - id: dp30305_12
+    name: casilla_506
+    position: 61
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Prorratas - 2 - Importe de operaciones [506]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_13
+    name: casilla_507
+    position: 78
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Prorratas - 2 - Importe de operaciones con derecho a deducción [507]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_14
+    name: casilla_508
+    position: 95
+    length: 1
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Prorratas - 2 - Tipo de prorrata [508]
+      validacion: ''
+      contenido: '"G", "E" o blanco.'
+  - id: dp30305_15
+    name: casilla_509
+    position: 96
+    length: 5
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Prorratas - 2 - % de prorrata [509]
+      validacion: ''
+      contenido: 3 enteros 2 decimales, menor o igual que 100.
+  - id: dp30305_16
+    name: casilla_510
+    position: 101
+    length: 4
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Prorratas - 3 - Código CNAE [510]
+      validacion: ''
+      contenido: CNAE-2025
+  - id: dp30305_17
+    name: casilla_511
+    position: 105
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Prorratas - 3 - Importe de operaciones [511]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_18
+    name: casilla_512
+    position: 122
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Prorratas - 3 - Importe de operaciones con derecho a deducción [512]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_19
+    name: casilla_513
+    position: 139
+    length: 1
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Prorratas - 3 - Tipo de prorrata [513]
+      validacion: ''
+      contenido: '"G", "E" o blanco.'
+  - id: dp30305_20
+    name: casilla_514
+    position: 140
+    length: 5
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Prorratas - 3 - % de prorrata [514]
+      validacion: ''
+      contenido: 3 enteros 2 decimales, menor o igual que 100.
+  - id: dp30305_21
+    name: casilla_515
+    position: 145
+    length: 4
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Prorratas - 4 - Código CNAE [515]
+      validacion: ''
+      contenido: CNAE-2025
+  - id: dp30305_22
+    name: casilla_516
+    position: 149
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Prorratas - 4 - Importe de operaciones [516]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_23
+    name: casilla_517
+    position: 166
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Prorratas - 4 - Importe de operaciones con derecho a deducción [517]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_24
+    name: casilla_518
+    position: 183
+    length: 1
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Prorratas - 4 - Tipo de prorrata [518]
+      validacion: ''
+      contenido: '"G", "E" o blanco.'
+  - id: dp30305_25
+    name: casilla_519
+    position: 184
+    length: 5
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Prorratas - 4 - % de prorrata [519]
+      validacion: ''
+      contenido: 3 enteros 2 decimales, menor o igual que 100.
+  - id: dp30305_26
+    name: casilla_520
+    position: 189
+    length: 4
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Prorratas - 5 - Código CNAE [520]
+      validacion: ''
+      contenido: CNAE-2025
+  - id: dp30305_27
+    name: casilla_521
+    position: 193
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Prorratas - 5 - Importe de operaciones [521]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_28
+    name: casilla_522
+    position: 210
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: Prorratas - 5 - Importe de operaciones con derecho a deducción [522]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_29
+    name: casilla_523
+    position: 227
+    length: 1
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Prorratas - 5 - Tipo de prorrata [523]
+      validacion: ''
+      contenido: '"G", "E" o blanco.'
+  - id: dp30305_30
+    name: casilla_524
+    position: 228
+    length: 5
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: Prorratas - 5 - % de prorrata [524]
+      validacion: ''
+      contenido: 3 enteros 2 decimales, menor o igual que 100.
+  - id: dp30305_31
+    name: casilla_700
+    position: 233
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 1 - IVA ded. Operac. Interiores - Bienes y servicios corrientes - Base imponible [700]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_32
+    name: casilla_701
+    position: 250
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 1 - IVA ded. Operac. Interiores - Bienes y servicios corrientes - Cuota deducible [701]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_33
+    name: casilla_702
+    position: 267
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 1 - IVA ded. Operac. Interiores - Bienes inversión - Base imponible [702]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_34
+    name: casilla_703
+    position: 284
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 1 - IVA ded. Operac. Interiores - Bienes inversión - Cuota deducible [703]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_35
+    name: casilla_704
+    position: 301
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 1 - IVA ded. Importaciones - Bienes corrientes - Base imponible [704]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_36
+    name: casilla_705
+    position: 318
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 1 - IVA ded. Importaciones - Bienes corrientes - Cuota deducible [705]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_37
+    name: casilla_706
+    position: 335
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 1 - IVA ded. Importaciones - Bienes inversión - Base imponible [706]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_38
+    name: casilla_707
+    position: 352
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 1 - IVA ded. Importaciones - Bienes inversión - Cuota deducible [707]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_39
+    name: casilla_708
+    position: 369
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 1 - IVA ded. Adquisic. intracomun. - Bienes corrientes y servicios - Base imponible [708]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_40
+    name: casilla_709
+    position: 386
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 1 - IVA ded. Adquisic. intracomun. - Bienes corrientes y servicios - Cuota deducible [709]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_41
+    name: casilla_710
+    position: 403
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 1 - IVA ded. Adquisic. intracomun. - Bienes inversión - Base imponible [710]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_42
+    name: casilla_711
+    position: 420
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 1 - IVA ded. Adquisic. intracomun. - Bienes inversión - Cuota deducible [711]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_43
+    name: casilla_712
+    position: 437
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 1 - Compensac. rég. especial agric./ganad./pesca - Base impon. [712]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_44
+    name: casilla_713
+    position: 454
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 1 - Compensac. rég. especial agric./ganad./pesca - Cuota deduc. [713]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_45
+    name: casilla_714
+    position: 471
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: 13. Reg. Deducc. Diferenc.- 1 - Rectificación de deducciones - Base impon.  [714]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_46
+    name: casilla_715
+    position: 488
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: 13. Reg. Deducc. Diferenc.- 1 - Rectificación de deducciones - Cuota deduc. [715]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_47
+    name: casilla_716
+    position: 505
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: 13. Reg. Deducc. Diferenc.- 1 - Regularización de bienes de inversión [716]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_48
+    name: casilla_717
+    position: 522
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: 13. Reg. Deducc. Diferenc.- 1 - Suma de deducciones [717]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_49
+    name: casilla_718
+    position: 539
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 2 - IVA ded. Operac. Interiores - Bienes y servicios corrientes - Base imponible [718]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_50
+    name: casilla_719
+    position: 556
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 2 - IVA ded. Operac. Interiores - Bienes y servicios corrientes - Cuota deducible [719]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_51
+    name: casilla_720
+    position: 573
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 2 - IVA ded. Operac. Interiores - Bienes inversión - Base imponible [720]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_52
+    name: casilla_721
+    position: 590
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 2 - IVA ded. Operac. Interiores - Bienes inversión - Cuota deducible [721]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_53
+    name: casilla_722
+    position: 607
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 2 - IVA ded. Importaciones - Bienes corrientes - Base imponible [722]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_54
+    name: casilla_723
+    position: 624
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 2 - IVA ded. Importaciones - Bienes corrientes - Cuota deducible [723]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_55
+    name: casilla_724
+    position: 641
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 2 - IVA ded. Importaciones - Bienes inversión - Base imponible [724]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_56
+    name: casilla_725
+    position: 658
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 2 - IVA ded. Importaciones - Bienes inversión - Cuota deducible [725]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_57
+    name: casilla_726
+    position: 675
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 2 - IVA ded. Adquisic. intracomun. - Bienes corrientes y servicios - Base imponible [726]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_58
+    name: casilla_727
+    position: 692
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 2 - IVA ded. Adquisic. intracomun. - Bienes corrientes y servicios - Cuota deducible [727]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_59
+    name: casilla_728
+    position: 709
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 2 - IVA ded. Adquisic. intracomun. - Bienes inversión - Base imponible [728]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_60
+    name: casilla_729
+    position: 726
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 2 - IVA ded. Adquisic. intracomun. - Bienes inversión - Cuota deducible [729]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_61
+    name: casilla_730
+    position: 743
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 2 - Compensac. rég. especial agric./ganad./pesca - Base impon. [730]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_62
+    name: casilla_731
+    position: 760
+    length: 17
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: Num
+      descripcion: 13. Reg. Deducc. Diferenc.- 2 - Compensac. rég. especial agric./ganad./pesca - Cuota deduc. [731]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_63
+    name: casilla_732
+    position: 777
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: 13. Reg. Deducc. Diferenc.- 2 - Rectificación de deducciones - Base impon.  [732]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_64
+    name: casilla_733
+    position: 794
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: 13. Reg. Deducc. Diferenc.- 2 - Rectificación de deducciones - Cuota deduc. [733]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_65
+    name: casilla_734
+    position: 811
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: 13. Reg. Deducc. Diferenc.- 2 - Regularización de bienes de inversión [734]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_66
+    name: casilla_735
+    position: 828
+    length: 17
+    field_type: numeric_signed
+    source: model
+    metadata:
+      tipo: N
+      descripcion: 13. Reg. Deducc. Diferenc.- 2 - Suma de deducciones [735]
+      validacion: ''
+      contenido: 15 enteros 2 decimales
+  - id: dp30305_67
+    name: dp30305_67
+    position: 845
+    length: 672
+    field_type: alphanumeric
+    source: constant
+    value: ''
+    metadata:
+      tipo: An
+      descripcion: Reservado para la AEAT
+      validacion: ''
+      contenido: ''
+  - id: dp30305_68
+    name: dp30305_68
+    position: 1517
+    length: 12
+    field_type: alphanumeric
+    source: constant
+    value: </T30305000>
+    metadata:
+      tipo: An
+      descripcion: Indicador de fin de registro
+      validacion: Obligatorio
+      contenido: Constante "</T30305000>"
+- id: dp303did
+  include_when: always
+  fields:
+  - id: dp303did_1
+    name: dp303did_1
+    position: 1
+    length: 2
+    field_type: alphanumeric
+    source: constant
+    value: <T
+    metadata:
+      tipo: An
+      descripcion: Inicio del identificador de modelo y página.
+      validacion: Obligatorio
+      contenido: Constante "<T"
+  - id: dp303did_2
+    name: dp303did_2
+    position: 3
+    length: 3
+    field_type: numeric
+    source: constant
+    value: '303'
+    metadata:
+      tipo: Num
+      descripcion: Modelo.
+      validacion: Obligatorio
+      contenido: Constante "303"
+  - id: dp303did_3
+    name: dp303did_3
+    position: 6
+    length: 5
+    field_type: alphanumeric
+    source: constant
+    value: DID00
+    metadata:
+      tipo: An
+      descripcion: Página.
+      validacion: Obligatorio
+      contenido: Constante "DID00"
+  - id: dp303did_4
+    name: dp303did_4
+    position: 11
+    length: 1
+    field_type: alphanumeric
+    source: constant
+    value: '>'
+    metadata:
+      tipo: An
+      descripcion: Fin de identificador de modelo.
+      validacion: Obligatorio
+      contenido: Constante ">"
+  - id: dp303did_5
+    name: swift
+    position: 12
+    length: 11
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Devolución. SWIFT-BIC
+      validacion: ''
+      contenido: Nota 3
+  - id: dp303did_6
+    name: iban
+    position: 23
+    length: 34
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Domiciliación/Devolución - IBAN
+      validacion: ''
+      contenido: Nota 3
+  - id: dp303did_7
+    name: bank_name
+    position: 57
+    length: 70
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Devolución - Banco/Bank name
+      validacion: ''
+      contenido: ''
+  - id: dp303did_8
+    name: bank_address
+    position: 127
+    length: 35
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Devolución - Dirección del Banco/ Bank address
+      validacion: ''
+      contenido: ''
+  - id: dp303did_9
+    name: bank_city
+    position: 162
+    length: 30
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Devolución - Ciudad/City
+      validacion: ''
+      contenido: ''
+  - id: dp303did_10
+    name: bank_country
+    position: 192
+    length: 2
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: An
+      descripcion: Devolución - Código País/Country code
+      validacion: ''
+      contenido: ''
+  - id: dp303did_11
+    name: sepa
+    position: 194
+    length: 1
+    field_type: numeric
+    source: builtin
+    function: sepa
+    metadata:
+      tipo: Num
+      descripcion: Devolución - Marca SEPA
+      validacion: ''
+      contenido: '"0", "1", "2", "3" Nota 2, Nota 3'
+  - id: dp303did_12
+    name: dp303did_12
+    position: 195
+    length: 617
+    field_type: alphanumeric
+    source: constant
+    value: ''
+    metadata:
+      tipo: An
+      descripcion: Reservado para la AEAT
+      validacion: ''
+      contenido: ''
+  - id: dp303did_13
+    name: dp303did_13
+    position: 812
+    length: 12
+    field_type: alphanumeric
+    source: constant
+    value: </T303DID00>
+    metadata:
+      tipo: An
+      descripcion: Indicador de fin de registro
+      validacion: Obligatorio
+      contenido: Constante "</T303DID00>"
+- id: registro_cierre
+  include_when: always
+  fields:
+  - id: registro_cierre_1
+    name: registro_general_close
+    position: 1
+    length: 3
+    field_type: alphanumeric
+    source: constant
+    value: </T
+    metadata:
+      tipo: ''
+      descripcion: ''
+      validacion: ''
+      contenido: ''
+  - id: registro_cierre_2
+    name: modelo
+    position: 4
+    length: 3
+    field_type: numeric
+    source: constant
+    value: '303'
+    metadata:
+      tipo: ''
+      descripcion: ''
+      validacion: ''
+      contenido: ''
+  - id: registro_cierre_3
+    name: discriminante
+    position: 7
+    length: 1
+    field_type: numeric
+    source: constant
+    value: '0'
+    metadata:
+      tipo: ''
+      descripcion: ''
+      validacion: ''
+      contenido: ''
+  - id: registro_cierre_4
+    name: ejercicio
+    position: 8
+    length: 4
+    field_type: numeric
+    source: model
+    metadata:
+      tipo: ''
+      descripcion: ''
+      validacion: ''
+      contenido: ''
+  - id: registro_cierre_5
+    name: periodo
+    position: 12
+    length: 2
+    field_type: alphanumeric
+    source: model
+    metadata:
+      tipo: ''
+      descripcion: ''
+      validacion: ''
+      contenido: ''
+  - id: registro_cierre_6
+    name: tipo_y_cierre
+    position: 14
+    length: 5
+    field_type: alphanumeric
+    source: constant
+    value: 0000>
+    metadata:
+      tipo: ''
+      descripcion: ''
+      validacion: ''
+      contenido: ''

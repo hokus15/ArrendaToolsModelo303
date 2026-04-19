@@ -1,16 +1,15 @@
-"""Infrastructure layer exports for layout and field metadata."""
+"""Infrastructure layer exports for schema and field metadata."""
 
-from .catalog import FIELD_CATALOG, FieldDef, FieldType
-from .layout import LayoutSpec, PageSpec
-from .layout_registry import LAYOUTS, get_layout, list_supported_years
+from .schema import FieldSpec, FieldType, PageSpec, SchemaSpec, Source
+from .schema_registry import SUPPORTED_SCHEMAS, get_schema, list_supported_years
 
 __all__ = [
     "FieldType",
-    "FieldDef",
-    "FIELD_CATALOG",
+    "FieldSpec",
     "PageSpec",
-    "LayoutSpec",
-    "LAYOUTS",
-    "get_layout",
+    "SchemaSpec",
+    "Source",
+    "SUPPORTED_SCHEMAS",
+    "get_schema",
     "list_supported_years",
 ]

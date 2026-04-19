@@ -57,96 +57,184 @@ Este módulo requiere Python 3.10 o superior.
 
 El primer paso es recopilar la información necesaria para el trimestre fiscal que desees realizar la declaración. Esta información incluye datos del contribuyente, datos financieros y otros detalles específicos del trimestre. Algunos campos son obligatorios, como el periodo, la base imponible y el NIF del contribuyente, mientras que otros son opcionales dependiendo del contexto, como el volumen anual de operaciones (obligatorio solo en el cuarto trimestre).
 
-Usando la clase Modelo303Data proporcionada por el módulo, puedes definir los datos requeridos. Cada campo tiene validaciones, como la longitud máxima, el formato y la obligatoriedad.
-Por ejemplo:
+Usando la clase `Modelo303Data` proporcionada por el módulo, puedes definir los datos requeridos. Cada campo tiene validaciones, como la longitud máxima, el formato y la obligatoriedad.
+
+El módulo incluye una función `get_generator(fiscal_year)` para obtener el generador del ejercicio deseado y un método `generate(data)` que devuelve el string listo para importar.
+
+Ejemplo completo:
 
 ```python
+from decimal import Decimal
+from pathlib import Path
+
 from arrendatools.modelo303.application.data import Modelo303Data
+from arrendatools.modelo303.application.facade import get_generator
 from arrendatools.modelo303.domain.enums import Period
 
 datos = Modelo303Data(
-    ejercicio=Period.FOURTH_QUARTER,
-    version="1.0",
+    periodo=Period.FOURTH_QUARTER,
+    version="1.00",
     nif_empresa_desarrollo="12345678X",
     razon_social="DE LOS PALOTES PERICO",
     nif_contribuyente="12345678X",
     iban="ES0012341234123412341234",
-    base_imponible=10000.00,
-    base_gastos_bienes_y_servicios=500.00,
-    cuota_gastos_bienes_y_servicios=105.00,
-    base_adquisiones_bienes_inversion=3000.00,
-    cuota_adquisiones_bienes_inversion=630.00,
-    volumen_anual_operaciones=20000.00
+    base_imponible=Decimal("10000.00"),
+    base_gastos_bienes_y_servicios=Decimal("500.00"),
+    cuota_gastos_bienes_y_servicios=Decimal("105.00"),
+    base_adquisiones_bienes_inversion=Decimal("3000.00"),
+    cuota_adquisiones_bienes_inversion=Decimal("630.00"),
+    volumen_anual_operaciones=Decimal("20000.00"),
 )
+
+generador = get_generator(2025)
+contenido = generador.generate(datos)
+
+# Guardar en fichero para importar en el modelo 303
+Path("modelo303.303").write_text(contenido)
 ```
 
-El módulo incluye una API funcional para obtener el generador según ejercicio.
-Por ejemplo:
+## Arquitectura
+
+El proyecto sigue una arquitectura por capas con un **motor de renderizado basado en schemas YAML**:
+
+```
+application/
+  facade.py          → API pública: get_generator(fiscal_year) → Modelo303Generator
+  generator.py       → Modelo303Generator(fiscal_year, schema).generate(data) → str
+  data.py            → Modelo303Data (entrada validada con Pydantic)
+
+domain/
+  model.py           → Modelo303Model (cálculos de casillas)
+  enums.py           → Period
+
+infrastructure/
+  schema.py          → Tipos internos: SchemaSpec, PageSpec, FieldSpec, Source, FieldType
+  schema_loader.py   → load_schema(path | Traversable) → SchemaSpec
+  schema_validator.py → validate_schema(schema)
+  schema_renderer.py → render_schema(schema, model) → str
+  schema_registry.py → SUPPORTED_SCHEMAS, get_schema(fiscal_year)
+  builtins.py        → BUILTIN_REGISTRY: funciones Python invocables desde el schema
+  formatting.py      → Utilidades de formateo de campos numéricos y con signo
+  schemas/
+    2025.1.yaml      → Schema completo del ejercicio 2025
+    2026.1.yaml      → Schema completo del ejercicio 2026
+
+tools/
+  generate_schema.py → Genera un schema YAML a partir del Excel oficial de la AEAT
+```
+
+### Flujo de datos
+
+```
+Modelo303Data
+     │
+     ▼
+Modelo303Model.from_data()   ← calcula casillas derivadas
+     │
+     ▼
+render_schema(schema, model) ← itera páginas y campos del schema YAML
+     │  ├─ source=constant  → valor literal del schema
+     │  ├─ source=default   → valor por defecto del schema
+     │  ├─ source=model     → atributo del modelo (casilla_XX)
+     │  ├─ source=builtin   → función registrada en BUILTIN_REGISTRY
+     │  └─ source=formula   → expresión aritmética evaluada de forma segura (sin eval)
+     │
+     ▼
+String de importación (formato AEAT)
+```
+
+### Sources de un campo en el schema
+
+| `source`    | Descripción                                                                          | Clave YAML requerida |
+|-------------|--------------------------------------------------------------------------------------|----------------------|
+| `constant`  | Valor literal fijo (e.g. identificadores de página, tipo de declaración fijo)        | `value`              |
+| `default`   | Valor por defecto (puede ser sobreescrito si se añade lógica futura)                 | `value`              |
+| `model`     | Se lee del atributo `name` del campo en `Modelo303Model`                              | —                    |
+| `builtin`   | Llama a una función registrada en `BUILTIN_REGISTRY`                                 | `function`           |
+| `formula`   | Expresión aritmética sobre atributos del modelo (`casilla_X op casilla_Y`)           | `expr`               |
+
+### Páginas condicionales
+
+Una página puede tener `include_when: fourth_quarter` para que solo se incluya en el cuarto trimestre. El valor por defecto es `always`.
+
+---
+
+## Cómo añadir un nuevo ejercicio
+
+Para añadir soporte para un año nuevo (por ejemplo, `2027`):
+
+### 1. Generar el schema YAML inicial desde el Excel de la AEAT
+
+```bash
+python tools/generate_schema.py "specs/2027/YYYYMMDD - DR303e27v101.xlsx" \
+    --year 2027 --revision 1.01 \
+    --output src/arrendatools/modelo303/infrastructure/schemas/2027.1.yaml
+```
+
+La herramienta genera un schema con campos `source=constant` para las constantes detectadas y `source=model` para el resto. Las advertencias (`!`) indican los campos que requieren revisión manual.
+
+### 2. Revisar y completar el schema YAML
+
+Abre `schemas/2027.1.yaml` y ajusta:
+
+- Los campos con `source=model` se resuelven usando el campo `name` del campo en el schema. El nombre debe coincidir exactamente con el atributo correspondiente en `Modelo303Model` (p.ej. `casilla_XX`).
+- Si un campo es el resultado de un cálculo entre casillas, usa `source: formula` con `expr: casilla_A - casilla_B + casilla_C`. Solo se permiten operaciones aritméticas básicas (`+`, `-`, `*`, `/`) sobre atributos numéricos del modelo.
+- Si un campo requiere lógica de negocio compleja (tipo de declaración, marca SEPA, etc.), usa `source: builtin` con `function: nombre_funcion`. La función debe estar registrada en `BUILTIN_REGISTRY`.
+- Si el cuarto trimestre tiene páginas adicionales (e.g. sección `DID`, volumen anual), añade `include_when: fourth_quarter` a esa página.
+
+### 3. Registrar el schema en el registry
+
+Edita `src/arrendatools/modelo303/infrastructure/schema_registry.py` y añade la entrada:
 
 ```python
-from arrendatools.modelo303.application.facade import get_generator
-
-modelo = get_generator(2025)
+SUPPORTED_SCHEMAS: dict[int, str] = {
+    2025: "2025.1.yaml",
+    2026: "2026.1.yaml",
+    2027: "2027.1.yaml",   # ← nuevo
+}
 ```
 
-## Arquitectura de generación por ejercicio
+Esto es el único cambio de código necesario si el nuevo ejercicio no introduce casillas nuevas ni lógica de negocio adicional.
 
-El proyecto utiliza un **único generador** para todos los ejercicios soportados:
+### 4. Revisar el schema YAML si hay campos numéricos nuevos
 
-- Generador único: `arrendatools.modelo303.application.generator.Modelo303Generator`
-- Layouts por año: `arrendatools.modelo303.infrastructure.layout_registry.LAYOUTS`
+El renderer escala automáticamente los valores `Decimal` a céntimos (`×100`) para todos los campos con `field_type: numeric` o `field_type: numeric_signed`. Los valores que el modelo retorna como `str` (año, periodo, flags de un carácter) se pasan tal cual sin conversión, ya que la rama `isinstance(raw_value, str)` los atrapa antes.
 
-Cada ejercicio define su layout completo: registro de apertura, secciones `00`, `01`, `02`, `03`, `04`, `05`, `DID` y registro de cierre.
+No hay configuración adicional necesaria: el tipo Python del valor y el `field_type` del schema son suficientes para determinar el formateo.
 
-### Cómo añadir un nuevo ejercicio
+### 5. Revisar `model.py` si hay nuevas casillas de datos
 
-Para añadir un nuevo año (por ejemplo, `2027`) hay que revisar **4 piezas**: `layout`, `catalog`, `model` y `year_overrides`.
+Si el nuevo ejercicio tiene casillas de entrada de datos nuevas que no existen en `Modelo303Model` (`src/arrendatools/modelo303/domain/model.py`):
 
-1. Crear el layout anual.
-   Archivo recomendado: `src/arrendatools/modelo303/infrastructure/layout_2027.py`.
-   Puedes hacerlo a partir de `layout_2026.py` y ajustar orden de campos/páginas según el diseño oficial del año.
+- Añade el atributo como slot de `Modelo303Model` con tipo `Decimal` y valor por defecto apropiado.
+- Si es una casilla derivada de otras (calculada), añade la lógica de cálculo directamente en `from_data()`.
+- Mantén siempre operaciones monetarias con `Decimal` y `quantize(Decimal("0.01"), ...)`.
 
-2. Registrar el layout en el registry.
-   Edita `src/arrendatools/modelo303/infrastructure/layout_registry.py`:
-   - importa `LAYOUT` del nuevo módulo;
-   - añade la entrada `2027: LAYOUT_2027` en `LAYOUTS`.
-   `get_generator(...)` usa este diccionario para decidir si un ejercicio está soportado.
+### 6. Registrar funciones builtin nuevas si las hay
 
-3. Revisar `catalog.py` para campos nuevos o cambios de formato.
-   Archivo: `src/arrendatools/modelo303/infrastructure/catalog.py`.
-   - Si aparecen campos nuevos en el layout, deben existir en `FIELD_CATALOG`.
-   - Si cambia longitud/tipo, actualiza `FieldDef(length, field_type, ...)`.
-   - Para campos numéricos:
-     - usa `scale_to_cents=True` cuando el valor representa importes monetarios;
-     - usa `scale_to_cents=False` para códigos, flags, año, etc.
-   - Si cambia una regla de validación de tipo, ajusta `_validate_type(...)`.
+Si el nuevo ejercicio introduce un campo con lógica que no puede expresarse como fórmula, añade la función en `src/arrendatools/modelo303/infrastructure/builtins.py`:
 
-4. Revisar el modelo de dominio para asegurar que todos los campos se resuelven.
-   Archivo: `src/arrendatools/modelo303/domain/model.py`.
-   - Si el nuevo layout/catálogo introduce campos de datos (no literales), añade atributos en `Modelo303Model`.
-   - Si el año exige lógica distinta en cálculos, intenta mantener los métodos base (`compute_casilla_*`) estables y delega diferencias anuales a overrides.
-   - Mantén operaciones monetarias con `Decimal` y `quantize(...)`.
+```python
+BUILTIN_REGISTRY: dict[str, Callable] = {
+    ...,
+    "mi_funcion_2027": lambda model: ...,
+}
+```
 
-5. Crear y registrar overrides anuales.
-   Crea `src/arrendatools/modelo303/infrastructure/year_overrides_2027.py` con:
-   - `CASILLA_DEFAULTS`: valores simples por defecto para ese año;
-   - `CASILLA_CALCULATORS`: funciones para campos cuyo cálculo cambia ese año.
-   Luego registra el módulo en `src/arrendatools/modelo303/infrastructure/year_overrides.py`:
-   - importa `CASILLA_DEFAULTS` y `CASILLA_CALCULATORS`;
-   - añade `2027` en `YEAR_OVERRIDES_REGISTRY`.
+### 7. Añadir tests del nuevo ejercicio
 
-6. Añadir tests del nuevo ejercicio.
-   - Crea tests tipo `tests/test_generator_tax_year_2027.py` tomando como base los de 2026.
-   - Añade ficheros golden en `tests/golden/2027/...`.
-   - Actualiza tests de factoría/soporte de años (`tests/test_modelo303_factory.py`) para incluir 2027.
-   - Verifica también los tests de alineación (`tests/test_catalog_model_alignment.py`), que detectan campos en layout sin catálogo o campos no renderizables.
+- Crea `tests/test_generator_tax_year_2027.py` tomando como base `test_generator_tax_year_2026.py`.
+- Añade ficheros golden en `tests/golden/2027/` para los escenarios 1T/2T/3T, 4T positivo, 4T negativo y sin IBAN.
+- Actualiza `tests/test_modelo303_factory.py` para incluir 2027 en los años soportados.
+- Ejecuta `pytest tests/ -v` para validar que todos los tests pasan.
 
-Checklist mínimo para dar por soportado un nuevo año:
+### Checklist mínimo
 
-1. `get_generator(2027)` devuelve generador sin error.
-2. Todos los campos de `layout_2027` existen en `FIELD_CATALOG`.
-3. `Modelo303Model.from_data(...)` genera string válido para escenarios 1T/2T/3T, 4T y sin IBAN.
-4. Golden tests del año pasan.
+- [ ] `get_generator(2027)` devuelve un generador sin error.
+- [ ] `test_all_schema_fields_exist_in_catalog` pasa (todos los campos del schema están en el catálogo).
+- [ ] `test_model_and_catalog_can_render_every_catalog_field` pasa.
+- [ ] Golden tests de 2027 pasan (1T/2T/3T, 4T y sin IBAN).
+- [ ] `pytest tests/ -v` sin fallos.
 
 Ahora ya puedes generar el fichero utilizando el método correspondiente. Este método convierte los datos proporcionados en un formato compatible con el sistema de la Agencia Tributaria.
 Por ejemplo:

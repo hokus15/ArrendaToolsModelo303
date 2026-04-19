@@ -1,10 +1,8 @@
-from arrendatools.modelo303.infrastructure.layout_registry import LAYOUTS
+from arrendatools.modelo303.infrastructure.schema_registry import get_schema
 
 from .generator import Modelo303Generator
 
 
 def get_generator(fiscal_year: int) -> Modelo303Generator:
-    layout = LAYOUTS.get(fiscal_year)
-    if layout is None:
-        raise ValueError(f"No existe un generador para el ejercicio {fiscal_year}")
-    return Modelo303Generator(fiscal_year=fiscal_year, layout=layout)
+    schema = get_schema(fiscal_year)
+    return Modelo303Generator(fiscal_year=fiscal_year, schema=schema)
