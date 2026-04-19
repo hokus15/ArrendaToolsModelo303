@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from functools import lru_cache
-from importlib.resources import files
+from importlib.resources import files  # noqa: F401 – requires Python 3.9+ (project requires 3.10+)
 
 from arrendatools.modelo303.infrastructure.schema import SchemaSpec
 from arrendatools.modelo303.infrastructure.schema_loader import load_schema
@@ -30,5 +30,7 @@ def get_schema(fiscal_year: int) -> SchemaSpec:
         filename
     )
     schema = load_schema(traversable)
+    validate_schema(schema)
+    return schema
     validate_schema(schema)
     return schema

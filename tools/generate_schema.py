@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
-"""
-Generate a schema YAML file from an AEAT Excel specification.
+r"""Generate a schema YAML file from an AEAT Excel specification.
 
-Usage:
-    python tools/generate_schema.py <excel_path> \\
-        [--year YYYY] [--revision X.XX] [--output path/to/schema.yaml] \\
+Usage
+-----
+    python tools/generate_schema.py <excel_path> \
+        [--year YYYY] [--revision X.XX] [--output path/to/schema.yaml] \
         [--spec-date YYYY-MM-DD]
 
-Example:
-    python tools/generate_schema.py "specs/2026/20260128 - DR303e26v101.xlsx" \\
-        --year 2026 --revision 1.01 \\
+Example
+-------
+    python tools/generate_schema.py "specs/2026/20260128 - DR303e26v101.xlsx" \
+        --year 2026 --revision 1.01 \
         --output src/arrendatools/modelo303/infrastructure/schemas/2026.1.yaml
+
 """
 
 from __future__ import annotations
@@ -85,7 +87,8 @@ _FORMULA_INNER_RE = re.compile(r"^\s*\[\d+\](\s*[+\-]\s*\[\d+\])+\s*$")
 
 
 def _infer_formula(description: str) -> tuple[str, str] | None:
-    """
+    """Infer an arithmetic formula from the field description.
+
     If the description encodes a single arithmetic formula such as
     '... ( [A] + [B] - [C] ) [result] ...', returns (result_name, expr_str).
 
@@ -293,9 +296,7 @@ def _map_tipo(raw: str) -> tuple[str, list[str]]:
 
 
 def _analyse_content(content: str) -> tuple[str, str | None, list[str]]:
-    """
-    Analyse the Contenido column and return (source, value, warnings).
-    """
+    """Analyse the Contenido column and return (source, value, warnings)."""
     stripped = content.strip()
     if not stripped:
         return "model", None, []
@@ -418,6 +419,105 @@ def _apply_field_overrides(schema: dict) -> list[str]:
     return applied
 
 
+def _parse_field_type(
+    raw_tipo: str, sheet_title: str, row_idx: int
+) -> tuple[str, list[str]]:
+    """Determine field_type from the raw Tipo cell value."""
+    if raw_tipo:
+        return _map_tipo(raw_tipo)
+    return "alphanumeric", [
+        f"Sheet '{sheet_title}' row {row_idx}: missing Tipo -> 'alphanumeric'"
+    ]
+
+
+def _apply_desc_override(
+    source: str, const_value: str | None, raw_desc: str
+) -> tuple[str, str | None]:
+    """Override source to 'constant' when the description signals reserved/blank fields."""
+    desc_lower = raw_desc.lower()
+    if source == "model" and (
+        "reservado para la" in desc_lower or "rellenar con blancos" in desc_lower
+    ):
+        return "constant", ""
+    return source, const_value
+
+
+def _resolve_name_and_source(
+    source: str,
+    formula_result: tuple[str, str] | None,
+    raw_desc: str,
+    raw_content: str,
+    field_id: str,
+    page_id: str,
+) -> tuple[str, str, str | None, list[str]]:
+    """Resolve the field name, final source, and optional builtin function name."""
+    warnings: list[str] = []
+    builtin_fn: str | None = None
+
+    if source == "formula":
+        field_name = formula_result[0]  # type: ignore[index]
+    elif source == "model":
+        inferred = _infer_name(raw_desc, raw_content)
+        if inferred is not None:
+            field_name = inferred
+            if field_name in BUILTIN_REGISTRY:
+                source = "builtin"
+                builtin_fn = field_name
+        else:
+            field_name = field_id
+            warnings.append(
+                f"Sheet '{page_id}' field '{field_id}': cannot infer name from "
+                f"description {raw_desc!r}; set 'name' manually"
+            )
+    else:
+        inferred = _infer_name(raw_desc, raw_content)
+        field_name = inferred if inferred is not None else field_id
+
+    if source == "builtin":
+        builtin_fn = field_name
+
+    return field_name, source, builtin_fn, warnings
+
+
+def _build_field_entry(
+    field_id: str,
+    field_name: str,
+    position: int,
+    length: int,
+    field_type: str,
+    source: str,
+    const_value: str | None,
+    formula_expr: str | None,
+    builtin_fn: str | None,
+    raw_tipo: str,
+    raw_desc: str,
+    raw_val: str,
+    raw_content: str,
+) -> dict:
+    """Assemble the field entry dict."""
+    entry: dict = {
+        "id": field_id,
+        "name": field_name,
+        "position": position,
+        "length": length,
+        "field_type": field_type,
+        "source": source,
+    }
+    if const_value is not None:
+        entry["value"] = const_value
+    if formula_expr is not None:
+        entry["expr"] = formula_expr
+    if builtin_fn is not None:
+        entry["function"] = builtin_fn
+    entry["metadata"] = {
+        "tipo": raw_tipo,
+        "descripcion": raw_desc,
+        "validacion": raw_val,
+        "contenido": raw_content,
+    }
+    return entry
+
+
 def import_sheet(sheet, page_id: str) -> tuple[list[dict], list[str]]:
     """Parse one Excel sheet into a list of field dicts. Returns (fields, warnings)."""
     header_row, col_map = _find_header_row(sheet)
@@ -432,7 +532,6 @@ def import_sheet(sheet, page_id: str) -> tuple[list[dict], list[str]]:
     consecutive_empty = 0
 
     for row_idx in range(header_row + 1, sheet.max_row + 1):
-        # raw_pos = _cell_str(sheet, row_idx, col_map, "position")
         raw_len = _cell_str(sheet, row_idx, col_map, "length")
         raw_tipo = _cell_str(sheet, row_idx, col_map, "field_type")
         raw_desc = _cell_str(sheet, row_idx, col_map, "description")
@@ -447,10 +546,8 @@ def import_sheet(sheet, page_id: str) -> tuple[list[dict], list[str]]:
                 break
             continue
         consecutive_empty = 0
-        # Skip the "Total" summary row (informational, not a real field)
         if raw_num.strip().lower() == "total":
             continue
-        # Skip rows where length is not a digit (decorative text rows)
         if raw_len and not raw_len.replace(" ", "").isdigit():
             continue
 
@@ -465,27 +562,14 @@ def import_sheet(sheet, page_id: str) -> tuple[list[dict], list[str]]:
         if length <= 0:
             continue
 
-        if raw_tipo:
-            field_type, tipo_warns = _map_tipo(raw_tipo)
-            warnings.extend(tipo_warns)
-        else:
-            field_type = "alphanumeric"
-            warnings.append(
-                f"Sheet '{sheet.title}' row {row_idx}: missing Tipo -> 'alphanumeric'"
-            )
+        field_type, tipo_warns = _parse_field_type(raw_tipo, sheet.title, row_idx)
+        warnings.extend(tipo_warns)
 
         source, const_value, content_warns = _analyse_content(raw_content)
         warnings.extend(content_warns)
 
-        # Description-based constant overrides: AEAT reserved / fill-with-blanks
-        desc_lower = raw_desc.lower()
-        if source == "model" and (
-            "reservado para la" in desc_lower or "rellenar con blancos" in desc_lower
-        ):
-            source = "constant"
-            const_value = ""
+        source, const_value = _apply_desc_override(source, const_value, raw_desc)
 
-        # Formula detection: description of the form '( [A] + [B] ) [result]'
         formula_expr: str | None = None
         formula_result = _infer_formula(raw_desc)
         if formula_result is not None:
@@ -493,7 +577,6 @@ def import_sheet(sheet, page_id: str) -> tuple[list[dict], list[str]]:
             const_value = None
             formula_expr = formula_result[1]
 
-        # Stable id: {page_id}_{N} — N is the integer from the Nº column.
         try:
             field_number = int(raw_num)
         except (TypeError, ValueError):
@@ -503,61 +586,29 @@ def import_sheet(sheet, page_id: str) -> tuple[list[dict], list[str]]:
             continue
         field_id = f"{page_id}_{field_number}"
 
-        # Semantic name: inferred from description, or fall back to field_id
-        if source == "formula":
-            # result name comes directly from _infer_formula
-            field_name = formula_result[0]  # type: ignore[index]
-        elif source == "model":
-            inferred = _infer_name(raw_desc, raw_content)
-            if inferred is not None:
-                field_name = inferred
-                # If the inferred name matches a known builtin function, upgrade
-                # the source so the renderer calls the function instead of reading
-                # a model attribute.
-                if field_name in BUILTIN_REGISTRY:
-                    source = "builtin"
-            else:
-                field_name = field_id
-                warnings.append(
-                    f"Sheet '{page_id}' field '{field_id}': cannot infer name from "
-                    f"description {raw_desc!r}; set 'name' manually"
-                )
-        else:
-            # Constants/defaults: name has no effect on rendering, but infer from
-            # casilla refs when available for documentation/identification purposes.
-            inferred = _infer_name(raw_desc, raw_content)
-            field_name = inferred if inferred is not None else field_id
+        field_name, source, builtin_fn, name_warns = _resolve_name_and_source(
+            source, formula_result, raw_desc, raw_content, field_id, page_id
+        )
+        warnings.extend(name_warns)
 
-        # When the field uses a builtin, the name IS the function name.
-        builtin_fn: str | None = field_name if source == "builtin" else None
-
-        # Apply known AEAT field-type overrides (e.g. date fields that must encode
-        # as zeros when blank, even though the Excel spec says AN).
         if field_name in _FIELD_TYPE_OVERRIDES:
             field_type = _FIELD_TYPE_OVERRIDES[field_name]
 
-        entry: dict = {
-            "id": field_id,
-            "name": field_name,
-            "position": position,
-            "length": length,
-            "field_type": field_type,
-            "source": source,
-        }
-        if const_value is not None:
-            entry["value"] = const_value
-        if formula_expr is not None:
-            entry["expr"] = formula_expr
-        if builtin_fn is not None:
-            entry["function"] = builtin_fn  # name == function for builtins
-
-        entry["metadata"] = {
-            "tipo": raw_tipo,
-            "descripcion": raw_desc,
-            "validacion": raw_val,
-            "contenido": raw_content,
-        }
-
+        entry = _build_field_entry(
+            field_id,
+            field_name,
+            position,
+            length,
+            field_type,
+            source,
+            const_value,
+            formula_expr,
+            builtin_fn,
+            raw_tipo,
+            raw_desc,
+            raw_val,
+            raw_content,
+        )
         fields.append(entry)
         position += length
 
@@ -876,5 +927,7 @@ def main() -> None:
 
 
 # Entry point
+if __name__ == "__main__":
+    main()
 if __name__ == "__main__":
     main()

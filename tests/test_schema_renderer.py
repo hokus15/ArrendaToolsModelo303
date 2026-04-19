@@ -201,7 +201,7 @@ class TestFormulaEvaluator:
 
 class TestRenderFormula:
     def test_formula_field_renders_correctly(self):
-        """casilla_71 via formula: casilla_69 - casilla_70 + casilla_109 - casilla_112"""
+        """casilla_71 via formula: casilla_69 - casilla_70 + casilla_109 - casilla_112."""
         f = FieldSpec(
             field_id="p1_1",
             name="casilla_71",

@@ -1,4 +1,4 @@
-"""Tests for schema_loader.py"""
+"""Tests for schema_loader.py."""
 
 import textwrap
 from pathlib import Path

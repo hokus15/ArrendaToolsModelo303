@@ -1,4 +1,4 @@
-"""Tests for schema_validator.py"""
+"""Tests for schema_validator.py."""
 
 import pytest
 

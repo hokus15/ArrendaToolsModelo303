@@ -1,4 +1,4 @@
-"""Tests for builtins.py"""
+"""Tests for builtins.py."""
 
 from decimal import Decimal
 
