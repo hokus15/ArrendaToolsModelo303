@@ -309,7 +309,7 @@ def _analyse_content(content: str) -> tuple[str, str | None, list[str]]:
     if stripped.startswith('"'):
         inner_end = stripped.find('"', 1)
         if inner_end != -1:
-            after = stripped[inner_end + 1 :].strip().lstrip(".").strip().lower()
+            after = stripped[inner_end + 1 :].strip().lstrip(".").strip().lower()  # noqa: E203
             if not after or after.startswith("nota"):
                 return "constant", stripped[1:inner_end], []
 
@@ -432,7 +432,7 @@ def import_sheet(sheet, page_id: str) -> tuple[list[dict], list[str]]:
     consecutive_empty = 0
 
     for row_idx in range(header_row + 1, sheet.max_row + 1):
-        raw_pos = _cell_str(sheet, row_idx, col_map, "position")
+        # raw_pos = _cell_str(sheet, row_idx, col_map, "position")
         raw_len = _cell_str(sheet, row_idx, col_map, "length")
         raw_tipo = _cell_str(sheet, row_idx, col_map, "field_type")
         raw_desc = _cell_str(sheet, row_idx, col_map, "description")
@@ -871,6 +871,10 @@ def main() -> None:
 
 
 # Entry point
+if __name__ == "__main__":
+    main()
+if __name__ == "__main__":
+    main()
 if __name__ == "__main__":
     main()
 if __name__ == "__main__":
